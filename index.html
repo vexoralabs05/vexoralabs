@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexora Labs | Premium VPN & Canva Accounts</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            900: '#7f1d1d',
+                            950: '#450a0a',
+                        },
+                        dark: {
+                            bg: '#121212',
+                            card: '#1a1a1a',
+                            border: '#2a2a2a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #f3f4f6;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121212; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f3f; 
+        }
+
+        /* Glassmorphism effects */
+        .glass-nav {
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(42, 42, 42, 0.5);
+        }
+        
+        .glass-card {
+            background: linear-gradient(145deg, #1a1a1a 0%, #121212 100%);
+            border: 1px solid #2a2a2a;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Animated gradient text */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #ef4444, #fca5a5);
+        }
+        
+        .canva-gradient {
+            background: linear-gradient(135deg, #450a0a 0%, #121212 100%);
+        }
+        
+        .plan-radio:checked + div {
+            border-color: #ef4444;
+            background-color: rgba(239, 68, 68, 0.1);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+        .plan-radio:checked + div .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .plan-radio:checked + div .plan-price {
+            color: #f87171;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img src="vex.jpg" alt="Vexora  Logo" class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-brand-500/20" onerror="this.outerHTML=`<div class='w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-brand-900 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/20'>V</div>`">
+                    <span class="font-bold text-2xl tracking-wide text-white">Vexora Labs</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Home</a>
+                    <a href="#canva" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Canva Pro</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Data Plans</a>
+                    <a href="#vpn" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">VPN Configs</a>
+                    <a href="#apps" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Setup Guide</a>
+                    <a href="https://wa.me/94727397294" target="_blank" class="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-lg font-medium transition-all shadow-lg shadow-brand-500/25 flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Contact Us
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-card border-b border-dark-border">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#home" class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-border transition-colors">Home</a>
+                <a href="#canva" class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-border transition-colors">Canva Pro</a>
+                <a href="#pricing" class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-border transition-colors">Data Plans</a>
+                <a href="#vpn" class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-border transition-colors">VPN Configs</a>
+                <a href="#apps" class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-border transition-colors">Setup Guide</a>
+                <a href="https://wa.me/94727397294" target="_blank" class="block px-3 py-3 rounded-md text-base font-medium text-green-400 hover:text-green-300 hover:bg-dark-border transition-colors flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-20">
+        <section id="home" class="relative overflow-hidden py-20 lg:py-32">
+            <!-- Background glow effects -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium mb-8">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                    Sri Lanka's Premium Digital Store
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-white">
+                    Elevate Your Digital <br class="hidden md:block"/> 
+                    <span class="text-gradient">Experience with Vexora Labs</span>
+                </h1>
+                
+                <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+                    Get premium high-speed VPN configurations for all Sri Lankan networks and official Canva Pro accounts at unbeatable prices.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#vpn" class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.5)] flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-server"></i> View VPN Configs
+                    </a>
+                    <a href="#canva" class="bg-dark-card border border-dark-border hover:border-gray-500 text-white px-8 py-3.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-palette text-brand-400"></i> Get Canva Pro
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="canva" class="py-16 relative z-10">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="canva-gradient rounded-3xl p-1 shadow-2xl shadow-brand-900/20 relative overflow-hidden">
+                    <!-- Decorative shapes -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                    
+                    <div class="bg-dark-bg/95 backdrop-blur-xl rounded-[23px] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 h-full">
+                        <div class="flex-1 text-center md:text-left">
+                            <div class="inline-block bg-gradient-to-r from-brand-400 to-brand-600 text-transparent bg-clip-text font-bold text-lg mb-2">🔥 Hot Deal</div>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Canva Pro Account</h2>
+                            <p class="text-gray-300 mb-6 text-lg">Unlock all premium templates, magical AI tools, and elements to supercharge your designs. 100% genuine accounts.</p>
+                            
+                            <ul class="space-y-3 mb-8 text-gray-400 text-sm md:text-base inline-block text-left">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-green-500"></i> Premium Templates & Fonts</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-green-500"></i> Magic Resize & Background Remover</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check-circle text-green-500"></i> Instant Delivery via WhatsApp</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-dark-card border border-dark-border rounded-2xl p-8 text-center min-w-[280px] backdrop-blur-sm relative">
+                            <div class="absolute -top-4 -right-4 bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg transform rotate-12 border border-brand-500">BEST SELLER</div>
+                            <div class="text-gray-400 text-sm uppercase tracking-wider mb-2">Price</div>
+                            <div class="text-5xl font-extrabold text-white mb-6">300 <span class="text-xl font-medium text-gray-400">LKR</span></div>
+                            <button onclick="orderViaWhatsApp('Canva Pro Account', '300 LKR')" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-4 rounded-xl font-bold text-lg transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-xl"></i> Order Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-20 relative z-10 bg-[#161616]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">VPN Data Packages</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Standalone data plans for our high-speed Singapore servers. Choose your preferred package and then select a matching network configuration below.</p>
+                </div>
+
+                <!-- Popular Packages -->
+                <div class="mb-12">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center justify-center md:justify-start gap-2">
+                        <i class="fa-solid fa-fire text-brand-500"></i> Popular Packages
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- 100 GB -->
+                        <div class="glass-card rounded-2xl p-6 text-center border-t-4 border-t-gray-600 hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                            <h4 class="text-gray-400 font-medium mb-2">Starter</h4>
+                            <div class="text-3xl font-bold text-white mb-4">100 GB</div>
+                            <div class="text-2xl font-bold text-gray-300 mb-6">150 LKR</div>
+                            <button onclick="document.getElementById('vpn').scrollIntoView({behavior: 'smooth'})" class="mt-auto w-full py-2.5 rounded-xl border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">Select Network</button>
+                        </div>
+                        <!-- 250 GB -->
+                        <div class="glass-card rounded-2xl p-6 text-center border-t-4 border-t-brand-500 hover:-translate-y-2 transition-transform duration-300 relative flex flex-col scale-100 lg:scale-105 shadow-xl shadow-brand-900/10 z-10">
+                            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-[11px] font-black px-4 py-1 rounded-full uppercase tracking-widest shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-brand-400/60">Best Value</div>
+                            <h4 class="text-gray-400 font-medium mb-2">Standard</h4>
+                            <div class="text-3xl font-bold text-white mb-4">250 GB</div>
+                            <div class="text-2xl font-bold text-brand-400 mb-6">250 LKR</div>
+                            <button onclick="document.getElementById('vpn').scrollIntoView({behavior: 'smooth'})" class="mt-auto w-full py-2.5 rounded-xl bg-brand-600 text-white hover:bg-brand-500 transition-colors shadow-lg shadow-brand-600/30">Select Network</button>
+                        </div>
+                        <!-- 400 GB -->
+                        <div class="glass-card rounded-2xl p-6 text-center border-t-4 border-t-gray-500 hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                            <h4 class="text-gray-400 font-medium mb-2">Heavy</h4>
+                            <div class="text-3xl font-bold text-white mb-4">400 GB</div>
+                            <div class="text-2xl font-bold text-gray-200 mb-6">350 LKR</div>
+                            <button onclick="document.getElementById('vpn').scrollIntoView({behavior: 'smooth'})" class="mt-auto w-full py-2.5 rounded-xl border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">Select Network</button>
+                        </div>
+                        <!-- UNLIMITED -->
+                        <div class="glass-card rounded-2xl p-6 text-center border-t-4 border-t-white hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-white text-black text-[11px] font-black px-4 py-1 rounded-full uppercase tracking-widest shadow-[0_0_15px_rgba(255,255,255,0.6)] border border-white">Pro</div>
+                            <h4 class="text-gray-400 font-medium mb-2">Ultimate</h4>
+                            <div class="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-infinity"></i> UNLIMITED</div>
+                            <div class="text-2xl font-bold text-white mb-6">500 LKR</div>
+                            <button onclick="document.getElementById('vpn').scrollIntoView({behavior: 'smooth'})" class="mt-auto w-full py-2.5 rounded-xl bg-white text-black hover:bg-gray-200 transition-colors font-semibold">Select Network</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optional Packages -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-300 mb-6 flex items-center justify-center md:justify-start gap-2">
+                        <i class="fa-solid fa-plus-circle text-gray-500"></i> Optional Packages
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl">
+                        <!-- 150 GB -->
+                        <div class="bg-dark-card border border-dark-border rounded-xl p-5 flex justify-between items-center hover:border-gray-500 transition-colors">
+                            <div>
+                                <div class="text-xl font-bold text-white">150 GB</div>
+                                <div class="text-sm text-gray-400">Optional Plan</div>
+                            </div>
+                            <div class="text-xl font-bold text-brand-400">190 LKR</div>
+                        </div>
+                        <!-- 300 GB -->
+                        <div class="bg-dark-card border border-dark-border rounded-xl p-5 flex justify-between items-center hover:border-gray-500 transition-colors">
+                            <div>
+                                <div class="text-xl font-bold text-white">300 GB</div>
+                                <div class="text-sm text-gray-400">Optional Plan</div>
+                            </div>
+                            <div class="text-xl font-bold text-brand-400">290 LKR</div>
+                        </div>
+                        <!-- 500 GB -->
+                        <div class="bg-dark-card border border-dark-border rounded-xl p-5 flex justify-between items-center hover:border-gray-500 transition-colors">
+                            <div>
+                                <div class="text-xl font-bold text-white">500 GB</div>
+                                <div class="text-sm text-gray-400">Optional Plan</div>
+                            </div>
+                            <div class="text-xl font-bold text-brand-400">390 LKR</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vpn" class="py-20 border-t border-dark-border relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">VPN Configurations</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Select your network provider below to find the perfect configuration for your needs. We support all major Sri Lankan networks.</p>
+                </div>
+
+                <!-- Premium Banner -->
+                <div class="max-w-4xl mx-auto mb-12">
+                    <div class="glass-card rounded-2xl p-6 border border-brand-500/20 bg-gradient-to-r from-brand-900/10 to-black/40">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center border border-brand-500/30 shrink-0">
+                                    <i class="fa-solid fa-server text-brand-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-bold text-lg">Premium Singapore Servers</h3>
+                                    <p class="text-gray-400 text-sm">All configurations are powered by our high-performance nodes.</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap justify-center gap-3">
+                                <span class="px-3 py-1.5 rounded-lg bg-dark-bg border border-dark-border text-xs font-semibold text-gray-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-bolt text-brand-500"></i> Low Ping Gaming
+                                </span>
+                                <span class="px-3 py-1.5 rounded-lg bg-dark-bg border border-dark-border text-xs font-semibold text-gray-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-infinity text-gray-100"></i> High Speed Data
+                                </span>
+                                <span class="px-3 py-1.5 rounded-lg bg-dark-bg border border-dark-border text-xs font-semibold text-gray-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-location-dot text-brand-400"></i> SG / SL IP Options
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Search and Filters -->
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                    <!-- Network Tabs -->
+                    <div class="flex flex-wrap gap-2 justify-center" id="network-tabs">
+                        <button class="filter-btn active px-5 py-2 rounded-full text-sm font-medium bg-brand-600 text-white transition-all border border-transparent" data-filter="all">All</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-500 transition-all" data-filter="Airtel">Airtel</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-500 transition-all" data-filter="Dialog">Dialog</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-500 transition-all" data-filter="Hutch">Hutch</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-500 transition-all" data-filter="Mobitel">Mobitel</button>
+                        <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-500 transition-all" data-filter="SLT">SLT</button>
+                    </div>
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-72">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-search text-gray-500"></i>
+                        </div>
+                        <input type="text" id="searchInput" class="block w-full pl-10 pr-3 py-2 border border-dark-border rounded-xl leading-5 bg-dark-card text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 sm:text-sm transition-all" placeholder="Search packages...">
+                    </div>
+                </div>
+
+                <!-- Packages Grid Container -->
+                <div id="packages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Cards will be injected here via JavaScript -->
+                </div>
+                
+                <!-- Show More Button -->
+                <div id="show-more-container" class="mt-12 text-center hidden">
+                    <button id="show-more-btn" class="inline-flex items-center gap-3 bg-dark-card/80 backdrop-blur-md border border-dark-border hover:border-brand-500 hover:bg-brand-500/10 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 group shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                        <span>Show More Packages</span>
+                        <i class="fa-solid fa-chevron-down group-hover:translate-y-1 transition-transform"></i>
+                    </button>
+                </div>
+
+                <!-- No Results Message -->
+                <div id="no-results" class="hidden text-center py-12">
+                    <i class="fa-solid fa-box-open text-4xl text-gray-600 mb-4"></i>
+                    <h3 class="text-xl font-medium text-gray-400">No packages found</h3>
+                    <p class="text-gray-500 mt-2">Try adjusting your search or filters.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="apps" class="py-20 relative z-10 bg-[#161616] border-t border-dark-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">How to Use Our Configs</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Download the required application for your device to import our VPN configurations and enjoy premium high-speed internet.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Windows PC -->
+                    <div class="glass-card rounded-2xl p-8 flex flex-col items-center text-center group bg-[#1a1a1a]">
+                        <div class="relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-700 to-blue-900 flex flex-col items-center justify-center shadow-lg shadow-blue-900/20 border border-white/5">
+                                <span class="font-black text-2xl text-white tracking-tighter leading-none mt-1">NM</span>
+                                <span class="text-[9px] text-blue-200 font-bold tracking-widest mt-1">HTTP</span>
+                            </div>
+                            <div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-dark-bg border border-dark-border flex items-center justify-center shadow-md" title="Windows">
+                                <i class="fa-brands fa-windows text-xs text-blue-400"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">NetMod </h3>
+                        <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">Windows PC</p>
+                        <p class="text-gray-500 text-sm mb-6 flex-grow">Use our configurations on your Windows computer.</p>
+                        <div class="w-full flex flex-col gap-3">
+                            <a href="https://sourceforge.net/projects/netmodhttp/" target="_blank" class="w-full py-3 px-4 bg-dark-border hover:bg-gray-700 hover:border-transparent border border-dark-border rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> Download App
+                            </a>
+                            <a href="https://youtu.be/K9kGPvGb0E0" target="_blank" class="w-full py-2.5 px-4 bg-brand-600/10 hover:bg-brand-600 text-brand-400 hover:text-white border border-brand-500/30 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm shadow-[0_0_15px_rgba(239,68,68,0.05)] hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                                <i class="fa-brands fa-youtube text-lg"></i> How to Install App
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Android -->
+                    <div class="glass-card rounded-2xl p-8 flex flex-col items-center text-center group bg-[#1a1a1a]">
+                        <div class="relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-green-700 to-green-900 flex flex-col items-center justify-center shadow-lg shadow-green-900/20 border border-white/5">
+                                <span class="font-black text-2xl text-white tracking-tighter leading-none mt-1">NM</span>
+                                <span class="text-[9px] text-green-200 font-bold tracking-widest mt-1">SYNA</span>
+                            </div>
+                            <div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-dark-bg border border-dark-border flex items-center justify-center shadow-md" title="Android">
+                                <i class="fa-brands fa-android text-xs text-green-500"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">NetMod </h3>
+                        <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">Android</p>
+                        <p class="text-gray-500 text-sm mb-6 flex-grow">Get the app for your Android smartphone or tablet.</p>
+                        <div class="w-full flex flex-col gap-3">
+                            <a href="https://play.google.com/store/apps/details?id=com.netmod.syna&pcampaignid=web_share" target="_blank" class="w-full py-3 px-4 bg-dark-border hover:bg-gray-700 hover:border-transparent border border-dark-border rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> Download App
+                            </a>
+                            <a href="https://youtu.be/IwqjGQw6xmk" target="_blank" class="w-full py-2.5 px-4 bg-brand-600/10 hover:bg-brand-600 text-brand-400 hover:text-white border border-brand-500/30 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm shadow-[0_0_15px_rgba(239,68,68,0.05)] hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                                <i class="fa-brands fa-youtube text-lg"></i> How to Install App
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- iPhone -->
+                    <div class="glass-card rounded-2xl p-8 flex flex-col items-center text-center group bg-[#1a1a1a]">
+                        <div class="relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-700 to-purple-900 flex flex-col items-center justify-center shadow-lg shadow-purple-900/20 border border-white/5">
+                                <i class="fa-solid fa-infinity text-3xl text-white mb-1"></i>
+                                <span class="text-[9px] text-purple-200 font-bold tracking-widest">NPV</span>
+                            </div>
+                            <div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-dark-bg border border-dark-border flex items-center justify-center shadow-md" title="iOS">
+                                <i class="fa-brands fa-apple text-xs text-gray-300"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">NPV Tunnel</h3>
+                        <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">iPhone / iOS</p>
+                        <p class="text-gray-500 text-sm mb-6 flex-grow">Install from the App Store for your iOS device.</p>
+                        <div class="w-full flex flex-col gap-3">
+                            <a href="https://apps.apple.com/us/app/npv-tunnel/id1629465476" target="_blank" class="w-full py-3 px-4 bg-dark-border hover:bg-gray-700 hover:border-transparent border border-dark-border rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> Download App
+                            </a>
+                            <a href="https://youtu.be/GcYkA3CQ1uY" target="_blank" class="w-full py-2.5 px-4 bg-brand-600/10 hover:bg-brand-600 text-brand-400 hover:text-white border border-brand-500/30 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm shadow-[0_0_15px_rgba(239,68,68,0.05)] hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                                <i class="fa-brands fa-youtube text-lg"></i> How to Install App
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- MacBook -->
+                    <div class="glass-card rounded-2xl p-8 flex flex-col items-center text-center group bg-[#1a1a1a]">
+                        <div class="relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-700 to-indigo-900 flex items-center justify-center shadow-lg shadow-indigo-900/20 border border-white/5">
+                                <i class="fa-solid fa-shield-halved text-4xl text-white"></i>
+                            </div>
+                            <div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-dark-bg border border-dark-border flex items-center justify-center shadow-md" title="macOS">
+                                <i class="fa-solid fa-laptop text-xs text-gray-300"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">Fair VPN</h3>
+                        <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">MacBook / macOS</p>
+                        <p class="text-gray-500 text-sm mb-6 flex-grow">Setup our configurations easily on your macOS.</p>
+                        <div class="w-full flex flex-col gap-3">
+                            <a href="https://apps.apple.com/us/app/fair-vpn/id1533873488" target="_blank" class="w-full py-3 px-4 bg-dark-border hover:bg-gray-700 hover:border-transparent border border-dark-border rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> Download App
+                            </a>
+                            <a href="https://youtu.be/GcYkA3CQ1uY" target="_blank" class="w-full py-2.5 px-4 bg-brand-600/10 hover:bg-brand-600 text-brand-400 hover:text-white border border-brand-500/30 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm shadow-[0_0_15px_rgba(239,68,68,0.05)] hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                                <i class="fa-brands fa-youtube text-lg"></i> How to Install App
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#121212] border-t border-dark-border pt-12 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="vex.jpg" alt="VexoracLabs Logo" class="w-8 h-8 rounded-lg object-cover" onerror="this.outerHTML=`<div class='w-8 h-8 rounded-lg bg-gradient-to-br from-brand-600 to-brand-900 flex items-center justify-center text-white font-bold text-sm'>V</div>`">
+                        <span class="font-bold text-xl text-white">Vexora Labs</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
+                        Your trusted provider for premium Canva accounts and high-speed VPN configurations in Sri Lanka. Fast delivery and reliable support.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a href="https://www.tiktok.com/@vexora_lab?_r=1&_t=ZS-9AT9QMRMRku" class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:bg-brand-500 hover:text-white hover:border-transparent transition-all shadow-lg" title="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.facebook.com/share/1FaZW1dVMD/" class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:bg-[#1877F2] hover:text-white hover:border-transparent transition-all shadow-lg" title="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="https://instagram.com/vexora_labss?cplk=MWQ4Znk3cWp0bjgzeg%3D%3D" class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:bg-[#E4405F] hover:text-white hover:border-transparent transition-all shadow-lg" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/94727397294" target="_blank" class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent transition-all shadow-lg" title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:bg-[#229ED9] hover:text-white hover:border-transparent transition-all shadow-lg" title="Telegram">
+                            <i class="fa-brands fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#canva" class="text-gray-400 hover:text-white transition-colors">Canva Pro Deals</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors">Data Plans</a></li>
+                        <li><a href="#vpn" class="text-gray-400 hover:text-white transition-colors">VPN Configs</a></li>
+                        <li><a href="#apps" class="text-gray-400 hover:text-white transition-colors">Setup & Apps Guide</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-brands fa-whatsapp text-brand-500 mt-0.5 text-lg"></i>
+                            <div>
+                                <p class="text-white font-medium">+94 72 739 7294</p>
+                                <p class="text-gray-400 text-xs mt-1">Available for WhatsApp support</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="https://wa.me/94727397294" target="_blank" class="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-white text-sm transition-all">
+                        <i class="fa-solid fa-headset"></i> Chat with Support
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2026 Vexora Labs. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="plan-modal" class="fixed inset-0 z-[100] pointer-events-none opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+            <div id="modal-content" class="relative bg-dark-card border border-dark-border rounded-2xl text-left overflow-hidden shadow-[0_0_40px_rgba(220,38,38,0.15)] transform scale-95 transition-transform duration-300 sm:my-8 sm:max-w-2xl w-full flex flex-col max-h-[90vh]">
+                
+                <!-- Modal Header -->
+                <div class="px-6 py-5 border-b border-dark-border flex justify-between items-center bg-[#121212]">
+                    <div>
+                        <h3 class="text-xl font-bold text-white" id="modal-config-name">Select Data Plan</h3>
+                        <p class="text-sm text-gray-400 mt-1" id="modal-config-network">Choose a package for your configuration</p>
+                    </div>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="px-6 py-6 overflow-y-auto custom-scrollbar bg-[#161616]">
+                    
+                    <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-brand-500"></i> Popular Packages
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8" id="popular-plans-container">
+                        <!-- Popular plans injected via JS -->
+                    </div>
+
+                    <h4 class="text-gray-400 font-semibold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle text-gray-500"></i> Optional Packages
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="optional-plans-container">
+                        <!-- Optional plans injected via JS -->
+                    </div>
+
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="px-6 py-5 border-t border-dark-border bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="text-center sm:text-left">
+                        <p class="text-gray-400 text-sm">Total Price</p>
+                        <p class="text-2xl font-bold text-white" id="modal-total-price">0 LKR</p>
+                    </div>
+                    <button id="modal-checkout-btn" disabled class="w-full sm:w-auto bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-lg flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> Continue to WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Business WhatsApp Number
+        const WHATSAPP_NUMBER = "94727397294";
+        
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // WhatsApp Ordering Function
+        function orderViaWhatsApp(itemName, price) {
+            let message = `Hello Vexora Labs! 🚀\n\nI am interested in purchasing:\n*${itemName}*\n\n`;
+            if (price && price !== "TBA") {
+                message += `Price listed: ${price}\n\n`;
+            }
+            message += `Please let me know how to proceed with the payment. Thank you!`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+        }
+
+        /* 
+         * DATA PACKAGES 
+         */
+        const dataPlans = {
+            popular: [
+                { id: "p1", gb: "100 GB", price: "150 LKR" },
+                { id: "p2", gb: "250 GB", price: "250 LKR", badge: "Best Value", badgeColor: "bg-brand-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-brand-400/60" },
+                { id: "p3", gb: "400 GB", price: "350 LKR" },
+                { id: "p4", gb: "UNLIMITED", price: "500 LKR", badge: "Pro", badgeColor: "bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.6)] border border-white", icon: "fa-infinity" }
+            ],
+            optional: [
+                { id: "o1", gb: "150 GB", price: "190 LKR" },
+                { id: "o2", gb: "300 GB", price: "290 LKR" },
+                { id: "o3", gb: "500 GB", price: "390 LKR" }
+            ]
+        };
+
+        /* 
+         * VPN PACKAGES DATA
+         */
+        const vpnPackages = [
+            // AIRTEL
+            { network: "Airtel", name: "AIRTEL 135/260 YOUTUBE" },
+            { network: "Airtel", name: "AIRTEL 135/260 YOUTUBE SRI LANKAN IP", hasSLIP: true },
+            { network: "Airtel", name: "AIRTEL TIKTOK 297/997" },
+            { network: "Airtel", name: "AIRTEL TIKTOK 297/997 SRI LANKAN IP", hasSLIP: true },
+            { network: "Airtel", name: "AIRTEL ZOOM 215" },
+            { network: "Airtel", name: "AIRTEL ZOOM 215 SRI LANKAN IP", hasSLIP: true },
+            
+            // DIALOG
+            { network: "Dialog", name: "DIALOG SIM VIDEO CONFERENCING 724" },
+            { network: "Dialog", name: "DIALOG SIM VIDEO CONFERENCING 724 SRI LANKAN IP", hasSLIP: true },
+            { network: "Dialog", name: "DIALOG SOCIAL MEDIA 348/488" },
+            { network: "Dialog", name: "DIALOG SOCIAL MEDIA 348/488 SRI LANKAN IP", hasSLIP: true },
+            { network: "Dialog", name: "DIALOG TIKTOK 297/997 (MOBILE SIM)" },
+            { network: "Dialog", name: "DIALOG TIKTOK 297/997 (MOBILE SIM) SRI LANKAN IP", hasSLIP: true },
+            { network: "Dialog", name: "DIALOG ZOOM 298/724 (ROUTER)" },
+            { network: "Dialog", name: "DIALOG ZOOM 298/724 (ROUTER) SRI LANKAN IP", hasSLIP: true },
+            
+            // HUTCH
+            { network: "Hutch", name: "HUTCH ZOOM 224" },
+            { network: "Hutch", name: "HUTCH ZOOM 224 SRI LANKAN IP", hasSLIP: true },
+            
+            // MOBITEL
+            { network: "Mobitel", name: "MOBITEL ZOOM (Android Only, IP Hunt Needed)" },
+            { network: "Mobitel", name: "MOBITEL ZOOM SRI LANKAN IP (Android Only, IP Hunt)", hasSLIP: true },
+            
+            // SLT
+            { network: "SLT", name: "SLT NETFLIX (Fibre, 4G, ADSL)" },
+            { network: "SLT", name: "SLT NETFLIX (Fibre, 4G, ADSL) SRI LANKAN IP", hasSLIP: true },
+            { network: "SLT", name: "SLT ZOOM (Fibre, 4G, ADSL)" },
+            { network: "SLT", name: "SLT ZOOM (Fibre, 4G, ADSL) SRI LANKAN IP", hasSLIP: true },
+            { network: "SLT", name: "SLT ZOOM PREPAID 235" },
+            { network: "SLT", name: "SLT ZOOM PREPAID 235 (Fibre, 4G, ADSL) SRI LANKAN IP", hasSLIP: true }
+        ];
+
+        // UI Elements
+        const gridContainer = document.getElementById('packages-grid');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const noResults = document.getElementById('no-results');
+        const showMoreContainer = document.getElementById('show-more-container');
+        const showMoreBtn = document.getElementById('show-more-btn');
+        
+        // Modal Elements
+        const modal = document.getElementById('plan-modal');
+        const modalConfigName = document.getElementById('modal-config-name');
+        const modalConfigNetwork = document.getElementById('modal-config-network');
+        const popularContainer = document.getElementById('popular-plans-container');
+        const optionalContainer = document.getElementById('optional-plans-container');
+        const totalPriceEl = document.getElementById('modal-total-price');
+        const checkoutBtn = document.getElementById('modal-checkout-btn');
+        
+        // Pagination Limits
+        const INITIAL_LIMIT = 4;
+        const INCREMENT = 4;
+        let currentLimit = INITIAL_LIMIT;
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let activeConfigForCheckout = null;
+        let activePlanForCheckout = null;
+
+        const networkColors = {
+            'Airtel': 'bg-red-500/10 text-red-400 border-red-500/30',
+            'Dialog': 'bg-red-600/10 text-red-500 border-red-600/30',
+            'Hutch': 'bg-orange-500/10 text-orange-400 border-orange-500/30',
+            'Mobitel': 'bg-green-500/10 text-green-400 border-green-500/30',
+            'SLT': 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+        };
+
+        function renderPackages() {
+            gridContainer.innerHTML = '';
+            
+            const filteredData = vpnPackages.filter(pkg => {
+                const matchesFilter = currentFilter === 'all' || pkg.network === currentFilter;
+                const matchesSearch = pkg.name.toLowerCase().includes(currentSearch.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filteredData.length === 0) {
+                noResults.classList.remove('hidden');
+                showMoreContainer.classList.add('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                
+                // Get the subset based on current limit
+                const paginatedData = filteredData.slice(0, currentLimit);
+                
+                paginatedData.forEach((pkg, index) => {
+                    const colorClass = networkColors[pkg.network] || 'bg-gray-500/10 text-gray-400 border-gray-500/30';
+                    const hasSLIPBadge = pkg.hasSLIP ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-brand-500/10 text-brand-400 border border-brand-500/30 mt-2"><i class="fa-solid fa-location-dot mr-1 text-[10px]"></i> SL IP</span>` : '';
+                    
+                    const card = document.createElement('div');
+                    card.className = 'glass-card rounded-xl p-5 flex flex-col h-full cursor-pointer hover:border-brand-500 transition-all group bg-[#1a1a1a]';
+                    card.onclick = () => openModal(pkg);
+                    
+                    card.innerHTML = `
+                        <div class="mb-4 flex justify-between items-start">
+                            <span class="inline-block px-2.5 py-1 rounded-md text-xs font-bold border uppercase tracking-wider ${colorClass}">
+                                ${pkg.network}
+                            </span>
+                        </div>
+                        <h3 class="text-white font-bold text-lg leading-tight mb-2 flex-grow group-hover:text-brand-400 transition-colors">${pkg.name}</h3>
+                        ${hasSLIPBadge}
+                        <div class="mt-6 pt-4 border-t border-dark-border flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-xs uppercase tracking-wider font-semibold mb-1">Plans start from</p>
+                                <p class="text-white font-bold text-lg">150 LKR</p>
+                            </div>
+                            <button class="px-4 py-2 rounded-lg bg-brand-600/10 text-brand-400 border border-brand-500/30 group-hover:bg-brand-600 group-hover:text-white transition-all text-sm font-semibold">
+                                Select Plan
+                            </button>
+                        </div>
+                    `;
+                    gridContainer.appendChild(card);
+                });
+
+                // Toggle "Show More / Show Less" button state
+                if (filteredData.length <= INITIAL_LIMIT) {
+                    showMoreContainer.classList.add('hidden');
+                } else {
+                    showMoreContainer.classList.remove('hidden');
+                    if (currentLimit >= filteredData.length) {
+                        showMoreBtn.innerHTML = `
+                            <span>Show Less Packages</span>
+                            <i class="fa-solid fa-chevron-up group-hover:-translate-y-1 transition-transform"></i>
+                        `;
+                    } else {
+                        showMoreBtn.innerHTML = `
+                            <span>Show More Packages</span>
+                            <i class="fa-solid fa-chevron-down group-hover:translate-y-1 transition-transform"></i>
+                        `;
+                    }
+                }
+            }
+        }
+        // Modal Functions
+        function generatePlanHTML(plan) {
+            const badgeHTML = plan.badge ? `<span class="absolute -top-2.5 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full ${plan.badgeColor} shadow-md z-20">${plan.badge}</span>` : '';
+            const iconHTML = plan.icon ? `<i class="fa-solid ${plan.icon} text-lg mb-1 block"></i>` : '';
+            
+            return `
+                <label class="relative block cursor-pointer group h-full mt-2 sm:mt-0">
+                    <input type="radio" name="dataplan" value="${plan.id}" class="peer sr-only plan-radio" onchange="selectPlan('${plan.gb}', '${plan.price}')">
+                    ${badgeHTML}
+                    <div class="h-full rounded-xl border border-dark-border bg-dark-bg p-4 hover:border-gray-500 transition-all relative overflow-hidden flex flex-col items-center justify-center text-center">
+                        <div class="absolute top-3 left-3 w-5 h-5 rounded-full border-2 border-gray-600 flex items-center justify-center peer-checked:border-brand-500">
+                            <div class="w-2.5 h-2.5 rounded-full bg-brand-500 opacity-0 transform scale-0 transition-all check-icon"></div>
+                        </div>
+                        <div class="mt-2">
+                            ${iconHTML}
+                            <span class="block text-lg font-bold text-white tracking-wide">${plan.gb}</span>
+                            <span class="block text-sm font-medium text-gray-400 mt-1 plan-price transition-colors">${plan.price}</span>
+                        </div>
+                    </div>
+                </label>
+            `;
+        }
+
+        function openModal(pkg) {
+            activeConfigForCheckout = pkg.name;
+            activePlanForCheckout = null;
+            
+            modalConfigName.textContent = pkg.name;
+            modalConfigNetwork.textContent = `${pkg.network} Network • Singapore Server`;
+            totalPriceEl.textContent = "0 LKR";
+            
+            checkoutBtn.disabled = true;
+            checkoutBtn.classList.remove('animate-pulse');
+
+            // Render Plans
+            popularContainer.innerHTML = dataPlans.popular.map(generatePlanHTML).join('');
+            optionalContainer.innerHTML = dataPlans.optional.map(generatePlanHTML).join('');
+            
+            modal.classList.remove('pointer-events-none');
+            // Trigger animation
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('modal-content').classList.remove('scale-95');
+                document.getElementById('modal-content').classList.add('scale-100');
+            }, 10);
+            
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            document.getElementById('modal-content').classList.remove('scale-100');
+            document.getElementById('modal-content').classList.add('scale-95');
+            
+            // Wait for animation to finish before disabling interactions
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+                document.body.classList.remove('modal-open');
+            }, 300);
+        }
+
+        function selectPlan(gb, price) {
+            activePlanForCheckout = { gb, price };
+            totalPriceEl.textContent = price;
+            
+            // Enable and highlight checkout button
+            checkoutBtn.disabled = false;
+        }
+
+        // Handle specific modal checkout
+        checkoutBtn.addEventListener('click', () => {
+            if (!activeConfigForCheckout || !activePlanForCheckout) return;
+            
+            const message = `Hello Vexora Labs! 🚀\n\nI want to buy a VPN Configuration:\n\n` +
+                            `📡 *Network Config:* ${activeConfigForCheckout}\n` +
+                            `📦 *Data Plan:* ${activePlanForCheckout.gb}\n` +
+                            `💰 *Price:* ${activePlanForCheckout.price}\n\n` +
+                            `Please let me know how to proceed with the payment.`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+        });
+
+        // Event Listeners for Filters
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Update active state
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-brand-600', 'text-white', 'border-transparent');
+                    b.classList.add('bg-dark-card', 'text-gray-400', 'border-dark-border');
+                });
+                
+                const target = e.target;
+                target.classList.remove('bg-dark-card', 'text-gray-400', 'border-dark-border');
+                target.classList.add('active', 'bg-brand-600', 'text-white', 'border-transparent');
+                
+                currentFilter = target.getAttribute('data-filter');
+                currentLimit = INITIAL_LIMIT; // Reset pagination limit when filter changes
+                renderPackages();
+            });
+        });
+
+        // Event Listener for Search
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            currentLimit = INITIAL_LIMIT; // Reset pagination limit when search changes
+            renderPackages();
+        });
+
+        // Event Listener for Show More / Show Less Button
+        showMoreBtn.addEventListener('click', () => {
+            // Count total matching packages for current filter/search
+            const totalMatching = vpnPackages.filter(pkg => {
+                const matchesFilter = currentFilter === 'all' || pkg.network === currentFilter;
+                const matchesSearch = pkg.name.toLowerCase().includes(currentSearch.toLowerCase());
+                return matchesFilter && matchesSearch;
+            }).length;
+            
+            if (currentLimit >= totalMatching) {
+                // If all are shown, reset to initial limit and scroll up
+                currentLimit = INITIAL_LIMIT;
+                document.getElementById('vpn').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Otherwise, load more
+                currentLimit += INCREMENT;
+            }
+            renderPackages();
+        });
+
+        // Initial Render
+        renderPackages();
+        
+    </script>
+</body>
+</html>
