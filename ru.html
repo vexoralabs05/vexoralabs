@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexora Labs Россия | Высокоскоростной V2Ray VPN и Настройка</title>
+    <meta name="description" content="Надежный и быстрый V2Ray VPN (VLESS, VMess, Trojan, Reality) для России. Обход блокировок YouTube, Discord, Instagram, ChatGPT и Gemini AI на высокой скорости.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23dc2626'/%3E%3Cpath d='M30 30 L50 72 L70 30' stroke='white' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            900: '#7f1d1d',
+                            950: '#450a0a'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --bg: #09090b;
+            --surface: #111116;
+            --surface-2: #14141f;
+            --line: #1e1e2a;
+            --brand: #ef4444;
+            --brand-strong: #dc2626;
+        }
+        html { scroll-padding-top: 5.5rem; }
+        body {
+            background-color: var(--bg);
+            color: #e5e7eb;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+        ::selection { background: rgba(239, 68, 68, .35); color: #fff; }
+        
+        /* Background Grid */
+        .bg-grid {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+            background-size: 44px 44px;
+            background-position: -1px -1px;
+        }
+
+        /* Glass Header */
+        .glass-header {
+            background: rgba(9, 9, 11, .82);
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(30, 30, 42, .7);
+        }
+
+        .nav-link { position: relative; padding: .25rem 0; }
+        .nav-link::after {
+            content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px;
+            background: var(--brand); border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+        }
+        .nav-link:hover::after { transform: scaleX(1); }
+
+        /* Vexora Card */
+        .vx-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 1rem;
+            position: relative;
+            transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+        }
+        .vx-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: 1rem 1rem 0 0;
+            background: linear-gradient(90deg, transparent, var(--brand), transparent); opacity: 0; transition: opacity .3s ease; pointer-events: none;
+        }
+        .vx-card:hover {
+            border-color: rgba(239, 68, 68, .35);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 50px rgba(239, 68, 68, .08);
+        }
+        .vx-card:hover::before { opacity: 1; }
+
+        /* Hero Text Gradient */
+        .text-gradient-hero {
+            background: linear-gradient(95deg, #f87171 0%, #ef4444 45%, #a855f7 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        /* Glow Orbs & Particles */
+        .glow-orb {
+            position: absolute; border-radius: 9999px; filter: blur(90px); pointer-events: none;
+            animation: orb 14s ease-in-out infinite;
+        }
+        .hero-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .particle {
+            position: absolute; bottom: -10px; border-radius: 9999px; background: rgba(248, 113, 113, .55);
+            box-shadow: 0 0 8px rgba(239, 68, 68, .6); animation: rise linear infinite; opacity: 0;
+        }
+
+        .section-glow-top { position: relative; }
+        .section-glow-top::before {
+            content: ''; position: absolute; top: 0; left: 50%; width: min(70%, 700px); height: 1px; transform: translateX(-50%);
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, .5), transparent); pointer-events: none;
+        }
+
+        /* Marquee Strip */
+        .logo-strip-container {
+            position: relative; overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+        }
+        .telecom-logo-strip {
+            display: flex; align-items: center; gap: 3.5rem; width: max-content;
+            animation: strip 30s linear infinite; padding: .5rem 0;
+        }
+        .logo-strip-container:hover .telecom-logo-strip { animation-play-state: paused; }
+
+        @keyframes orb { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(18px, -22px, 0) scale(1.06); } }
+        @keyframes rise { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: .9; } 100% { transform: translateY(-95vh); opacity: 0; } }
+        @keyframes strip { to { transform: translateX(-50%); } }
+
+        /* Mobile Responsive Enhancements */
+        @media (max-width: 640px) {
+            .vx-card:hover { transform: none; }
+            .glow-orb { opacity: 0.5; filter: blur(70px); }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-grid overflow-x-hidden">
+
+    <!-- ═══════════════ НАВИГАЦИЯ (HEADER) ═══════════════ -->
+    <header class="sticky top-0 z-50 glass-header">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-[68px] sm:h-[72px]">
+
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-brand-500 via-brand-600 to-brand-900 flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-lg shadow-brand-500/20 border border-brand-400/20 group-hover:scale-105 transition-transform">
+                        V
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-lg sm:text-xl tracking-tight text-white block leading-none">Vexora Labs</span>
+                        <span class="text-[8px] sm:text-[9px] font-mono uppercase tracking-[0.18em] text-brand-400 font-bold" data-i18n="brand_sub">VPN Сервис • Россия</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden lg:flex items-center space-x-6">
+                    <a href="#home" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white transition-colors" data-i18n="nav_home">Главная</a>
+                    <a href="#packages" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white transition-colors" data-i18n="nav_packages">Тарифы VPN</a>
+                    <a href="#features" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white transition-colors" data-i18n="nav_features">Преимущества</a>
+                    <a href="#setup" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white transition-colors" data-i18n="nav_setup">Установка</a>
+                    <a href="#about" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white transition-colors" data-i18n="nav_about">О нас</a>
+                    <a href="#contact" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white transition-colors" data-i18n="nav_contact">Контакты</a>
+                </nav>
+
+                <!-- Language Toggle + CTA + Mobile Button -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- RU / EN Language Switcher Button -->
+                    <button id="lang-toggle-btn" onclick="toggleLanguage()" type="button"
+                            class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#14141f] hover:bg-[#1f1f30] border border-[#2a2a3c] hover:border-brand-500/50 text-xs font-bold text-white transition-all shadow-sm"
+                            title="Switch Language / Сменить язык">
+                        <i class="fa-solid fa-earth-americas text-brand-400 text-sm"></i>
+                        <span id="lang-btn-label" class="font-mono tracking-wider">EN</span>
+                    </button>
+
+                    <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="hidden md:flex bg-brand-600 hover:bg-brand-500 text-white px-4 lg:px-5 py-2.5 rounded-xl text-xs lg:text-sm font-semibold transition-all shadow-lg shadow-brand-600/25 items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="nav_cta">Заказать в WhatsApp</span>
+                    </a>
+                    <button id="mobile-menu-btn" class="lg:hidden p-2.5 text-gray-300 hover:text-white bg-[#111116] border border-[#1e1e2a] rounded-xl" aria-label="Меню">
+                        <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#0c0c10]/95 backdrop-blur-xl border-b border-[#1e1e2a] px-4 py-5 space-y-2">
+            <a href="#home" class="mobile-link block px-4 py-3 rounded-xl font-medium text-white bg-white/5 border border-white/10 text-sm" data-i18n="nav_home">Главная</a>
+            <a href="#packages" class="mobile-link block px-4 py-3 rounded-xl font-medium text-gray-300 hover:text-white hover:bg-white/5 text-sm" data-i18n="nav_packages">Тарифы VPN</a>
+            <a href="#features" class="mobile-link block px-4 py-3 rounded-xl font-medium text-gray-300 hover:text-white hover:bg-white/5 text-sm" data-i18n="nav_features">Преимущества</a>
+            <a href="#setup" class="mobile-link block px-4 py-3 rounded-xl font-medium text-gray-300 hover:text-white hover:bg-white/5 text-sm" data-i18n="nav_setup">Установка</a>
+            <a href="#about" class="mobile-link block px-4 py-3 rounded-xl font-medium text-gray-300 hover:text-white hover:bg-white/5 text-sm" data-i18n="nav_about">О нас</a>
+            <a href="#contact" class="mobile-link block px-4 py-3 rounded-xl font-medium text-gray-300 hover:text-white hover:bg-white/5 text-sm" data-i18n="nav_contact">Контакты</a>
+            <div class="pt-2 flex flex-col sm:flex-row gap-2">
+                <button onclick="toggleLanguage()" type="button" class="w-full py-3 bg-[#161622] border border-[#2a2a3c] text-white text-center rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-language text-brand-400"></i> <span id="mobile-lang-label">Switch to English (EN)</span>
+                </button>
+                <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-emerald-600 text-white text-center rounded-xl font-bold text-sm">
+                    <i class="fa-brands fa-whatsapp mr-1"></i> <span data-i18n="nav_cta">Заказать в WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- ═══════════════ ГЛАВНЫЙ ЭКРАН (HERO) ═══════════════ -->
+        <section id="home" class="relative min-h-[82vh] sm:min-h-[88vh] flex items-center justify-center overflow-hidden">
+            <div id="hero-particles" class="hero-particles"></div>
+
+            <!-- Glow Orbs -->
+            <div class="glow-orb w-[320px] sm:w-[600px] h-[260px] sm:h-[400px] bg-brand-600/20 top-[-10%] left-[10%] sm:left-[20%]"></div>
+            <div class="glow-orb w-[280px] sm:w-[500px] h-[240px] sm:h-[350px] bg-purple-600/10 bottom-[5%] right-[5%] sm:right-[10%]" style="animation-delay: 4s;"></div>
+            <div class="glow-orb w-[220px] sm:w-[300px] h-[220px] sm:h-[300px] bg-blue-600/10 top-[40%] left-[-5%]" style="animation-delay: 8s;"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-12 sm:py-16">
+
+                <!-- Pill Badge -->
+                <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-[11px] sm:text-sm font-semibold mb-6 sm:mb-8 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+                    <span data-i18n="hero_badge">СВОБОДНЫЙ ИНТЕРНЕТ БЕЗ ОГРАНИЧЕНИЙ И ЗАМЕДЛЕНИЙ</span>
+                </div>
+
+                <!-- Hero Title -->
+                <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-black tracking-tight leading-[1.12] sm:leading-[1.08] mb-5 sm:mb-6">
+                    <span class="text-white block" data-i18n="hero_title_1">Высокоскоростной VPN</span>
+                    <span class="text-gradient-hero block mt-1" data-i18n="hero_title_2">Нового Поколения с Vexora Labs</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="max-w-3xl mx-auto text-sm sm:text-lg lg:text-xl text-gray-400 mb-8 sm:mb-10 leading-relaxed px-1" data-i18n="hero_subtitle">
+                    Приватные конфигурации <strong>V2Ray (VLESS / VMess / Trojan / Reality)</strong>. Смотрите <strong>YouTube в 4K</strong> без замедления, общайтесь в <strong>Discord</strong>, пользуйтесь Instagram, ChatGPT и Google Gemini AI на максимальной скорости вашего провайдера.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center mb-12 sm:mb-16">
+                    <a href="#packages" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-2xl font-bold text-sm sm:text-base transition-all shadow-[0_0_30px_rgba(239,68,68,0.3)] hover:shadow-[0_0_40px_rgba(239,68,68,0.5)] flex items-center justify-center gap-2.5">
+                        <i class="fa-solid fa-bolt"></i> <span data-i18n="hero_btn_1">Выбрать тариф (от 120 ₽)</span>
+                    </a>
+                    <a href="#setup" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[#111118] hover:bg-[#18182a] text-white border border-[#2a2a3c] rounded-2xl font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2.5">
+                        <i class="fa-solid fa-download text-brand-400"></i> <span data-i18n="hero_btn_2">Инструкция и Приложения</span>
+                    </a>
+                    <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/30 rounded-2xl font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2.5">
+                        <i class="fa-brands fa-whatsapp"></i> <span data-i18n="hero_btn_3">Быстрый заказ</span>
+                    </a>
+                </div>
+
+                <!-- Stats Counters -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+                    <div class="vx-card p-4 sm:p-5 text-center">
+                        <div class="text-2xl sm:text-4xl font-black text-white mb-1" data-i18n="stat_1_val">10 Гбит/с</div>
+                        <div class="text-[10px] sm:text-[11px] font-semibold text-gray-500 uppercase tracking-wider" data-i18n="stat_1_lbl">Канал Серверов</div>
+                    </div>
+                    <div class="vx-card p-4 sm:p-5 text-center">
+                        <div class="text-2xl sm:text-4xl font-black text-emerald-400 mb-1">99.98%</div>
+                        <div class="text-[10px] sm:text-[11px] font-semibold text-gray-500 uppercase tracking-wider" data-i18n="stat_2_lbl">Стабильность (Uptime)</div>
+                    </div>
+                    <div class="vx-card p-4 sm:p-5 text-center">
+                        <div class="text-2xl sm:text-4xl font-black text-brand-400 mb-1" data-i18n="stat_3_val">&lt;40 мс</div>
+                        <div class="text-[10px] sm:text-[11px] font-semibold text-gray-500 uppercase tracking-wider" data-i18n="stat_3_lbl">Низкий Пинг в Играх</div>
+                    </div>
+                    <div class="vx-card p-4 sm:p-5 text-center">
+                        <div class="text-2xl sm:text-4xl font-black text-white mb-1">24/7</div>
+                        <div class="text-[10px] sm:text-[11px] font-semibold text-gray-500 uppercase tracking-wider" data-i18n="stat_4_lbl">Поддержка в WhatsApp</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══════════════ БЕГУЩАЯ СТРОКА СЕРВИСОВ ═══════════════ -->
+        <section class="py-6 sm:py-8 bg-[#0c0c10] border-y border-[#1a1a26]">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <p class="text-[10px] sm:text-[11px] uppercase font-bold text-gray-500 tracking-[0.15em] sm:tracking-[0.2em] mb-4 sm:mb-5" data-i18n="strip_title">Работает со всеми провайдерами РФ и открывает доступ к любым сервисам</p>
+                <div class="logo-strip-container">
+                    <div class="telecom-logo-strip text-gray-400 font-bold text-sm sm:text-lg">
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <span data-i18n="strip_yt">YouTube 4K без тормозов</span></span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-discord text-indigo-400"></i> <span data-i18n="strip_dc">Discord + Голосовой чат</span></span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-instagram text-pink-500"></i> Instagram & Meta</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-robot text-emerald-400"></i> ChatGPT & OpenAI</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-brain text-amber-400"></i> Google Gemini AI</span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-spotify text-green-500"></i> Spotify & Netflix</span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-x-twitter text-white"></i> X (Twitter)</span>
+                        <!-- Duplicate for seamless loop -->
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-500"></i> <span data-i18n="strip_yt">YouTube 4K без тормозов</span></span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-discord text-indigo-400"></i> <span data-i18n="strip_dc">Discord + Голосовой чат</span></span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-instagram text-pink-500"></i> Instagram & Meta</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-robot text-emerald-400"></i> ChatGPT & OpenAI</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-brain text-amber-400"></i> Google Gemini AI</span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-spotify text-green-500"></i> Spotify & Netflix</span>
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-x-twitter text-white"></i> X (Twitter)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════ ТАРИФЫ VPN (PACKAGES) ═══════════════ -->
+        <section id="packages" class="py-16 sm:py-20 lg:py-28 section-glow-top">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-500/10 border border-brand-500/25 text-brand-400 inline-block mb-3" data-i18n="pkg_badge">
+                        Официальный прайс-лист
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4" data-i18n="pkg_title">Тарифные Планы VPN по Трафику</h2>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed" data-i18n="pkg_sub">
+                        Никаких привязок к SIM-картам — работает на домашнем Wi-Fi (Ростелеком, Дом.ру, МТС, Билайн и др.) и любом мобильном интернете. Выберите нужный объем гигабайт на 30 дней.
+                    </p>
+                </div>
+
+                <!-- 6 Pricing Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-14 sm:mb-16">
+
+                    <!-- 1. 100 GB - 120 Ruble -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white/5 text-gray-300 border border-white/10" data-i18n="tier_1_tag">Стартовый</span>
+                                <span class="text-xs font-mono text-gray-400" data-i18n="days_30">30 Дней</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-3xl sm:text-4xl font-black text-white" data-i18n="gb_100">100 ГБ</span>
+                                <span class="text-xs text-emerald-400 font-mono">High-Speed</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-6" data-i18n="tier_1_desc">Отличный вариант для ежедневного серфинга, соцсетей, мессенджеров и просмотра видео.</p>
+                            
+                            <ul class="space-y-2.5 text-xs text-gray-300 mb-7">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_dpi">Обход DPI блокировок (VLESS / Reality)</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_social">Доступ к Instagram, Discord, YouTube</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_devices">Работает на ПК, Android, iOS, Mac</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_enc">Шифрование AES-256-GCM</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-[#1e1e2a] pt-5 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] text-gray-500 uppercase block" data-i18n="price_lbl">Стоимость</span>
+                                <span class="text-2xl sm:text-3xl font-black text-white">120 <span class="text-base font-bold text-brand-400">₽</span></span>
+                            </div>
+                            <button onclick="orderVpnPackage('100 GB', '120 RUB (₽)')" class="px-4 sm:px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-lg shadow-brand-600/25 transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="buy_now">Купить сейчас</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. 150 GB - 170 Ruble -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-500/15 text-blue-400 border border-blue-500/30" data-i18n="tier_2_tag">Базовый</span>
+                                <span class="text-xs font-mono text-gray-400" data-i18n="days_30">30 Дней</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-3xl sm:text-4xl font-black text-white" data-i18n="gb_150">150 ГБ</span>
+                                <span class="text-xs text-emerald-400 font-mono">High-Speed</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-6" data-i18n="tier_2_desc">Оптимальный баланс для регулярного просмотра YouTube в Full HD и работы с AI-сервисами.</p>
+                            
+                            <ul class="space-y-2.5 text-xs text-gray-300 mb-7">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_dpi">Обход DPI блокировок (VLESS / Reality)</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_dc">Стабильный голос в Discord без лагов</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_ai">Разблокировка ChatGPT и Gemini AI</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_all_dev">Поддержка всех устройств</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-[#1e1e2a] pt-5 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] text-gray-500 uppercase block" data-i18n="price_lbl">Стоимость</span>
+                                <span class="text-2xl sm:text-3xl font-black text-white">170 <span class="text-base font-bold text-brand-400">₽</span></span>
+                            </div>
+                            <button onclick="orderVpnPackage('150 GB', '170 RUB (₽)')" class="px-4 sm:px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-lg shadow-brand-600/25 transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="buy_now">Купить сейчас</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. 200 GB - 190 Ruble (BEST VALUE) -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between border-brand-500/50 bg-gradient-to-b from-[#171216] to-[#111116] shadow-xl shadow-brand-900/15 relative mt-2 sm:mt-0">
+                        <span class="absolute -top-3.5 right-6 bg-brand-600 text-white text-[10px] font-black uppercase px-3.5 py-1 rounded-full tracking-wider shadow-md" data-i18n="best_seller_badge">
+                            Хит Продаж ⭐
+                        </span>
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-brand-500/20 text-brand-400 border border-brand-500/40" data-i18n="tier_3_tag">Популярный</span>
+                                <span class="text-xs font-mono text-gray-400" data-i18n="days_30">30 Дней</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-3xl sm:text-4xl font-black text-white" data-i18n="gb_200">200 ГБ</span>
+                                <span class="text-xs text-brand-400 font-mono">Best Value</span>
+                            </div>
+                            <p class="text-xs text-gray-300 mb-6" data-i18n="tier_3_desc">Самый выгодный тариф! Всего +20 рублей за дополнительные 50 ГБ высокоскоростного трафика.</p>
+                            
+                            <ul class="space-y-2.5 text-xs text-gray-200 mb-7">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_10g">Приоритетный канал до 10 Гбит/с</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_yt4k">YouTube в 2K / 4K без буферизации</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_ping">Низкий пинг для онлайн-игр</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_zerolog">Полная анонимность (Zero-Logs)</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-brand-500/20 pt-5 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] text-brand-400 uppercase font-bold block" data-i18n="super_price_lbl">Супер Цена</span>
+                                <span class="text-2xl sm:text-3xl font-black text-white">190 <span class="text-base font-bold text-brand-400">₽</span></span>
+                            </div>
+                            <button onclick="orderVpnPackage('200 GB', '190 RUB (₽)')" class="px-4 sm:px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-lg shadow-brand-600/40 transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="buy_now">Купить сейчас</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4. 300 GB - 320 Ruble -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-purple-500/15 text-purple-400 border border-purple-500/30" data-i18n="tier_4_tag">Продвинутый</span>
+                                <span class="text-xs font-mono text-gray-400" data-i18n="days_30">30 Дней</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-3xl sm:text-4xl font-black text-white" data-i18n="gb_300">300 ГБ</span>
+                                <span class="text-xs text-emerald-400 font-mono">High-Speed</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-6" data-i18n="tier_4_desc">Для активных пользователей, геймеров, стриминга фильмов и удаленной работы.</p>
+                            
+                            <ul class="space-y-2.5 text-xs text-gray-300 mb-7">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_fast_dl">Высокая скорость загрузки файлов</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_stream">Стриминг Netflix, Twitch, YouTube 4K</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_hotspot">Раздача VPN через Wi-Fi Хот-спот</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_sup24">Техподдержка 24/7 в WhatsApp</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-[#1e1e2a] pt-5 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] text-gray-500 uppercase block" data-i18n="price_lbl">Стоимость</span>
+                                <span class="text-2xl sm:text-3xl font-black text-white">320 <span class="text-base font-bold text-brand-400">₽</span></span>
+                            </div>
+                            <button onclick="orderVpnPackage('300 GB', '320 RUB (₽)')" class="px-4 sm:px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-lg shadow-brand-600/25 transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="buy_now">Купить сейчас</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 5. 400 GB - 420 Ruble -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/30" data-i18n="tier_5_tag">Гейминг & Про</span>
+                                <span class="text-xs font-mono text-gray-400" data-i18n="days_30">30 Дней</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-3xl sm:text-4xl font-black text-white" data-i18n="gb_400">400 ГБ</span>
+                                <span class="text-xs text-emerald-400 font-mono">High-Speed</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-6" data-i18n="tier_5_desc">Огромный запас трафика для скачивания больших обновлений, игр и тяжелого контента.</p>
+                            
+                            <ul class="space-y-2.5 text-xs text-gray-300 mb-7">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_route">Прямая маршрутизация без потерь пакетов</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_tun">Поддержка TUN-режима для всех игр на ПК</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_ide">Доступ к зарубежным ИИ и IDE без блокировок</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-brand-400 shrink-0"></i> <span data-i18n="feat_instant">Мгновенная выдача ключа</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-[#1e1e2a] pt-5 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] text-gray-500 uppercase block" data-i18n="price_lbl">Стоимость</span>
+                                <span class="text-2xl sm:text-3xl font-black text-white">420 <span class="text-base font-bold text-brand-400">₽</span></span>
+                            </div>
+                            <button onclick="orderVpnPackage('400 GB', '420 RUB (₽)')" class="px-4 sm:px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-lg shadow-brand-600/25 transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="buy_now">Купить сейчас</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 6. UNLIMITED - 1000 Ruble -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between border-emerald-500/40 bg-gradient-to-b from-[#101c16] to-[#111116] relative mt-2 sm:mt-0">
+                        <span class="absolute -top-3.5 right-6 bg-emerald-500 text-black text-[10px] font-black uppercase px-3.5 py-1 rounded-full tracking-wider shadow-md" data-i18n="vip_badge">
+                            VIP Безлимит 👑
+                        </span>
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/40" data-i18n="tier_6_tag">Максимум</span>
+                                <span class="text-xs font-mono text-gray-400" data-i18n="days_30">30 Дней</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-2xl sm:text-4xl font-black text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-infinity text-emerald-400"></i> <span data-i18n="gb_unlim">БЕЗЛИМИТ</span>
+                                </span>
+                            </div>
+                            <p class="text-xs text-gray-300 mb-6" data-i18n="tier_6_desc">Никаких лимитов по гигабайтам! Полная свобода действий 24/7 для самых требовательных задач.</p>
+                            
+                            <ul class="space-y-2.5 text-xs text-gray-200 mb-7">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_unlim_1"><strong>Неограниченный трафик</strong> на максимальной скорости</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_unlim_2">Выделенный VIP-поток без просадок вечером</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_unlim_3">4K / 8K Стриминг, Торренты, Игры</span></li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-check text-emerald-400 shrink-0"></i> <span data-i18n="feat_unlim_4">Персональная VIP-поддержка</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-emerald-500/20 pt-5 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] text-emerald-400 uppercase font-bold block" data-i18n="vip_price_lbl">VIP Тариф</span>
+                                <span class="text-2xl sm:text-3xl font-black text-white">1000 <span class="text-base font-bold text-emerald-400">₽</span></span>
+                            </div>
+                            <button onclick="orderVpnPackage('UNLIMITED', '1000 RUB (₽)')" class="px-4 sm:px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="order_vip">Заказать VIP</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Summary Rate Table (Responsive Table + Mobile Cards) -->
+                <div class="vx-card p-5 sm:p-8 overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+                        <h3 class="text-lg sm:text-xl font-bold text-white" data-i18n="table_title">Сравнительная таблица тарифов</h3>
+                        <span class="text-xs text-gray-400 font-mono" data-i18n="table_sub">Все тарифы действуют 30 дней с момента активации</span>
+                    </div>
+                    <div class="overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0">
+                        <table class="w-full min-w-[580px] text-left text-sm">
+                            <thead class="bg-[#14141d] text-gray-400 text-xs uppercase tracking-wider border-b border-[#242433]">
+                                <tr>
+                                    <th class="py-3.5 px-4 font-semibold" data-i18n="th_plan">Тариф</th>
+                                    <th class="py-3.5 px-4 font-semibold" data-i18n="th_data">Лимит Трафика</th>
+                                    <th class="py-3.5 px-4 font-semibold" data-i18n="th_price">Цена (Рубли)</th>
+                                    <th class="py-3.5 px-4 font-semibold" data-i18n="th_per_gb">Цена за 1 ГБ</th>
+                                    <th class="py-3.5 px-4 font-semibold" data-i18n="th_best">Рекомендация</th>
+                                    <th class="py-3.5 px-4 font-semibold text-right" data-i18n="th_action">Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-[#1e1e2a] text-gray-300 font-medium">
+                                <tr class="hover:bg-white/[0.02]">
+                                    <td class="py-3.5 px-4 font-bold text-white" data-i18n="tier_1_tag">Стартовый</td>
+                                    <td class="py-3.5 px-4 font-mono" data-i18n="gb_100">100 ГБ</td>
+                                    <td class="py-3.5 px-4 font-mono text-brand-400 font-bold">120 ₽</td>
+                                    <td class="py-3.5 px-4 font-mono text-xs text-gray-400">1.20 ₽ / GB</td>
+                                    <td class="py-3.5 px-4 text-xs text-gray-400" data-i18n="tb_rec_1">Соцсети, браузер, музыка</td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <button onclick="orderVpnPackage('100 GB', '120 RUB (₽)')" class="px-3 py-1.5 rounded-lg bg-brand-600/20 text-brand-400 hover:bg-brand-600 hover:text-white text-xs font-bold transition-all" data-i18n="btn_order">Заказать</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-white/[0.02]">
+                                    <td class="py-3.5 px-4 font-bold text-white" data-i18n="tier_2_tag">Базовый</td>
+                                    <td class="py-3.5 px-4 font-mono" data-i18n="gb_150">150 ГБ</td>
+                                    <td class="py-3.5 px-4 font-mono text-brand-400 font-bold">170 ₽</td>
+                                    <td class="py-3.5 px-4 font-mono text-xs text-gray-400">1.13 ₽ / GB</td>
+                                    <td class="py-3.5 px-4 text-xs text-gray-400" data-i18n="tb_rec_2">YouTube 1080p, Discord, AI</td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <button onclick="orderVpnPackage('150 GB', '170 RUB (₽)')" class="px-3 py-1.5 rounded-lg bg-brand-600/20 text-brand-400 hover:bg-brand-600 hover:text-white text-xs font-bold transition-all" data-i18n="btn_order">Заказать</button>
+                                    </td>
+                                </tr>
+                                <tr class="bg-brand-500/5 hover:bg-brand-500/10">
+                                    <td class="py-3.5 px-4 font-bold text-white"><span data-i18n="tier_3_tag">Популярный</span> <span class="ml-1 px-2 py-0.5 text-[10px] bg-brand-600 text-white rounded-full">HOT</span></td>
+                                    <td class="py-3.5 px-4 font-mono font-bold text-white" data-i18n="gb_200">200 ГБ</td>
+                                    <td class="py-3.5 px-4 font-mono text-brand-400 font-bold">190 ₽</td>
+                                    <td class="py-3.5 px-4 font-mono text-xs text-emerald-400 font-bold">0.95 ₽ / GB</td>
+                                    <td class="py-3.5 px-4 text-xs text-gray-300" data-i18n="tb_rec_3">Лучшее соотношение цены и объема</td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <button onclick="orderVpnPackage('200 GB', '190 RUB (₽)')" class="px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-500 text-xs font-bold transition-all" data-i18n="btn_order">Заказать</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-white/[0.02]">
+                                    <td class="py-3.5 px-4 font-bold text-white" data-i18n="tier_4_tag">Продвинутый</td>
+                                    <td class="py-3.5 px-4 font-mono" data-i18n="gb_300">300 ГБ</td>
+                                    <td class="py-3.5 px-4 font-mono text-brand-400 font-bold">320 ₽</td>
+                                    <td class="py-3.5 px-4 font-mono text-xs text-gray-400">1.06 ₽ / GB</td>
+                                    <td class="py-3.5 px-4 text-xs text-gray-400" data-i18n="tb_rec_4">Ежедневный YouTube 4K и работа</td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <button onclick="orderVpnPackage('300 GB', '320 RUB (₽)')" class="px-3 py-1.5 rounded-lg bg-brand-600/20 text-brand-400 hover:bg-brand-600 hover:text-white text-xs font-bold transition-all" data-i18n="btn_order">Заказать</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-white/[0.02]">
+                                    <td class="py-3.5 px-4 font-bold text-white" data-i18n="tier_5_tag">Гейминг & Про</td>
+                                    <td class="py-3.5 px-4 font-mono" data-i18n="gb_400">400 ГБ</td>
+                                    <td class="py-3.5 px-4 font-mono text-brand-400 font-bold">420 ₽</td>
+                                    <td class="py-3.5 px-4 font-mono text-xs text-gray-400">1.05 ₽ / GB</td>
+                                    <td class="py-3.5 px-4 text-xs text-gray-400" data-i18n="tb_rec_5">Онлайн-игры, стримы, загрузки</td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <button onclick="orderVpnPackage('400 GB', '420 RUB (₽)')" class="px-3 py-1.5 rounded-lg bg-brand-600/20 text-brand-400 hover:bg-brand-600 hover:text-white text-xs font-bold transition-all" data-i18n="btn_order">Заказать</button>
+                                    </td>
+                                </tr>
+                                <tr class="bg-emerald-500/5 hover:bg-emerald-500/10">
+                                    <td class="py-3.5 px-4 font-bold text-white" data-i18n="vip_badge">VIP Безлимит 👑</td>
+                                    <td class="py-3.5 px-4 font-mono font-bold text-emerald-400" data-i18n="gb_unlim">БЕЗЛИМИТ</td>
+                                    <td class="py-3.5 px-4 font-mono text-emerald-400 font-bold">1000 ₽</td>
+                                    <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">∞</td>
+                                    <td class="py-3.5 px-4 text-xs text-gray-300" data-i18n="tb_rec_6">Максимальная свобода 24/7</td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <button onclick="orderVpnPackage('UNLIMITED', '1000 RUB (₽)')" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 text-xs font-bold transition-all" data-i18n="btn_order">Заказать</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══════════════ ПРЕИМУЩЕСТВА И ОБХОД БЛОКИРОВОК (FEATURES) ═══════════════ -->
+        <section id="features" class="py-16 sm:py-20 bg-[#0c0c10] border-y border-[#1a1a26]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Geo-Restriction Spotlight -->
+                <div class="vx-card p-6 sm:p-8 md:p-12 border-brand-500/30 bg-gradient-to-br from-[#14141f] via-[#111118] to-[#1a0e10] relative overflow-hidden mb-12 sm:mb-16">
+                    <div class="glow-orb w-64 h-64 bg-brand-600/15 -top-20 -right-20"></div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                        <div class="lg:col-span-8">
+                            <span class="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-widest bg-brand-500/15 text-brand-400 border border-brand-500/30 inline-block mb-4" data-i18n="spot_badge">Обход любых ограничений</span>
+                            <h2 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight" data-i18n="spot_title">
+                                Устали от ошибки <span class="text-brand-400">«Недоступно в вашем регионе»</span> или вечной загрузки YouTube?
+                            </h2>
+                            <p class="text-gray-300 text-xs sm:text-base leading-relaxed mb-6" data-i18n="spot_desc">
+                                Обычные VPN-протоколы (OpenVPN, WireGuard) легко блокируются системами ТСПУ и DPI. <strong>Vexora Labs</strong> использует передовые протоколы <strong>V2Ray (VLESS, VMess, Trojan, XTLS-Reality)</strong>, которые маскируют ваш трафик под обычный HTTPS-сайт, обеспечивая 100% стабильное соединение без потери скорости.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 rounded-lg bg-[#09090b] border border-[#1e1e2a] text-xs font-semibold text-gray-200"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> YouTube 4K 60fps</span>
+                                <span class="px-3 py-1.5 rounded-lg bg-[#09090b] border border-[#1e1e2a] text-xs font-semibold text-gray-200"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Discord + Voice</span>
+                                <span class="px-3 py-1.5 rounded-lg bg-[#09090b] border border-[#1e1e2a] text-xs font-semibold text-gray-200"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ChatGPT & Gemini AI</span>
+                                <span class="px-3 py-1.5 rounded-lg bg-[#09090b] border border-[#1e1e2a] text-xs font-semibold text-gray-200"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Anti-DPI Bypass</span>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-4 flex flex-col gap-3">
+                            <a href="#packages" class="py-3.5 sm:py-4 px-6 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-bold text-center text-sm sm:text-base shadow-lg transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-rocket"></i> <span data-i18n="spot_btn_1">Подключить от 120 ₽</span>
+                            </a>
+                            <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="py-3.5 px-6 bg-[#09090b] hover:bg-[#141420] text-gray-200 border border-[#2a2a3c] rounded-xl font-semibold text-center text-xs sm:text-sm transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-emerald-400"></i> <span data-i18n="spot_btn_2">Задать вопрос в WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3 Pillars -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                    <div class="vx-card p-6 sm:p-7 flex flex-col">
+                        <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2" data-i18n="pil_1_title">Серверы Tier-3 на NVMe</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4 flex-grow" data-i18n="pil_1_desc">
+                            Наши узлы работают на выделенных серверах с каналами 10 Гбит/с. Никакого оверселлинга и перегруженных бесплатных прокси — только чистая скорость.
+                        </p>
+                        <span class="text-[11px] font-mono text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1"></i> <span data-i18n="pil_1_sub">Мгновенный отклик</span></span>
+                    </div>
+
+                    <div class="vx-card p-6 sm:p-7 flex flex-col">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2" data-i18n="pil_2_title">Политика Zero-Logs</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4 flex-grow" data-i18n="pil_2_desc">
+                            Ваша конфиденциальность неприкосновенна. Мы не отслеживаем, не храним и не передаем историю ваших посещений или DNS-запросов.
+                        </p>
+                        <span class="text-[11px] font-mono text-blue-400"><i class="fa-solid fa-lock text-[8px] mr-1"></i> ChaCha20 & AES-256</span>
+                    </div>
+
+                    <div class="vx-card p-6 sm:p-7 flex flex-col">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2" data-i18n="pil_3_title">Универсальная совместимость</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4 flex-grow" data-i18n="pil_3_desc">
+                            Один ключ легко импортируется в приложение на Windows, Android, iPhone, iPad или MacBook. Никаких сложных настроек — подключение в 1 клик.
+                        </p>
+                        <span class="text-[11px] font-mono text-emerald-400"><i class="fa-solid fa-check text-[8px] mr-1"></i> <span data-i18n="pil_3_sub">Быстрая выдача конфигурации</span></span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══════════════ УСТАНОВКА И ПРИЛОЖЕНИЯ (SETUP GUIDE) ═══════════════ -->
+        <section id="setup" class="py-16 sm:py-20 lg:py-28 section-glow-top">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 border border-blue-500/20 text-blue-400 inline-block mb-3" data-i18n="setup_badge">
+                        Подключение за 60 секунд
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4" data-i18n="setup_title">Инструкция и Приложения</h2>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed" data-i18n="setup_sub">
+                        Скачайте бесплатный клиент для вашего устройства, импортируйте полученный от нас ключ и нажмите кнопку подключения.
+                    </p>
+                </div>
+
+                <!-- 4 Steps -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
+                    <div class="vx-card p-5 sm:p-6 relative">
+                        <span class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mb-4">1</span>
+                        <h3 class="text-base font-bold text-white mb-2" data-i18n="step_1_t">Скачайте приложение</h3>
+                        <p class="text-xs text-gray-400" data-i18n="step_1_d">Установите официальный клиент для вашей операционной системы по ссылкам ниже.</p>
+                    </div>
+                    <div class="vx-card p-5 sm:p-6 relative">
+                        <span class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mb-4">2</span>
+                        <h3 class="text-base font-bold text-white mb-2" data-i18n="step_2_t">Выберите тариф</h3>
+                        <p class="text-xs text-gray-400" data-i18n="step_2_d">Оформите заказ на нужный объем ГБ (от 100 ГБ до Безлимита) через наш WhatsApp.</p>
+                    </div>
+                    <div class="vx-card p-5 sm:p-6 relative">
+                        <span class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mb-4">3</span>
+                        <h3 class="text-base font-bold text-white mb-2" data-i18n="step_3_t">Импортируйте ключ</h3>
+                        <p class="text-xs text-gray-400" data-i18n="step_3_d">Скопируйте полученный ключ или файл конфигурации и нажмите «Импорт» в приложении.</p>
+                    </div>
+                    <div class="vx-card p-5 sm:p-6 relative">
+                        <span class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mb-4">4</span>
+                        <h3 class="text-base font-bold text-white mb-2" data-i18n="step_4_t">Нажмите Подключить</h3>
+                        <p class="text-xs text-gray-400" data-i18n="step_4_d">Включите TUN-режим (на ПК) и нажмите Start. Наслаждайтесь быстрым интернетом!</p>
+                    </div>
+                </div>
+
+                <!-- Device Apps Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+                    
+                    <!-- Windows -->
+                    <div class="vx-card p-6 sm:p-7 border-blue-500/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-md text-xs font-bold uppercase bg-blue-500/20 text-blue-400 border border-blue-500/40">Windows 10 / 11</span>
+                                <i class="fa-brands fa-windows text-2xl text-blue-400"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-extrabold text-white mb-2" data-i18n="app_win_t">NetMod HTTP / v2rayN для ПК</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6" data-i18n="app_win_d">
+                                Полноценная поддержка виртуального сетевого адаптера (TUN Mode), который направляет весь трафик компьютера (браузеры, Discord, игры в Steam) через защищенный туннель.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                            <a href="https://sourceforge.net/projects/netmodhttp/" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> <span data-i18n="dl_win">Скачать NetMod HTTP</span>
+                            </a>
+                            <a href="https://youtu.be/K9kGPvGb0E0" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-[#1f1f2e] hover:bg-[#28283d] text-gray-200 border border-[#333348] font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-youtube text-red-500"></i> <span data-i18n="vid_guide">Видео-инструкция</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Android -->
+                    <div class="vx-card p-6 sm:p-7 border-emerald-500/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-md text-xs font-bold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">Android 8.0+</span>
+                                <i class="fa-brands fa-android text-2xl text-emerald-400"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-extrabold text-white mb-2">NetMod Syna / v2rayNG</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6" data-i18n="app_and_d">
+                                Официальное приложение из Google Play. Подключение в одно касание, минимальный расход заряда батареи и поддержка раздачи VPN по Wi-Fi.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                            <a href="https://play.google.com/store/apps/details?id=com.netmod.syna&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-google-play"></i> <span data-i18n="dl_play">Скачать в Google Play</span>
+                            </a>
+                            <a href="https://youtu.be/IwqjGQw6xmk" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-[#1f1f2e] hover:bg-[#28283d] text-gray-200 border border-[#333348] font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-youtube text-red-500"></i> <span data-i18n="vid_guide">Видео-инструкция</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- iOS -->
+                    <div class="vx-card p-6 sm:p-7 border-purple-500/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-md text-xs font-bold uppercase bg-purple-500/20 text-purple-400 border border-purple-500/40">iPhone / iPad</span>
+                                <i class="fa-brands fa-apple text-2xl text-purple-400"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-extrabold text-white mb-2">NPV Tunnel / Streisand</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6" data-i18n="app_ios_d">
+                                Сертифицированное приложение в Apple App Store. Быстрый импорт ключа из буфера обмена или по QR-коду, стабильная работа в фоновом режиме.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                            <a href="https://apps.apple.com/us/app/npv-tunnel/id1629465476" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-app-store-ios"></i> <span data-i18n="dl_appstore">Скачать в App Store</span>
+                            </a>
+                            <a href="https://youtu.be/GcYkA3CQ1uY" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-[#1f1f2e] hover:bg-[#28283d] text-gray-200 border border-[#333348] font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-youtube text-red-500"></i> <span data-i18n="vid_guide">Видео-инструкция</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- macOS -->
+                    <div class="vx-card p-6 sm:p-7 border-indigo-500/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 rounded-md text-xs font-bold uppercase bg-indigo-500/20 text-indigo-400 border border-indigo-500/40">macOS (M1/M2/M3 & Intel)</span>
+                                <i class="fa-solid fa-laptop text-2xl text-indigo-400"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-extrabold text-white mb-2">Fair VPN (MacBook & iMac)</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-6" data-i18n="app_mac_d">
+                                Нативный клиент для macOS с поддержкой процессоров Apple Silicon. Работает как системный VPN-туннель для всех программ на вашем Mac.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                            <a href="https://apps.apple.com/us/app/fair-vpn/id1533873488" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-apple"></i> <span data-i18n="dl_mac">Скачать для Mac</span>
+                            </a>
+                            <a href="https://youtu.be/GcYkA3CQ1uY" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-[#1f1f2e] hover:bg-[#28283d] text-gray-200 border border-[#333348] font-bold text-xs transition-all flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-youtube text-red-500"></i> <span data-i18n="vid_guide">Видео-инструкция</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════ О НАС (ABOUT US) ═══════════════ -->
+        <section id="about" class="py-16 sm:py-20 bg-[#0c0c10] border-y border-[#1a1a26]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="vx-card p-6 sm:p-8 md:p-12 border-brand-500/30 bg-gradient-to-r from-[#171722] via-[#14141d] to-[#201015]">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-8">
+                            <span class="text-xs uppercase font-bold text-brand-400 tracking-wider block mb-2" data-i18n="about_badge">О Проекте Vexora Labs</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4" data-i18n="about_title">
+                                Интернет без границ и цензуры
+                            </h2>
+                            <p class="text-gray-300 text-xs sm:text-base leading-relaxed mb-4" data-i18n="about_p1">
+                                Сегодня пользователи в России сталкиваются с замедлением YouTube, блокировками Discord, недоступностью зарубежных нейросетей (ChatGPT, Google Gemini) и постоянными сбоями обычных VPN-сервисов.
+                            </p>
+                            <p class="text-gray-300 text-xs sm:text-base leading-relaxed mb-6" data-i18n="about_p2">
+                                <strong>Команда Vexora Labs</strong> создала надежную инфраструктуру приватных V2Ray-серверов, устойчивых к глубокому анализу пакетов (DPI). Вы платите только за честный объем высокоскоростного трафика — по доступным ценам от 120 рублей.
+                            </p>
+                            <div class="flex flex-wrap gap-2.5 sm:gap-3">
+                                <span class="px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#0e0e14] border border-[#262638] text-xs font-semibold text-gray-200">
+                                    <i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> <span data-i18n="about_tag_1">10,000+ Активных конфигураций</span>
+                                </span>
+                                <span class="px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#0e0e14] border border-[#262638] text-xs font-semibold text-gray-200">
+                                    <i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> <span data-i18n="about_tag_2">Гарантия работы весь срок</span>
+                                </span>
+                                <span class="px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#0e0e14] border border-[#262638] text-xs font-semibold text-gray-200">
+                                    <i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> <span data-i18n="about_tag_3">Быстрая помощь с настройкой</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-4 flex flex-col items-center justify-center text-center p-6 bg-[#0d0d12] rounded-2xl border border-[#232333]">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-brand-600 to-brand-900 text-white flex items-center justify-center text-3xl font-black mb-4 shadow-xl shadow-brand-900/30">
+                                V
+                            </div>
+                            <h4 class="text-white font-bold text-lg mb-1">Vexora Labs RU</h4>
+                            <p class="text-xs text-gray-400 mb-4" data-i18n="about_card_sub">Официальный провайдер VPN конфигураций</p>
+                            <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all">
+                                <i class="fa-brands fa-whatsapp"></i> +94 72 739 7294
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════ КОНТАКТЫ И ФОРМА ЗАКАЗА (CONTACT) ═══════════════ -->
+        <section id="contact" class="py-16 sm:py-20 lg:py-28 section-glow-top">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 inline-block mb-3" data-i18n="contact_badge">
+                        Быстрое Оформление и Поддержка 24/7
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4" data-i18n="contact_title">
+                        Свяжитесь с Vexora Labs
+                    </h2>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed" data-i18n="contact_sub">
+                        Готовы подключить VPN или остались вопросы? Напишите нам напрямую в WhatsApp или заполните форму быстрого заказа ниже.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+
+                    <!-- Left: Contact Details & Socials -->
+                    <div class="lg:col-span-5 space-y-5 sm:space-y-6">
+                        
+                        <!-- Direct WhatsApp Card -->
+                        <div class="vx-card p-6 border-emerald-500/40 bg-gradient-to-r from-[#111c16] to-[#121217]">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl shrink-0">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-base sm:text-lg font-bold text-white" data-i18n="wa_card_title">Официальный WhatsApp</h3>
+                                    <p class="text-xs text-gray-400" data-i18n="wa_card_sub">Мгновенная выдача ключей и поддержка</p>
+                                </div>
+                            </div>
+                            <p class="text-xl sm:text-2xl font-black text-white font-mono mb-4">+94 72 739 7294</p>
+                            <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all">
+                                <i class="fa-brands fa-whatsapp text-base"></i> <span data-i18n="wa_card_btn">Открыть чат в WhatsApp</span>
+                            </a>
+                        </div>
+
+                        <!-- Social Profiles -->
+                        <div class="vx-card p-6">
+                            <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4" data-i18n="socials_title">Наши Социальные Сети</h4>
+                            <div class="space-y-3">
+                                <a href="https://www.tiktok.com/@vexora_lab?_r=1&_t=ZS-9AT9QMRMRku" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl bg-[#121217] border border-[#222230] hover:border-brand-500 transition-all text-xs group">
+                                    <span class="flex items-center gap-3 text-gray-300 group-hover:text-white font-semibold">
+                                        <i class="fa-brands fa-tiktok text-brand-400 text-base"></i> TikTok (@vexora_lab)
+                                    </span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-brand-400"></i>
+                                </a>
+
+                                <a href="https://www.facebook.com/share/1FaZW1dVMD/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl bg-[#121217] border border-[#222230] hover:border-blue-500 transition-all text-xs group">
+                                    <span class="flex items-center gap-3 text-gray-300 group-hover:text-white font-semibold">
+                                        <i class="fa-brands fa-facebook text-blue-500 text-base"></i> Facebook Page
+                                    </span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-blue-400"></i>
+                                </a>
+
+                                <a href="https://instagram.com/vexora_labss?cplk=MWQ4Znk3cWp0bjgzeg%3D%3D" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl bg-[#121217] border border-[#222230] hover:border-pink-500 transition-all text-xs group">
+                                    <span class="flex items-center gap-3 text-gray-300 group-hover:text-white font-semibold">
+                                        <i class="fa-brands fa-instagram text-pink-500 text-base"></i> Instagram (@vexora_labss)
+                                    </span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-400"></i>
+                                </a>
+
+                                <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl bg-[#121217] border border-[#222230] hover:border-emerald-500 transition-all text-xs group">
+                                    <span class="flex items-center gap-3 text-gray-300 group-hover:text-white font-semibold">
+                                        <i class="fa-brands fa-whatsapp text-emerald-400 text-base"></i> WhatsApp Direct
+                                    </span>
+                                    <span class="text-emerald-400 font-mono font-bold">+94 72 739 7294</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right: Interactive WhatsApp Order Generator -->
+                    <div class="lg:col-span-7">
+                        <div class="vx-card p-6 sm:p-8 md:p-10 border-[#2a2a3c]">
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-2" data-i18n="form_title">Быстрый заказ VPN конфигурации</h3>
+                            <p class="text-xs text-gray-400 mb-6" data-i18n="form_sub">Выберите нужный пакет трафика и ваше устройство — система сформирует готовый заказ для отправки в WhatsApp.</p>
+
+                            <form id="ru-order-form" onsubmit="handleRussianOrder(event)" class="space-y-4">
+                                <div>
+                                    <label for="client-name" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_name">Ваше Имя</label>
+                                    <input type="text" id="client-name" required placeholder="Александр / Alexander" 
+                                           class="w-full px-4 py-3 rounded-xl bg-[#121218] border border-[#272738] text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-brand-500 transition-colors">
+                                </div>
+
+                                <div>
+                                    <label for="selected-plan" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_plan">Выберите Тарифный План</label>
+                                    <select id="selected-plan" class="w-full px-4 py-3 rounded-xl bg-[#121218] border border-[#272738] text-sm text-gray-200 focus:outline-none focus:border-brand-500 transition-colors">
+                                        <option value="100 GB — 120 RUB">100 GB — 120 ₽</option>
+                                        <option value="150 GB — 170 RUB">150 GB — 170 ₽</option>
+                                        <option value="200 GB — 190 RUB" selected>200 GB — 190 ₽ (⭐ Best Value)</option>
+                                        <option value="300 GB — 320 RUB">300 GB — 320 ₽</option>
+                                        <option value="400 GB — 420 RUB">400 GB — 420 ₽</option>
+                                        <option value="UNLIMITED — 1000 RUB">UNLIMITED (∞) — 1000 ₽ (👑 VIP)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_device">Ваше Устройство</label>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                                        <label class="p-2.5 rounded-xl border border-[#272738] bg-[#121218] text-center cursor-pointer has-[:checked]:border-brand-500 has-[:checked]:bg-brand-500/10">
+                                            <input type="radio" name="device_platform" value="Windows PC" checked class="sr-only">
+                                            <span>Windows PC</span>
+                                        </label>
+                                        <label class="p-2.5 rounded-xl border border-[#272738] bg-[#121218] text-center cursor-pointer has-[:checked]:border-brand-500 has-[:checked]:bg-brand-500/10">
+                                            <input type="radio" name="device_platform" value="Android" class="sr-only">
+                                            <span>Android</span>
+                                        </label>
+                                        <label class="p-2.5 rounded-xl border border-[#272738] bg-[#121218] text-center cursor-pointer has-[:checked]:border-brand-500 has-[:checked]:bg-brand-500/10">
+                                            <input type="radio" name="device_platform" value="iPhone / iPad (iOS)" class="sr-only">
+                                            <span>iPhone / iOS</span>
+                                        </label>
+                                        <label class="p-2.5 rounded-xl border border-[#272738] bg-[#121218] text-center cursor-pointer has-[:checked]:border-brand-500 has-[:checked]:bg-brand-500/10">
+                                            <input type="radio" name="device_platform" value="MacBook (macOS)" class="sr-only">
+                                            <span>MacBook</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="client-notes" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_notes">Дополнительный комментарий (необязательно)</label>
+                                    <textarea id="client-notes" rows="3" placeholder="..." 
+                                              class="w-full px-4 py-3 rounded-xl bg-[#121218] border border-[#272738] text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-brand-500 transition-colors"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-600/30 transition-all flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="form_btn">Отправить заказ в WhatsApp (+94 72 739 7294)</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════ ПОДВАЛ (FOOTER) ═══════════════ -->
+    <footer class="bg-[#07070a] border-t border-[#1a1a26] pt-14 sm:pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-12">
+
+                <!-- Brand -->
+                <div class="sm:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-900 flex items-center justify-center text-white font-black text-xl shadow-md">V</div>
+                        <span class="font-extrabold text-2xl text-white">Vexora Labs</span>
+                    </div>
+                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6 max-w-md" data-i18n="footer_desc">
+                        Надежный провайдер высокоскоростных VPN-конфигураций V2Ray для пользователей из России. Свободный доступ к YouTube, Discord и мировым сервисам без ограничений.
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center hover:bg-emerald-600 hover:border-transparent transition-all" title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-base"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@vexora_lab?_r=1&_t=ZS-9AT9QMRMRku" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center hover:bg-brand-600 hover:border-transparent transition-all" title="TikTok">
+                            <i class="fa-brands fa-tiktok text-gray-200 text-base"></i>
+                        </a>
+                        <a href="https://www.facebook.com/share/1FaZW1dVMD/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all" title="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="https://instagram.com/vexora_labss?cplk=MWQ4Znk3cWp0bjgzeg%3D%3D" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center hover:bg-pink-600 hover:border-transparent transition-all" title="Instagram">
+                            <i class="fa-brands fa-instagram text-pink-400 text-base"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div>
+                    <h3 class="text-white font-bold text-xs tracking-[0.15em] uppercase mb-4" data-i18n="footer_nav">Навигация</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors" data-i18n="nav_home">Главная</a></li>
+                        <li><a href="#packages" class="text-gray-400 hover:text-white transition-colors" data-i18n="nav_packages">Тарифы VPN</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors" data-i18n="nav_features">Преимущества</a></li>
+                        <li><a href="#setup" class="text-gray-400 hover:text-white transition-colors" data-i18n="nav_setup">Установка</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors" data-i18n="nav_contact">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacts -->
+                <div>
+                    <h3 class="text-white font-bold text-xs tracking-[0.15em] uppercase mb-4" data-i18n="footer_contact">Контакты и Заказ</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                            <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="text-white font-mono hover:text-emerald-400 transition-colors">+94 72 739 7294</a>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-solid fa-headset text-brand-400"></i>
+                            <span data-i18n="stat_4_lbl">Поддержка 24/7</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-solid fa-shield-halved text-blue-400"></i>
+                            <span>Anti-DPI V2Ray</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-solid fa-bolt text-amber-400"></i>
+                            <span data-i18n="feat_instant">Мгновенная выдача ключа</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-[#141420] pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500 text-center sm:text-left">
+                <p data-i18n="footer_copy">&copy; 2026 Vexora Labs. Все права защищены.</p>
+                <div class="flex gap-4">
+                    <a href="#packages" class="hover:text-gray-300" data-i18n="nav_packages">Тарифы VPN</a>
+                    <a href="#setup" class="hover:text-gray-300" data-i18n="nav_setup">Установка</a>
+                    <a href="#contact" class="hover:text-gray-300" data-i18n="nav_contact">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-5 right-5 z-50 w-12 h-12 sm:w-14 sm:h-14 bg-emerald-600 hover:bg-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-600/30 transition-all duration-300 hover:scale-110"
+       title="WhatsApp">
+        <i class="fa-brands fa-whatsapp text-white text-xl sm:text-2xl"></i>
+    </a>
+
+    <!-- ═══════════════ JAVASCRIPT (TRANSLATION + ORDERS) ═══════════════ -->
+    <script>
+        const WHATSAPP_NUMBER = '94727397294';
+        let currentLang = 'ru';
+
+        // Dictionary for Russian (ru) and English (en)
+        const translations = {
+            ru: {
+                brand_sub: 'VPN Сервис • Россия',
+                nav_home: 'Главная',
+                nav_packages: 'Тарифы VPN',
+                nav_features: 'Преимущества',
+                nav_setup: 'Установка',
+                nav_about: 'О нас',
+                nav_contact: 'Контакты',
+                nav_cta: 'Заказать в WhatsApp',
+                hero_badge: 'СВОБОДНЫЙ ИНТЕРНЕТ БЕЗ ОГРАНИЧЕНИЙ И ЗАМЕДЛЕНИЙ',
+                hero_title_1: 'Высокоскоростной VPN',
+                hero_title_2: 'Нового Поколения с Vexora Labs',
+                hero_subtitle: 'Приватные конфигурации <strong>V2Ray (VLESS / VMess / Trojan / Reality)</strong>. Смотрите <strong>YouTube в 4K</strong> без замедления, общайтесь в <strong>Discord</strong>, пользуйтесь Instagram, ChatGPT и Google Gemini AI на максимальной скорости вашего провайдера.',
+                hero_btn_1: 'Выбрать тариф (от 120 ₽)',
+                hero_btn_2: 'Инструкция и Приложения',
+                hero_btn_3: 'Быстрый заказ',
+                stat_1_val: '10 Гбит/с',
+                stat_1_lbl: 'Канал Серверов',
+                stat_2_lbl: 'Стабильность (Uptime)',
+                stat_3_val: '<40 мс',
+                stat_3_lbl: 'Низкий Пинг в Играх',
+                stat_4_lbl: 'Поддержка в WhatsApp',
+                strip_title: 'Работает со всеми провайдерами РФ и открывает доступ к любым сервисам',
+                strip_yt: 'YouTube 4K без тормозов',
+                strip_dc: 'Discord + Голосовой чат',
+                pkg_badge: 'Официальный прайс-лист',
+                pkg_title: 'Тарифные Планы VPN по Трафику',
+                pkg_sub: 'Никаких привязок к SIM-картам — работает на домашнем Wi-Fi (Ростелеком, Дом.ру, МТС, Билайн и др.) и любом мобильном интернете. Выберите нужный объем гигабайт на 30 дней.',
+                days_30: '30 Дней',
+                gb_100: '100 ГБ',
+                gb_150: '150 ГБ',
+                gb_200: '200 ГБ',
+                gb_300: '300 ГБ',
+                gb_400: '400 ГБ',
+                gb_unlim: 'БЕЗЛИМИТ',
+                tier_1_tag: 'Стартовый',
+                tier_1_desc: 'Отличный вариант для ежедневного серфинга, соцсетей, мессенджеров и просмотра видео.',
+                tier_2_tag: 'Базовый',
+                tier_2_desc: 'Оптимальный баланс для регулярного просмотра YouTube в Full HD и работы с AI-сервисами.',
+                best_seller_badge: 'Хит Продаж ⭐',
+                tier_3_tag: 'Популярный',
+                tier_3_desc: 'Самый выгодный тариф! Всего +20 рублей за дополнительные 50 ГБ высокоскоростного трафика.',
+                tier_4_tag: 'Продвинутый',
+                tier_4_desc: 'Для активных пользователей, геймеров, стриминга фильмов и удаленной работы.',
+                tier_5_tag: 'Гейминг & Про',
+                tier_5_desc: 'Огромный запас трафика для скачивания больших обновлений, игр и тяжелого контента.',
+                vip_badge: 'VIP Безлимит 👑',
+                tier_6_tag: 'Максимум',
+                tier_6_desc: 'Никаких лимитов по гигабайтам! Полная свобода действий 24/7 для самых требовательных задач.',
+                feat_dpi: 'Обход DPI блокировок (VLESS / Reality)',
+                feat_social: 'Доступ к Instagram, Discord, YouTube',
+                feat_devices: 'Работает на ПК, Android, iOS, Mac',
+                feat_enc: 'Шифрование AES-256-GCM',
+                feat_dc: 'Стабильный голос в Discord без лагов',
+                feat_ai: 'Разблокировка ChatGPT и Gemini AI',
+                feat_all_dev: 'Поддержка всех устройств',
+                feat_10g: 'Приоритетный канал до 10 Гбит/с',
+                feat_yt4k: 'YouTube в 2K / 4K без буферизации',
+                feat_ping: 'Низкий пинг для онлайн-игр',
+                feat_zerolog: 'Полная анонимность (Zero-Logs)',
+                feat_fast_dl: 'Высокая скорость загрузки файлов',
+                feat_stream: 'Стриминг Netflix, Twitch, YouTube 4K',
+                feat_hotspot: 'Раздача VPN через Wi-Fi Хот-спот',
+                feat_sup24: 'Техподдержка 24/7 в WhatsApp',
+                feat_route: 'Прямая маршрутизация без потерь пакетов',
+                feat_tun: 'Поддержка TUN-режима для всех игр на ПК',
+                feat_ide: 'Доступ к зарубежным ИИ и IDE без блокировок',
+                feat_instant: 'Мгновенная выдача ключа',
+                feat_unlim_1: '<strong>Неограниченный трафик</strong> на максимальной скорости',
+                feat_unlim_2: 'Выделенный VIP-поток без просадок вечером',
+                feat_unlim_3: '4K / 8K Стриминг, Торренты, Игры',
+                feat_unlim_4: 'Персональная VIP-поддержка',
+                price_lbl: 'Стоимость',
+                super_price_lbl: 'Супер Цена',
+                vip_price_lbl: 'VIP Тариф',
+                buy_now: 'Купить сейчас',
+                order_vip: 'Заказать VIP',
+                table_title: 'Сравнительная таблица тарифов',
+                table_sub: 'Все тарифы действуют 30 дней с момента активации',
+                th_plan: 'Тариф',
+                th_data: 'Лимит Трафика',
+                th_price: 'Цена (Рубли)',
+                th_per_gb: 'Цена за 1 ГБ',
+                th_best: 'Рекомендация',
+                th_action: 'Действие',
+                tb_rec_1: 'Соцсети, браузер, музыка',
+                tb_rec_2: 'YouTube 1080p, Discord, AI',
+                tb_rec_3: 'Лучшее соотношение цены и объема',
+                tb_rec_4: 'Ежедневный YouTube 4K и работа',
+                tb_rec_5: 'Онлайн-игры, стримы, загрузки',
+                tb_rec_6: 'Максимальная свобода 24/7',
+                btn_order: 'Заказать',
+                spot_badge: 'Обход любых ограничений',
+                spot_title: 'Устали от ошибки <span class="text-brand-400">«Недоступно в вашем регионе»</span> или вечной загрузки YouTube?',
+                spot_desc: 'Обычные VPN-протоколы (OpenVPN, WireGuard) легко блокируются системами ТСПУ и DPI. <strong>Vexora Labs</strong> использует передовые протоколы <strong>V2Ray (VLESS, VMess, Trojan, XTLS-Reality)</strong>, которые маскируют ваш трафик под обычный HTTPS-сайт, обеспечивая 100% стабильное соединение без потери скорости.',
+                spot_btn_1: 'Подключить от 120 ₽',
+                spot_btn_2: 'Задать вопрос в WhatsApp',
+                pil_1_title: 'Серверы Tier-3 на NVMe',
+                pil_1_desc: 'Наши узлы работают на выделенных серверах с каналами 10 Гбит/с. Никакого оверселлинга и перегруженных бесплатных прокси — только чистая скорость.',
+                pil_1_sub: 'Мгновенный отклик',
+                pil_2_title: 'Политика Zero-Logs',
+                pil_2_desc: 'Ваша конфиденциальность неприкосновенна. Мы не отслеживаем, не храним и не передаем историю ваших посещений или DNS-запросов.',
+                pil_3_title: 'Универсальная совместимость',
+                pil_3_desc: 'Один ключ легко импортируется в приложение на Windows, Android, iPhone, iPad или MacBook. Никаких сложных настроек — подключение в 1 клик.',
+                pil_3_sub: 'Быстрая выдача конфигурации',
+                setup_badge: 'Подключение за 60 секунд',
+                setup_title: 'Инструкция и Приложения',
+                setup_sub: 'Скачайте бесплатный клиент для вашего устройства, импортируйте полученный от нас ключ и нажмите кнопку подключения.',
+                step_1_t: 'Скачайте приложение',
+                step_1_d: 'Установите официальный клиент для вашей операционной системы по ссылкам ниже.',
+                step_2_t: 'Выберите тариф',
+                step_2_d: 'Оформите заказ на нужный объем ГБ (от 100 ГБ до Безлимита) через наш WhatsApp.',
+                step_3_t: 'Импортируйте ключ',
+                step_3_d: 'Скопируйте полученный ключ или файл конфигурации и нажмите «Импорт» в приложении.',
+                step_4_t: 'Нажмите Подключить',
+                step_4_d: 'Включите TUN-режим (на ПК) и нажмите Start. Наслаждайтесь быстрым интернетом!',
+                app_win_t: 'NetMod HTTP / v2rayN для ПК',
+                app_win_d: 'Полноценная поддержка виртуального сетевого адаптера (TUN Mode), который направляет весь трафик компьютера (браузеры, Discord, игры в Steam) через защищенный туннель.',
+                dl_win: 'Скачать NetMod HTTP',
+                vid_guide: 'Видео-инструкция',
+                app_and_d: 'Официальное приложение из Google Play. Подключение в одно касание, минимальный расход заряда батареи и поддержка раздачи VPN по Wi-Fi.',
+                dl_play: 'Скачать в Google Play',
+                app_ios_d: 'Сертифицированное приложение в Apple App Store. Быстрый импорт ключа из буфера обмена или по QR-коду, стабильная работа в фоновом режиме.',
+                dl_appstore: 'Скачать в App Store',
+                app_mac_d: 'Нативный клиент для macOS с поддержкой процессоров Apple Silicon. Работает как системный VPN-туннель для всех программ на вашем Mac.',
+                dl_mac: 'Скачать для Mac',
+                about_badge: 'О Проекте Vexora Labs',
+                about_title: 'Интернет без границ и цензуры',
+                about_p1: 'Сегодня пользователи в России сталкиваются с замедлением YouTube, блокировками Discord, недоступностью зарубежных нейросетей (ChatGPT, Google Gemini) и постоянными сбоями обычных VPN-сервисов.',
+                about_p2: '<strong>Команда Vexora Labs</strong> создала надежную инфраструктуру приватных V2Ray-серверов, устойчивых к глубокому анализу пакетов (DPI). Вы платите только за честный объем высокоскоростного трафика — по доступным ценам от 120 рублей.',
+                about_tag_1: '10,000+ Активных конфигураций',
+                about_tag_2: 'Гарантия работы весь срок',
+                about_tag_3: 'Быстрая помощь с настройкой',
+                about_card_sub: 'Официальный провайдер VPN конфигураций',
+                contact_badge: 'Быстрое Оформление и Поддержка 24/7',
+                contact_title: 'Свяжитесь с Vexora Labs',
+                contact_sub: 'Готовы подключить VPN или остались вопросы? Напишите нам напрямую в WhatsApp или заполните форму быстрого заказа ниже.',
+                wa_card_title: 'Официальный WhatsApp',
+                wa_card_sub: 'Мгновенная выдача ключей и поддержка',
+                wa_card_btn: 'Открыть чат в WhatsApp',
+                socials_title: 'Наши Социальные Сети',
+                form_title: 'Быстрый заказ VPN конфигурации',
+                form_sub: 'Выберите нужный пакет трафика и ваше устройство — система сформирует готовый заказ для отправки в WhatsApp.',
+                lbl_name: 'Ваше Имя',
+                lbl_plan: 'Выберите Тарифный План',
+                lbl_device: 'Ваше Устройство',
+                lbl_notes: 'Дополнительный комментарий (необязательно)',
+                form_btn: 'Отправить заказ в WhatsApp (+94 72 739 7294)',
+                footer_desc: 'Надежный провайдер высокоскоростных VPN-конфигураций V2Ray для пользователей из России. Свободный доступ к YouTube, Discord и мировым сервисам без ограничений.',
+                footer_nav: 'Навигация',
+                footer_contact: 'Контакты и Заказ',
+                footer_copy: '© 2026 Vexora Labs. Все права защищены.'
+            },
+            en: {
+                brand_sub: 'VPN Service • Russia',
+                nav_home: 'Home',
+                nav_packages: 'VPN Plans',
+                nav_features: 'Features',
+                nav_setup: 'Setup Guide',
+                nav_about: 'About Us',
+                nav_contact: 'Contact',
+                nav_cta: 'Order on WhatsApp',
+                hero_badge: 'UNRESTRICTED HIGH-SPEED INTERNET WITHOUT THROTTLING',
+                hero_title_1: 'Next-Gen High Speed VPN',
+                hero_title_2: 'Powered by Vexora Labs',
+                hero_subtitle: 'Private <strong>V2Ray (VLESS / VMess / Trojan / Reality)</strong> configurations for Russia. Watch <strong>4K YouTube</strong> without buffering, use <strong>Discord voice</strong>, Instagram, ChatGPT & Google Gemini AI at full ISP speed.',
+                hero_btn_1: 'View Plans (from 120 ₽)',
+                hero_btn_2: 'Apps & Setup Guide',
+                hero_btn_3: 'Quick Order',
+                stat_1_val: '10 Gbps',
+                stat_1_lbl: 'Server Bandwidth',
+                stat_2_lbl: 'Server Uptime',
+                stat_3_val: '<40 ms',
+                stat_3_lbl: 'Low Gaming Ping',
+                stat_4_lbl: '24/7 WhatsApp Support',
+                strip_title: 'Compatible with all Russian Wi-Fi & Mobile ISPs — Unlocks all global services',
+                strip_yt: 'YouTube 4K No Buffering',
+                strip_dc: 'Discord + Voice Chat',
+                pkg_badge: 'Official Rate Sheet',
+                pkg_title: 'VPN Data Bandwidth Plans',
+                pkg_sub: 'No SIM-package restrictions — works on any home Wi-Fi or mobile carrier in Russia. Choose your 30-day high-speed data allowance below.',
+                days_30: '30 Days',
+                gb_100: '100 GB',
+                gb_150: '150 GB',
+                gb_200: '200 GB',
+                gb_300: '300 GB',
+                gb_400: '400 GB',
+                gb_unlim: 'UNLIMITED',
+                tier_1_tag: 'Starter',
+                tier_1_desc: 'Great for daily browsing, social media, messaging apps, and standard video streaming.',
+                tier_2_tag: 'Basic',
+                tier_2_desc: 'Optimal balance for regular Full HD YouTube streaming and working with AI tools.',
+                best_seller_badge: 'Best Value ⭐',
+                tier_3_tag: 'Popular',
+                tier_3_desc: 'Our most popular plan! Get an extra 50 GB of high-speed traffic for just +20 Rubles.',
+                tier_4_tag: 'Advanced',
+                tier_4_desc: 'Designed for active users, gamers, HD movie streaming, and remote work.',
+                tier_5_tag: 'Gaming & Pro',
+                tier_5_desc: 'Massive data allowance for downloading large game updates, heavy files, and 4K streams.',
+                vip_badge: 'VIP Unlimited 👑',
+                tier_6_tag: 'Ultimate',
+                tier_6_desc: 'Zero gigabyte limits! Total 24/7 freedom for the most demanding power users.',
+                feat_dpi: 'DPI Bypass (VLESS / XTLS-Reality)',
+                feat_social: 'Unlocks Instagram, Discord, YouTube',
+                feat_devices: 'Works on PC, Android, iOS, Mac',
+                feat_enc: 'AES-256-GCM Encryption',
+                feat_dc: 'Lag-free Discord Voice & Streaming',
+                feat_ai: 'Unlocks ChatGPT & Google Gemini AI',
+                feat_all_dev: 'All platforms supported',
+                feat_10g: 'Priority 10 Gbps Server Port',
+                feat_yt4k: 'Smooth 2K / 4K YouTube Playback',
+                feat_ping: 'Low Latency for Online Gaming',
+                feat_zerolog: 'Strict Zero-Logs Privacy Policy',
+                feat_fast_dl: 'Blazing Fast Download Speeds',
+                feat_stream: 'Stream Netflix, Twitch, YouTube 4K',
+                feat_hotspot: 'Wi-Fi Hotspot Tethering Supported',
+                feat_sup24: '24/7 WhatsApp Tech Support',
+                feat_route: 'Direct Routing with Zero Packet Loss',
+                feat_tun: 'Full TUN Mode for PC Games',
+                feat_ide: 'Unblocks AI Coding IDEs & Services',
+                feat_instant: 'Instant Config Key Delivery',
+                feat_unlim_1: '<strong>Unlimited Bandwidth</strong> at Max Speed',
+                feat_unlim_2: 'Dedicated VIP Node (No Evening Drops)',
+                feat_unlim_3: '4K / 8K Streaming, Gaming & Downloads',
+                feat_unlim_4: 'Priority VIP Customer Support',
+                price_lbl: 'Price',
+                super_price_lbl: 'Best Deal',
+                vip_price_lbl: 'VIP Plan',
+                buy_now: 'Buy Now',
+                order_vip: 'Order VIP',
+                table_title: 'Plan Comparison Table',
+                table_sub: 'All plans are valid for 30 days from activation',
+                th_plan: 'Plan',
+                th_data: 'Data Limit',
+                th_price: 'Price (RUB)',
+                th_per_gb: 'Cost per GB',
+                th_best: 'Best For',
+                th_action: 'Action',
+                tb_rec_1: 'Social media, browsing, music',
+                tb_rec_2: 'YouTube 1080p, Discord, AI',
+                tb_rec_3: 'Best price-to-bandwidth ratio',
+                tb_rec_4: 'Daily 4K YouTube & remote work',
+                tb_rec_5: 'Online gaming, streams, downloads',
+                tb_rec_6: 'Maximum freedom 24/7',
+                btn_order: 'Order',
+                spot_badge: 'Bypass Geo-Restrictions',
+                spot_title: 'Tired of <span class="text-brand-400">"Not available in your location"</span> or slow YouTube?',
+                spot_desc: 'Standard VPN protocols (OpenVPN, WireGuard) are easily throttled by DPI firewalls. <strong>Vexora Labs</strong> uses next-gen <strong>V2Ray (VLESS, VMess, Trojan, XTLS-Reality)</strong> protocols that disguise your traffic as standard HTTPS web traffic for 100% stability.',
+                spot_btn_1: 'Get Started from 120 ₽',
+                spot_btn_2: 'Ask on WhatsApp',
+                pil_1_title: 'Tier-3 NVMe Hardware',
+                pil_1_desc: 'Our nodes run on dedicated enterprise servers with 10 Gbps uplinks. No overcrowded free proxies — pure, unthrottled speed.',
+                pil_1_sub: 'Sub-40ms low latency',
+                pil_2_title: 'Strict Zero-Logs Policy',
+                pil_2_desc: 'Your privacy is sacred. We never monitor, store, or share your browsing history, traffic content, or DNS queries.',
+                pil_3_title: 'Cross-Platform Support',
+                pil_3_desc: 'Easily import your key into Windows, Android, iPhone, iPad, or MacBook client apps. One-click connection in 60 seconds.',
+                pil_3_sub: 'Instant WhatsApp delivery',
+                setup_badge: '60-Second Setup Process',
+                setup_title: 'App Downloads & Setup Guide',
+                setup_sub: 'Download the free client app for your device, import the config key we send you, and tap connect.',
+                step_1_t: 'Download Client App',
+                step_1_d: 'Install the verified application for your operating system using the links below.',
+                step_2_t: 'Choose Your Plan',
+                step_2_d: 'Order your preferred data package (100 GB to Unlimited) via our WhatsApp desk.',
+                step_3_t: 'Import Config Key',
+                step_3_d: 'Copy the config key or file sent to you on WhatsApp and tap Import in the app.',
+                step_4_t: 'Tap Connect',
+                step_4_d: 'Enable TUN mode (on PC) and hit Start. Enjoy fast, unrestricted internet!',
+                app_win_t: 'NetMod HTTP / v2rayN for PC',
+                app_win_d: 'Full virtual network adapter (TUN Mode) support to route all PC applications (browsers, Discord, Steam games) through the encrypted tunnel.',
+                dl_win: 'Download NetMod HTTP',
+                vid_guide: 'Video Tutorial',
+                app_and_d: 'Official Google Play Store app. One-tap connection, low battery usage, and Wi-Fi hotspot tethering support.',
+                dl_play: 'Get on Google Play',
+                app_ios_d: 'Certified Apple App Store client. 1-click clipboard or QR code import with reliable background operation.',
+                dl_appstore: 'Download on App Store',
+                app_mac_d: 'Native macOS client supporting Apple Silicon (M1/M2/M3) and Intel Macs. System-wide VPN proxy tunnel.',
+                dl_mac: 'Download for Mac',
+                about_badge: 'About Vexora Labs',
+                about_title: 'Internet Without Borders or Censorship',
+                about_p1: 'Internet users in Russia face YouTube throttling, Discord blocks, geo-restricted AI platforms (ChatGPT, Google Gemini), and frequent disruptions of traditional VPNs.',
+                about_p2: '<strong>Vexora Labs</strong> operates private DPI-resistant V2Ray servers. You pay only for honest, high-speed data bandwidth starting at just 120 Rubles.',
+                about_tag_1: '10,000+ Active Configurations',
+                about_tag_2: 'Full 30-Day Uptime Guarantee',
+                about_tag_3: '24/7 Setup Assistance',
+                about_card_sub: 'Official VPN Configuration Provider',
+                contact_badge: 'Fast Delivery & 24/7 Support',
+                contact_title: 'Contact Vexora Labs',
+                contact_sub: 'Ready to order your VPN config or have questions? Chat with us directly on WhatsApp or submit the quick order form below.',
+                wa_card_title: 'Official WhatsApp Desk',
+                wa_card_sub: 'Instant key delivery & technical support',
+                wa_card_btn: 'Open WhatsApp Chat',
+                socials_title: 'Official Social Profiles',
+                form_title: 'Quick VPN Configuration Order',
+                form_sub: 'Select your bandwidth package and device below — this will generate a pre-filled WhatsApp order message.',
+                lbl_name: 'Your Name',
+                lbl_plan: 'Select Data Package',
+                lbl_device: 'Your Device Platform',
+                lbl_notes: 'Additional Notes (Optional)',
+                form_btn: 'Send Order via WhatsApp (+94 72 739 7294)',
+                footer_desc: 'Trusted provider of high-speed V2Ray VPN configurations for Russia. Unrestricted access to YouTube, Discord, and global services.',
+                footer_nav: 'Quick Links',
+                footer_contact: 'Contact & Orders',
+                footer_copy: '© 2026 Vexora Labs. All rights reserved.'
+            }
+        };
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            const dict = translations[lang];
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) {
+                    el.innerHTML = dict[key];
+                }
+            });
+
+            // Update language switcher button labels
+            const desktopLabel = document.getElementById('lang-btn-label');
+            const mobileLabel = document.getElementById('mobile-lang-label');
+            if (desktopLabel) {
+                desktopLabel.textContent = lang === 'ru' ? 'EN' : 'RU';
+            }
+            if (mobileLabel) {
+                mobileLabel.textContent = lang === 'ru' ? 'Switch to English (EN)' : 'Переключить на Русский (RU)';
+            }
+        }
+
+        function toggleLanguage() {
+            const nextLang = currentLang === 'ru' ? 'en' : 'ru';
+            applyLanguage(nextLang);
+        }
+
+        // Direct Order Button Function
+        function orderVpnPackage(gbPlan, priceRub) {
+            const message = currentLang === 'ru'
+                ? `Здравствуйте, Vexora Labs! 👋\n\nЯ хочу заказать VPN конфигурацию (Россия):\n📦 Тариф: ${gbPlan}\n💳 Стоимость: ${priceRub}\n\nПожалуйста, пришлите реквизиты для оплаты и инструкцию.`
+                : `Hello Vexora Labs! 👋\n\nI would like to order a Russia VPN configuration:\n📦 Plan: ${gbPlan}\n💳 Price: ${priceRub}\n\nPlease send payment details and setup instructions.`;
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Contact Form Order Generator
+        function handleRussianOrder(event) {
+            event.preventDefault();
+            const name = document.getElementById('client-name').value.trim();
+            const plan = document.getElementById('selected-plan').value;
+            const deviceEl = document.querySelector('input[name="device_platform"]:checked');
+            const device = deviceEl ? deviceEl.value : 'Windows PC';
+            const notes = document.getElementById('client-notes').value.trim();
+
+            let message = currentLang === 'ru'
+                ? `Здравствуйте, Vexora Labs! 👋\n\nЗаявка на покупку VPN (Россия):\n👤 Имя: ${name}\n📦 Тариф: ${plan}\n💻 Устройство: ${device}`
+                : `Hello Vexora Labs! 👋\n\nNew Russia VPN Order:\n👤 Name: ${name}\n📦 Plan: ${plan}\n💻 Device: ${device}`;
+
+            if (notes) {
+                message += currentLang === 'ru' ? `\n📝 Комментарий: ${notes}` : `\n📝 Notes: ${notes}`;
+            }
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Mobile Menu & Particles Setup
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    const isHidden = mobileMenu.classList.toggle('hidden');
+                    menuIcon.className = isHidden ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+                });
+
+                document.querySelectorAll('.mobile-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuIcon.className = 'fa-solid fa-bars text-lg';
+                    });
+                });
+            }
+
+            // Generate animated particles like original site
+            const particleContainer = document.getElementById('hero-particles');
+            if (particleContainer) {
+                for (let i = 0; i < 20; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    const size = Math.random() * 4 + 2;
+                    p.style.width = `${size}px`;
+                    p.style.height = `${size}px`;
+                    p.style.left = `${Math.random() * 100}%`;
+                    p.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                    p.style.animationDelay = `${Math.random() * 6}s`;
+                    particleContainer.appendChild(p);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
