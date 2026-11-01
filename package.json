@@ -1,3 +1,4 @@
+
 {
   "name": "vexora-labs-site",
   "private": true,
@@ -6,5 +7,10 @@
     "build": "tailwindcss -c tailwind.config.js -i src/input.css -o assets/css/style.css --minify",
     "watch": "tailwindcss -c tailwind.config.js -i src/input.css -o assets/css/style.css --watch"
   },
-  "devDependencies": { "tailwindcss": "3.4.17" }
+  "dependencies": {
+    "googleapis": "^171.0.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
 }
