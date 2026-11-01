@@ -2,582 +2,859 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080d18">
-  <meta name="description" content="VEXORA VPN Customer Usage Portal">
-  <title>VEXORA | VPN Usage Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09090b">
+<meta name="description" content="VEXORA VPN Customer Usage Dashboard">
+<title>VEXORA | Usage Dashboard</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<link rel="icon" href="../assets/images/vex.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background:
-        radial-gradient(ellipse at top, #10294a 0%, transparent 55%),
-        #080d18;
-      color: #f5f7fb;
-      font-family: Arial, sans-serif;
-    }
+<style>
+:root {
+  --bg: #09090b;
+  --panel: #111116;
+  --panel2: #16161e;
+  --border: #292936;
+  --red: #dc2626;
+  --red2: #ef4444;
+  --text: #f8fafc;
+  --muted: #9292a3;
+  --green: #22c55e;
+}
 
-    .card {
-      width: 100%;
-      max-width: 460px;
-      padding: 30px 25px;
-      border: 1px solid #243b58;
-      border-radius: 22px;
-      background: rgba(16, 26, 42, .96);
-      box-shadow: 0 20px 70px #0009;
-    }
+* { box-sizing: border-box; }
 
-    .brand {
-      color: #38a5ff;
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: 5px;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, #3b1015 0%, transparent 42%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, sans-serif;
+}
 
-    .subtitle {
-      color: #8fa3bc;
-      font-size: 10px;
-      letter-spacing: 2.5px;
-      text-align: center;
-      margin: 8px 0 30px;
-    }
+button, input { font: inherit; }
 
-    h2 {
-      text-align: center;
-      font-size: 23px;
-      margin-bottom: 10px;
-    }
+a { color: inherit; text-decoration: none; }
 
-    .description {
-      color: #9aabc0;
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
+.container {
+  width: min(1100px, 92%);
+  margin: auto;
+}
 
-    label {
-      display: block;
-      margin: 20px 0 9px;
-      color: #b8c8dc;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
+header {
+  height: 76px;
+  border-bottom: 1px solid #ffffff12;
+  background: #09090bdd;
+  backdrop-filter: blur(18px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-    input {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #34465f;
-      border-radius: 11px;
-      background: #0a1321;
-      color: white;
-      outline: none;
-      font-size: 14px;
-    }
+.nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    input:focus {
-      border-color: #2997ff;
-      box-shadow: 0 0 0 3px #2997ff20;
-    }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-    button {
-      width: 100%;
-      margin-top: 14px;
-      padding: 15px;
-      border: 0;
-      border-radius: 11px;
-      background: linear-gradient(100deg, #0879e8, #28a5ff);
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: .2s;
-    }
+.brand img {
+  width: 43px;
+  height: 43px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #ef444455;
+}
 
-    button:hover { filter: brightness(1.12); }
-    button:disabled { opacity: .6; cursor: wait; }
+.brand-name {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -.5px;
+}
 
-    #message {
-      min-height: 22px;
-      margin-top: 15px;
-      color: #9aabc0;
-      font-size: 13px;
-      text-align: center;
-      line-height: 1.5;
-    }
+.brand-tag {
+  display: block;
+  color: var(--red2);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
 
-    .error { color: #ff7777 !important; }
-    .success { color: #48d597 !important; }
+.nav-links {
+  display: flex;
+  gap: 24px;
+  color: #b4b4c1;
+  font-size: 12px;
+  font-weight: 600;
+}
 
-    .dashboard {
-      display: none;
-      margin-top: 25px;
-      padding-top: 22px;
-      border-top: 1px solid #293b53;
-    }
+.nav-links a:hover { color: white; }
 
-    .customer {
-      text-align: center;
-      margin-bottom: 22px;
-    }
+.home-link {
+  padding: 11px 16px;
+  background: #18181f;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
 
-    .customer-name {
-      font-size: 19px;
-      font-weight: bold;
-    }
+.hero {
+  text-align: center;
+  padding: 65px 0 35px;
+}
 
-    .package {
-      color: #91a5bd;
-      font-size: 12px;
-      margin-top: 7px;
-      line-height: 1.5;
-    }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid #ef444444;
+  background: #dc262615;
+  color: #ff7777;
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
 
-    .usage-box {
-      padding: 19px;
-      border: 1px solid #2a405b;
-      border-radius: 15px;
-      background: #0b1524;
-    }
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--green);
+}
 
-    .usage-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      font-size: 12px;
-      color: #a8bad0;
-    }
+h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  margin: 22px 0 12px;
+}
 
-    .usage-heading strong {
-      color: #fff;
-      font-size: 14px;
-    }
+.gradient {
+  background: linear-gradient(90deg, #f87171, #dc2626, #fb7185);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
 
-    .progress {
-      height: 10px;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #26364c;
-    }
+.hero p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
 
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 20px;
-      background: linear-gradient(90deg, #1687f8, #45d4ff);
-      transition: width .5s ease;
-    }
+.search-card {
+  max-width: 570px;
+  margin: 30px auto 0;
+  padding: 23px;
+  border: 1px solid #ffffff18;
+  border-radius: 18px;
+  background: #15151cdd;
+  box-shadow: 0 20px 70px #0007;
+  text-align: left;
+}
 
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 15px;
-    }
+label {
+  display: block;
+  color: #c5c5d0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
 
-    .stat {
-      padding: 15px;
-      border: 1px solid #263b54;
-      border-radius: 12px;
-      background: #101e30;
-    }
+.input-row {
+  display: flex;
+  gap: 10px;
+}
 
-    .stat-label {
-      color: #8fa3bc;
-      font-size: 11px;
-      margin-bottom: 9px;
-    }
+input {
+  min-width: 0;
+  flex: 1;
+  padding: 14px;
+  background: #09090f;
+  border: 1px solid #343442;
+  color: white;
+  border-radius: 10px;
+  outline: none;
+  font-size: 13px;
+}
 
-    .stat-value {
-      font-size: 20px;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
+input:focus { border-color: var(--red2); }
 
-    .details {
-      margin-top: 15px;
-      padding: 15px;
-      border: 1px solid #263b54;
-      border-radius: 12px;
-      background: #101e30;
-    }
+.primary-btn {
+  padding: 0 20px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #b91c1c, #ef4444);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .2s;
+}
 
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 9px 0;
-      border-bottom: 1px solid #26364a;
-      font-size: 12px;
-    }
+.primary-btn:hover { filter: brightness(1.15); }
+.primary-btn:disabled { opacity: .6; cursor: wait; }
 
-    .detail-row:last-child { border-bottom: 0; }
+#message {
+  min-height: 20px;
+  margin-top: 13px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
 
-    .detail-label { color: #8fa3bc; }
-    .detail-value {
-      color: #f5f7fb;
-      text-align: right;
-      overflow-wrap: anywhere;
-    }
+.error { color: #fb7777 !important; }
+.success { color: #4ade80 !important; }
 
-    .status {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 20px;
-      background: #123d31;
-      color: #4be0a0;
-      font-size: 11px;
-      font-weight: bold;
-    }
+.dashboard {
+  display: none;
+  padding: 20px 0 70px;
+}
 
-    .status.expired,
-    .status.limit-reached {
-      background: #482327;
-      color: #ff8585;
-    }
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
 
-    .refresh {
-      background: #172a40;
-      border: 1px solid #34506e;
-      margin-top: 15px;
-    }
+.section-heading h2 {
+  font-size: 20px;
+  margin: 0;
+}
 
-    .hidden { display: none !important; }
+.updated {
+  color: var(--muted);
+  font-size: 10px;
+  font-family: "JetBrains Mono", monospace;
+}
 
-    footer {
-      margin-top: 30px;
-      color: #71839b;
-      font-size: 11px;
-      text-align: center;
-      line-height: 1.7;
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
 
-    @media (max-width: 380px) {
-      .card { padding: 25px 17px; }
-      .stat-value { font-size: 17px; }
-    }
-  </style>
+.panel {
+  background: linear-gradient(145deg, #17171f, #101015);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 22px;
+  min-width: 0;
+  box-shadow: 0 12px 35px #0003;
+}
+
+.metric-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.metric-number {
+  font-size: 28px;
+  font-weight: 900;
+  margin-top: 13px;
+  letter-spacing: -1px;
+}
+
+.metric-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 7px;
+}
+
+.metric-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 15px;
+  background: #dc262620;
+  color: #f87171;
+}
+
+.green-icon {
+  background: #22c55e18;
+  color: #4ade80;
+}
+
+.blue-icon {
+  background: #3b82f618;
+  color: #60a5fa;
+}
+
+.analytics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.chart-panel h3 {
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+}
+
+.donut {
+  width: 155px;
+  height: 155px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(
+    var(--red2) 0deg,
+    #292936 0deg
+  );
+  position: relative;
+}
+
+.donut::before {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 119px;
+  background: #14141b;
+  border-radius: 50%;
+}
+
+.donut-content {
+  position: relative;
+  text-align: center;
+}
+
+.donut-content strong {
+  display: block;
+  font-size: 27px;
+}
+
+.donut-content span {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 12px;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.legend i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.used-dot { background: var(--red2); }
+.remaining-dot { background: #414151; }
+
+.bar-row { margin: 20px 0; }
+
+.bar-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  margin-bottom: 9px;
+}
+
+.bar-title span:first-child { color: var(--muted); }
+
+.bar {
+  height: 9px;
+  background: #292936;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 20px;
+  transition: width .7s ease;
+}
+
+.upload-fill {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+.download-fill {
+  background: linear-gradient(90deg, #b91c1c, #fb7185);
+}
+
+.info-panel {
+  margin-top: 16px;
+}
+
+.info-panel h3 {
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #ffffff0d;
+  font-size: 12px;
+}
+
+.info-row:last-child { border: 0; }
+.info-label { color: var(--muted); }
+.info-value { text-align: right; overflow-wrap: anywhere; }
+
+.status {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 6px 10px;
+  background: #14532d44;
+  color: #4ade80;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.status.bad {
+  background: #7f1d1d55;
+  color: #fca5a5;
+}
+
+.refresh-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 12px 22px;
+  border-radius: 10px;
+  border: 1px solid #ef444455;
+  background: #dc262615;
+  color: #ff8585;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+footer {
+  border-top: 1px solid #ffffff12;
+  padding: 25px 0;
+  text-align: center;
+  color: #686875;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.footer-brand {
+  color: white;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+@media(max-width: 700px) {
+  .nav-links { display: none; }
+  .hero { padding-top: 45px; }
+  .grid { grid-template-columns: 1fr 1fr; }
+  .analytics { grid-template-columns: 1fr; }
+  .metric-number { font-size: 23px; }
+}
+
+@media(max-width: 430px) {
+  .input-row { flex-direction: column; }
+  .primary-btn { min-height: 46px; }
+  .grid { gap: 10px; }
+  .panel { padding: 16px; }
+  .metric-number { font-size: 20px; }
+  .section-heading { align-items: flex-start; flex-direction: column; }
+}
+</style>
 </head>
 
 <body>
-  <main class="card">
 
-    <div class="brand">VEXORA</div>
-    <div class="subtitle">VPN CUSTOMER PORTAL</div>
+<header>
+  <div class="container nav">
+    <a class="brand" href="https://vexoralabs.com.lk">
+      <img src="../assets/images/vex.jpg" alt="Vexora Labs Logo">
+      <div>
+        <div class="brand-name">VEXORA LABS</div>
+        <span class="brand-tag">DIGITAL STORE • SRI LANKA</span>
+      </div>
+    </a>
 
-    <h2>Check Your Data Usage</h2>
+    <nav class="nav-links">
+      <a href="https://vexoralabs.com.lk">Home</a>
+      <a href="https://vexoralabs.com.lk/vpn.html">VPN Plans</a>
+      <a href="https://vexoralabs.com.lk/contact.html">Support</a>
+    </nav>
 
-    <p class="description">
-      Enter your personal Portal ID to view
-      your live VPN data usage information.
+    <a class="home-link" href="https://vexoralabs.com.lk">
+      <i class="fa-solid fa-house"></i> Home
+    </a>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <span class="badge">
+      <span class="dot"></span>
+      LIVE VPN MONITORING
+    </span>
+
+    <h1>YOUR DATA.<br><span class="gradient">YOUR CONTROL.</span></h1>
+
+    <p>
+      Monitor your VEXORA VPN subscription in real time.<br>
+      Enter your private Portal ID to access your dashboard.
     </p>
 
-    <form id="usageForm">
-      <label for="portalId">YOUR PORTAL ID</label>
+    <div class="search-card">
+      <form id="usageForm">
+        <label for="portalId">YOUR PRIVATE PORTAL ID</label>
+        <div class="input-row">
+          <input
+            id="portalId"
+            type="text"
+            placeholder="Enter your Portal ID"
+            autocomplete="off"
+            spellcheck="false"
+            maxlength="100"
+            required
+          >
+          <button id="submitBtn" class="primary-btn" type="submit">
+            <i class="fa-solid fa-chart-line"></i> CHECK USAGE
+          </button>
+        </div>
+      </form>
+      <div id="message" role="status" aria-live="polite"></div>
+    </div>
+  </section>
 
-      <input
-        id="portalId"
-        type="text"
-        placeholder="Enter your Portal ID"
-        autocomplete="off"
-        spellcheck="false"
-        required
-        maxlength="100"
-      >
+  <section id="dashboard" class="dashboard">
 
-      <button id="submitBtn" type="submit">
-        CHECK MY USAGE
-      </button>
-    </form>
+    <div class="section-heading">
+      <div>
+        <h2>Usage Overview</h2>
+        <div id="customerPackage" class="updated">Customer dashboard</div>
+      </div>
+      <div id="updatedAt" class="updated">Waiting for data</div>
+    </div>
 
-    <div id="message" role="status" aria-live="polite"></div>
+    <div class="grid">
 
-    <section id="dashboard" class="dashboard">
+      <article class="panel">
+        <div class="metric-icon"><i class="fa-solid fa-chart-column"></i></div>
+        <div class="metric-label">TOTAL DATA</div>
+        <div id="totalGB" class="metric-number">0 GB</div>
+        <div class="metric-note">Your package allowance</div>
+      </article>
 
-      <div class="customer">
-        <div id="customerName" class="customer-name">Customer</div>
-        <div id="packageName" class="package">VPN Package</div>
+      <article class="panel">
+        <div class="metric-icon"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
+        <div class="metric-label">DATA USED</div>
+        <div id="usedGB" class="metric-number">0 GB</div>
+        <div class="metric-note">Upload + Download</div>
+      </article>
+
+      <article class="panel">
+        <div class="metric-icon green-icon"><i class="fa-solid fa-database"></i></div>
+        <div class="metric-label">REMAINING</div>
+        <div id="remainingGB" class="metric-number">0 GB</div>
+        <div class="metric-note">Available data balance</div>
+      </article>
+
+    </div>
+
+    <div class="analytics">
+
+      <article class="panel chart-panel">
+        <h3><i class="fa-solid fa-chart-pie" style="color:#ef4444"></i> Data Distribution</h3>
+
+        <div class="donut-wrap">
+          <div id="donut" class="donut">
+            <div class="donut-content">
+              <strong id="usagePercent">0%</strong>
+              <span>USED</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="legend">
+          <span><i class="used-dot"></i> Used</span>
+          <span><i class="remaining-dot"></i> Remaining</span>
+        </div>
+      </article>
+
+      <article class="panel chart-panel">
+        <h3><i class="fa-solid fa-chart-bar" style="color:#ef4444"></i> Traffic Breakdown</h3>
+
+        <div class="bar-row">
+          <div class="bar-title">
+            <span>Download</span>
+            <strong id="downloadGB">0 GB</strong>
+          </div>
+          <div class="bar">
+            <div id="downloadBar" class="bar-fill download-fill"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-title">
+            <span>Upload</span>
+            <strong id="uploadGB">0 GB</strong>
+          </div>
+          <div class="bar">
+            <div id="uploadBar" class="bar-fill upload-fill"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-title">
+            <span>Total Usage</span>
+            <strong id="trafficPercent">0%</strong>
+          </div>
+          <div class="bar">
+            <div id="trafficBar" class="bar-fill download-fill"></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <article class="panel info-panel">
+      <h3><i class="fa-solid fa-circle-info" style="color:#ef4444"></i> Subscription Details</h3>
+
+      <div class="info-row">
+        <span class="info-label">Customer</span>
+        <strong id="customerName" class="info-value">-</strong>
       </div>
 
-      <div class="usage-box">
-        <div class="usage-heading">
-          <span>DATA USAGE</span>
-          <strong id="usagePercent">0%</strong>
-        </div>
-
-        <div
-          class="progress"
-          role="progressbar"
-          aria-label="Data usage"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="0"
-          id="progressBar"
-        >
-          <div id="progressFill" class="progress-fill"></div>
-        </div>
-
-        <div class="usage-heading" style="margin:12px 0 0">
-          <span id="usedLabel">0 GB Used</span>
-          <span id="totalLabel">0 GB Total</span>
-        </div>
+      <div class="info-row">
+        <span class="info-label">VPN Package</span>
+        <strong id="packageName" class="info-value">-</strong>
       </div>
 
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-label">DATA USED</div>
-          <div id="usedGB" class="stat-value">0 GB</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">REMAINING DATA</div>
-          <div id="remainingGB" class="stat-value">0 GB</div>
-        </div>
+      <div class="info-row">
+        <span class="info-label">VPN Server</span>
+        <strong id="server" class="info-value">-</strong>
       </div>
 
-      <div class="details">
-        <div class="detail-row">
-          <span class="detail-label">Total Package</span>
-          <span id="totalGB" class="detail-value">-</span>
-        </div>
-
-        <div class="detail-row">
-          <span class="detail-label">Upload</span>
-          <span id="uploadGB" class="detail-value">-</span>
-        </div>
-
-        <div class="detail-row">
-          <span class="detail-label">Download</span>
-          <span id="downloadGB" class="detail-value">-</span>
-        </div>
-
-        <div class="detail-row">
-          <span class="detail-label">Server</span>
-          <span id="server" class="detail-value">-</span>
-        </div>
-
-        <div class="detail-row">
-          <span class="detail-label">Expiry Date</span>
-          <span id="expiry" class="detail-value">-</span>
-        </div>
-
-        <div class="detail-row">
-          <span class="detail-label">Status</span>
-          <span id="status" class="detail-value">
-            <span class="status">Active</span>
-          </span>
-        </div>
+      <div class="info-row">
+        <span class="info-label">Expiry Date</span>
+        <strong id="expiry" class="info-value">-</strong>
       </div>
 
-      <button id="refreshBtn" class="refresh" type="button">
-        REFRESH USAGE
-      </button>
+      <div class="info-row">
+        <span class="info-label">Subscription Status</span>
+        <span id="status" class="info-value">
+          <span class="status">Checking</span>
+        </span>
+      </div>
+    </article>
 
-    </section>
+    <button id="refreshBtn" class="refresh-btn" type="button">
+      <i class="fa-solid fa-rotate"></i> REFRESH LIVE USAGE
+    </button>
 
-    <footer>
-      SECURE VPN USAGE PORTAL<br>
-      © VEXORA Labs
-    </footer>
+  </section>
 
-  </main>
+</main>
 
-  <script>
-    const API_URL =
-      "https://vexora-usage-api.vexora05.workers.dev/";
+<footer>
+  <div class="footer-brand">VEXORA LABS</div>
+  SECURE VPN USAGE PORTAL<br>
+  © 2026 Vexora Labs. All rights reserved.
+  <br>
+  <a href="https://vexoralabs.com.lk" style="color:#ef4444">Official Website</a>
+</footer>
 
-    const form = document.getElementById("usageForm");
-    const button = document.getElementById("submitBtn");
-    const refreshBtn = document.getElementById("refreshBtn");
-    const message = document.getElementById("message");
-    const dashboard = document.getElementById("dashboard");
-    const portalInput = document.getElementById("portalId");
+<script>
+const API_URL = "https://vexora-usage-api.vexora05.workers.dev/";
 
-    function showMessage(text, type = "") {
-      message.textContent = text;
-      message.className = type;
-    }
+const form = document.getElementById("usageForm");
+const input = document.getElementById("portalId");
+const submitBtn = document.getElementById("submitBtn");
+const refreshBtn = document.getElementById("refreshBtn");
+const message = document.getElementById("message");
+const dashboard = document.getElementById("dashboard");
 
-    function formatGB(value) {
-      const number = Number(value);
-      return Number.isFinite(number)
-        ? number.toFixed(2) + " GB"
-        : "-";
-    }
+function showMessage(text, type = "") {
+  message.textContent = text;
+  message.className = type;
+}
 
-    function formatDate(value) {
-      if (!value) return "Not available";
+function gb(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number.toFixed(2) + " GB" : "-";
+}
 
-      const date = new Date(value);
+function dateFormat(value) {
+  if (!value) return "Not available";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not available";
 
-      if (Number.isNaN(date.getTime())) {
-        return "Not available";
-      }
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+}
 
-      return new Intl.DateTimeFormat("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      }).format(date);
-    }
+function setText(id, value) {
+  document.getElementById(id).textContent = value;
+}
 
-    function displayUsage(data) {
-      const customer = data.customer || {};
-      const usage = data.usage || {};
+function displayUsage(data) {
+  const customer = data.customer || {};
+  const usage = data.usage || {};
 
-      document.getElementById("customerName").textContent =
-        customer.name || "Customer";
+  const used = Math.max(0, Number(usage.usedGB) || 0);
+  const remaining = Math.max(0, Number(usage.remainingGB) || 0);
+  const total = Math.max(0, Number(usage.totalGB) || 0);
+  const upload = Math.max(0, Number(usage.uploadGB) || 0);
+  const download = Math.max(0, Number(usage.downloadGB) || 0);
 
-      document.getElementById("packageName").textContent =
-        customer.packageName || "VPN Package";
+  const percent = usage.unlimited || total <= 0
+    ? 0
+    : Math.min(100, used / total * 100);
 
-      const used = Number(usage.usedGB) || 0;
-      const remaining = Number(usage.remainingGB) || 0;
-      const total = Number(usage.totalGB) || 0;
+  setText("customerName", customer.name || "Customer");
+  setText("packageName", customer.packageName || "VPN Package");
+  setText("customerPackage", customer.packageName || "Customer dashboard");
 
-      const percent = total > 0
-        ? Math.min(100, (used / total) * 100)
-        : 0;
+  setText("totalGB", usage.unlimited ? "Unlimited" : gb(total));
+  setText("usedGB", gb(used));
+  setText("remainingGB", usage.unlimited ? "Unlimited" : gb(remaining));
+  setText("uploadGB", gb(upload));
+  setText("downloadGB", gb(download));
 
-      document.getElementById("usagePercent").textContent =
-        percent.toFixed(1) + "%";
+  setText("usagePercent", percent.toFixed(1) + "%");
+  setText("trafficPercent", percent.toFixed(1) + "%");
 
-      document.getElementById("progressFill").style.width =
-        percent + "%";
+  document.getElementById("donut").style.background =
+    `conic-gradient(#ef4444 ${percent}%, #414151 ${percent}% 100%)`;
 
-      document.getElementById("progressBar")
-        .setAttribute("aria-valuenow", percent.toFixed(1));
+  const maxTraffic = Math.max(upload, download, 0.01);
 
-      document.getElementById("usedLabel").textContent =
-        formatGB(used) + " Used";
+  document.getElementById("uploadBar").style.width =
+    (upload / maxTraffic * 100) + "%";
 
-      document.getElementById("totalLabel").textContent =
-        usage.unlimited ? "Unlimited" : formatGB(total) + " Total";
+  document.getElementById("downloadBar").style.width =
+    (download / maxTraffic * 100) + "%";
 
-      document.getElementById("usedGB").textContent =
-        formatGB(used);
+  document.getElementById("trafficBar").style.width =
+    percent + "%";
 
-      document.getElementById("remainingGB").textContent =
-        usage.unlimited ? "Unlimited" : formatGB(remaining);
+  setText("server", data.server || "-");
+  setText("expiry", dateFormat(usage.expiry));
+  setText("updatedAt", "Updated: " + dateFormat(data.updatedAt));
 
-      document.getElementById("totalGB").textContent =
-        usage.unlimited ? "Unlimited" : formatGB(total);
+  const statusText = usage.status || "Unknown";
+  const status = document.createElement("span");
+  status.className = "status";
+  status.textContent = statusText;
 
-      document.getElementById("uploadGB").textContent =
-        formatGB(usage.uploadGB);
+  if (["expired", "limit reached"].includes(statusText.toLowerCase())) {
+    status.classList.add("bad");
+  }
 
-      document.getElementById("downloadGB").textContent =
-        formatGB(usage.downloadGB);
+  document.getElementById("status").replaceChildren(status);
+  dashboard.style.display = "block";
+}
 
-      document.getElementById("server").textContent =
-        data.server || "-";
+async function checkUsage() {
+  const portalId = input.value.trim();
 
-      document.getElementById("expiry").textContent =
-        formatDate(usage.expiry);
+  if (!portalId) {
+    showMessage("Please enter your Portal ID.", "error");
+    return;
+  }
 
-      const status = document.createElement("span");
-      status.className = "status";
+  submitBtn.disabled = true;
+  refreshBtn.disabled = true;
+  submitBtn.textContent = "LOADING...";
+  showMessage("Fetching your live VPN usage...");
 
-      const statusText = usage.status || "Unknown";
-      status.textContent = statusText;
-
-      if (statusText.toLowerCase() === "expired") {
-        status.classList.add("expired");
-      } else if (statusText.toLowerCase() === "limit reached") {
-        status.classList.add("limit-reached");
-      }
-
-      const statusContainer = document.getElementById("status");
-      statusContainer.replaceChildren(status);
-
-      dashboard.style.display = "block";
-    }
-
-    async function checkUsage() {
-      const portalId = portalInput.value.trim();
-
-      if (!portalId) {
-        showMessage("Please enter your Portal ID.", "error");
-        return;
-      }
-
-      button.disabled = true;
-      refreshBtn.disabled = true;
-      button.textContent = "CHECKING...";
-      showMessage("Connecting securely to VEXORA servers...");
-
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ portalId })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(
-            data.error || "Unable to retrieve usage information."
-          );
-        }
-
-        displayUsage(data);
-        showMessage(
-          "Usage information updated successfully.",
-          "success"
-        );
-
-      } catch (error) {
-        dashboard.style.display = "none";
-
-        const knownErrors = {
-          "Portal ID not found":
-            "Invalid Portal ID. Please check your ID.",
-          "Customer subscription URL is missing":
-            "Your subscription is not configured. Contact VEXORA support.",
-          "Subscription provider unavailable":
-            "VPN server is temporarily unavailable. Try again later.",
-          "Usage information unavailable":
-            "Usage information is currently unavailable.",
-          "Invalid subscription address":
-            "Subscription configuration error. Contact support."
-        };
-
-        showMessage(
-          knownErrors[error.message] ||
-          "Connection failed. Please try again later.",
-          "error"
-        );
-
-        console.error("Usage request failed:", error);
-
-      } finally {
-        button.disabled = false;
-        refreshBtn.disabled = false;
-        button.textContent = "CHECK MY USAGE";
-      }
-    }
-
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-      checkUsage();
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ portalId })
     });
 
-    refreshBtn.addEventListener("click", checkUsage);
-  </script>
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Unable to retrieve usage.");
+    }
+
+    displayUsage(data);
+    showMessage("Your usage has been updated successfully.", "success");
+
+  } catch (error) {
+    dashboard.style.display = "none";
+
+    const messages = {
+      "Portal ID not found": "Invalid Portal ID. Please check and try again.",
+      "Customer subscription URL is missing": "Subscription not configured. Contact VEXORA support.",
+      "Subscription provider unavailable": "VPN server temporarily unavailable. Try again later.",
+      "Usage information unavailable": "Usage information is currently unavailable.",
+      "Invalid subscription address": "Subscription configuration error. Contact support."
+    };
+
+    showMessage(
+      messages[error.message] || "Connection failed. Please try again later.",
+      "error"
+    );
+
+    console.error("Usage API error:", error);
+
+  } finally {
+    submitBtn.disabled = false;
+    refreshBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fa-solid fa-chart-line"></i> CHECK USAGE';
+  }
+}
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  checkUsage();
+});
+
+refreshBtn.addEventListener("click", checkUsage);
+</script>
+
 </body>
 </html>
 ```
