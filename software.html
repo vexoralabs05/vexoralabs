@@ -379,15 +379,27 @@
             max-width: 44px; max-height: 44px; object-fit: contain;
             border-radius: 9px; margin: auto;
         }
-        #softwareGrid .vexora-product-heading-wrap { min-width: 0; flex: 1 1 auto; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px 10px; }
-        #softwareGrid [class*="rounded-full"], #softwareGrid [class*="badge"], #softwareGrid [class*="tag"] { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+        #softwareGrid .vexora-product-heading-wrap { min-width: 0; flex: 1 1 150px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px 10px; }
+        /* Product promo badges must participate in normal layout, never float over titles. */
+        #softwareGrid .vexora-product-badge {
+            position: static !important; inset: auto !important; transform: none !important;
+            display: inline-flex !important; align-items: center; justify-content: center;
+            flex: 0 1 auto; width: fit-content; max-width: 100%; min-width: 0;
+            margin: 0 0 6px auto; padding: 5px 11px; line-height: 1.25;
+            white-space: normal !important; overflow-wrap: anywhere; text-align: center;
+        }
+        #softwareGrid .vexora-product-header {
+            display: flex !important; flex-wrap: wrap !important; align-items: flex-start !important;
+            column-gap: 12px; row-gap: 8px; min-width: 0;
+        }
+        #softwareGrid [class*="rounded-full"], #softwareGrid [class*="badge"], #softwareGrid [class*="tag"] {
+            max-width: 100%; white-space: normal; overflow-wrap: anywhere;
+        }
         #softwareGrid .vexora-product-tag-wrap {
             display: flex; flex-wrap: wrap; align-items: center;
             gap: 5px; max-width: 100%; min-width: 0;
         }
-        #softwareGrid .vexora-product-tag-wrap > * {
-            max-width: 100%; white-space: normal; overflow-wrap: anywhere;
-        }
+        #softwareGrid .vexora-product-tag-wrap > * { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
         #softwareGrid .vexora-gemini-logo { width: 44px; height: 44px; display: block; }
     </style>
     <script>
@@ -468,10 +480,31 @@
                 const heading = card.querySelector('h1,h2,h3,h4,[class*="product-title"]');
                 if (heading) {
                     heading.style.whiteSpace = 'normal';
-                    heading.style.overflowWrap = 'anywhere';
+                    heading.style.overflowWrap = 'break-word';
+                    heading.style.wordBreak = 'normal';
                     const headingParent = heading.parentElement;
                     if (headingParent && headingParent !== card) headingParent.classList.add('vexora-product-heading-wrap');
                 }
+
+                // Find the promotional pill (e.g. Trending Hot / Best Seller) and
+                // take it out of absolute positioning so it cannot cover the title.
+                const badgeCandidates = Array.from(card.querySelectorAll('*')).filter(el => {
+                    if (el.children.length > 3) return false;
+                    const label = (el.textContent || '').trim();
+                    if (!label || label.length > 48) return false;
+                    const looksLikeBadge = /trending|best seller|creator choice|new 20|hot|popular|featured|sale|% off/i.test(label);
+                    const hasBadgeClass = /badge|tag|rounded-full/i.test(String(el.className || ''));
+                    return looksLikeBadge && (hasBadgeClass || getComputedStyle(el).position === 'absolute');
+                });
+                badgeCandidates.forEach(badge => {
+                    badge.classList.add('vexora-product-badge');
+                    const badgeParent = badge.parentElement;
+                    if (badgeParent && badgeParent !== card) badgeParent.classList.add('vexora-product-header');
+                    badge.style.position = 'static';
+                    badge.style.top = 'auto'; badge.style.right = 'auto';
+                    badge.style.bottom = 'auto'; badge.style.left = 'auto';
+                    badge.style.transform = 'none';
+                });
             });
         }
 
