@@ -358,16 +358,12 @@
     <script src="assets/js/software.js"></script>
 
     <style>
-        /* Product-card logo and text layout fixes */
-        #softwareGrid > * { min-width: 0; }
-        #softwareGrid h2, #softwareGrid h3, #softwareGrid h4,
-        #softwareGrid .product-title, #softwareGrid [class*="product-title"] {
-            min-width: 0;
-            max-width: 100%;
-            white-space: normal !important;
-            overflow-wrap: anywhere;
-            word-break: normal;
-            line-height: 1.3;
+        /* Universal product-card layout: apply to every product, not only logo matches. */
+        #softwareGrid > * { min-width: 0; position: relative; }
+        #softwareGrid h1, #softwareGrid h2, #softwareGrid h3, #softwareGrid h4,
+        #softwareGrid [class*="title"] {
+            min-width: 0; max-width: 100%; white-space: normal !important;
+            overflow-wrap: anywhere; word-break: normal; line-height: 1.3;
         }
         #softwareGrid .vexora-product-logo-box {
             position: relative; overflow: hidden; flex: 0 0 60px;
@@ -375,31 +371,29 @@
             display: flex; align-items: center; justify-content: center;
         }
         #softwareGrid .vexora-product-logo {
-            display: block; width: 44px; height: 44px;
-            max-width: 44px; max-height: 44px; object-fit: contain;
-            border-radius: 9px; margin: auto;
+            display: block; width: 44px; height: 44px; max-width: 44px;
+            max-height: 44px; object-fit: contain; border-radius: 9px; margin: auto;
         }
-        #softwareGrid .vexora-product-heading-wrap { min-width: 0; flex: 1 1 150px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px 10px; }
-        /* Product promo badges must participate in normal layout, never float over titles. */
         #softwareGrid .vexora-product-badge {
             position: static !important; inset: auto !important; transform: none !important;
             display: inline-flex !important; align-items: center; justify-content: center;
             flex: 0 1 auto; width: fit-content; max-width: 100%; min-width: 0;
-            margin: 0 0 6px auto; padding: 5px 11px; line-height: 1.25;
-            white-space: normal !important; overflow-wrap: anywhere; text-align: center;
+            margin: 0 0 6px auto !important; padding: 5px 11px;
+            line-height: 1.25; white-space: normal !important;
+            overflow-wrap: anywhere; text-align: center; vertical-align: top;
         }
         #softwareGrid .vexora-product-header {
-            display: flex !important; flex-wrap: wrap !important; align-items: flex-start !important;
-            column-gap: 12px; row-gap: 8px; min-width: 0;
-        }
-        #softwareGrid [class*="rounded-full"], #softwareGrid [class*="badge"], #softwareGrid [class*="tag"] {
-            max-width: 100%; white-space: normal; overflow-wrap: anywhere;
+            display: flex !important; flex-wrap: wrap !important;
+            align-items: flex-start !important; column-gap: 12px; row-gap: 8px;
+            min-width: 0; max-width: 100%;
         }
         #softwareGrid .vexora-product-tag-wrap {
             display: flex; flex-wrap: wrap; align-items: center;
             gap: 5px; max-width: 100%; min-width: 0;
         }
-        #softwareGrid .vexora-product-tag-wrap > * { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+        #softwareGrid .vexora-product-tag-wrap > * {
+            max-width: 100%; white-space: normal !important; overflow-wrap: anywhere;
+        }
         #softwareGrid .vexora-gemini-logo { width: 44px; height: 44px; display: block; }
     </style>
     <script>
@@ -438,88 +432,112 @@
             return svg;
         }
 
-        function getCardTitle(card) {
-            const heading = card.querySelector('h1,h2,h3,h4,[class*="product-title"]');
-            return heading ? heading.textContent.trim() : '';
+        function titleFor(card) {
+            return card.querySelector('h1,h2,h3,h4,[class*="product-title"],[class*="title"]');
         }
 
-        function applyProductLogos() {
-            const grid = document.getElementById('softwareGrid');
-            if (!grid) return;
-            Array.from(grid.children).forEach(card => {
-                if (!(card instanceof HTMLElement)) return;
-                const title = getCardTitle(card);
-                if (!title) return;
-                const isGemini = /\bgemini\b/i.test(title);
-                const logo = productLogos.find(item => item.match.test(title));
-                if (!isGemini && !logo) return;
-
-                const icon = card.querySelector('i[class*="fa-"]');
-                if (!icon) return;
-                const iconBox = icon.parentElement;
-                if (!iconBox || iconBox.dataset.vexoraLogoApplied === 'true') return;
-
-                let visual;
-                if (isGemini) {
-                    visual = geminiMark();
-                } else {
-                    visual = document.createElement('img');
-                    visual.src = logo.src;
-                    visual.alt = logo.alt + ' logo';
-                    visual.loading = 'lazy';
-                    visual.decoding = 'async';
-                    visual.className = 'vexora-product-logo';
-                    visual.onerror = () => { visual.remove(); icon.style.display = ''; };
+        function normalizeBadge(badge, heading) {
+            badge.classList.add('vexora-product-badge');
+            // Also neutralize positioned wrappers, which commonly carry the absolute utility class.
+            let node = badge;
+            for (let depth = 0; node && node !== heading && depth < 3; depth++, node = node.parentElement) {
+                if (getComputedStyle(node).position === 'absolute' || getComputedStyle(node).position === 'fixed') {
+                    node.style.setProperty('position', 'static', 'important');
+                    node.style.setProperty('inset', 'auto', 'important');
+                    node.style.setProperty('top', 'auto', 'important');
+                    node.style.setProperty('right', 'auto', 'important');
+                    node.style.setProperty('bottom', 'auto', 'important');
+                    node.style.setProperty('left', 'auto', 'important');
+                    node.style.setProperty('transform', 'none', 'important');
+                    node.style.setProperty('float', 'none', 'important');
                 }
-
-                icon.style.display = 'none';
-                iconBox.appendChild(visual);
-                iconBox.classList.add('vexora-product-logo-box');
-                iconBox.dataset.vexoraLogoApplied = 'true';
-
-                const heading = card.querySelector('h1,h2,h3,h4,[class*="product-title"]');
-                if (heading) {
-                    heading.style.whiteSpace = 'normal';
-                    heading.style.overflowWrap = 'break-word';
-                    heading.style.wordBreak = 'normal';
-                    const headingParent = heading.parentElement;
-                    if (headingParent && headingParent !== card) headingParent.classList.add('vexora-product-heading-wrap');
-                }
-
-                // Find the promotional pill (e.g. Trending Hot / Best Seller) and
-                // take it out of absolute positioning so it cannot cover the title.
-                const badgeCandidates = Array.from(card.querySelectorAll('*')).filter(el => {
-                    if (el.children.length > 3) return false;
-                    const label = (el.textContent || '').trim();
-                    if (!label || label.length > 48) return false;
-                    const looksLikeBadge = /trending|best seller|creator choice|new 20|hot|popular|featured|sale|% off/i.test(label);
-                    const hasBadgeClass = /badge|tag|rounded-full/i.test(String(el.className || ''));
-                    return looksLikeBadge && (hasBadgeClass || getComputedStyle(el).position === 'absolute');
-                });
-                badgeCandidates.forEach(badge => {
-                    badge.classList.add('vexora-product-badge');
-                    const badgeParent = badge.parentElement;
-                    if (badgeParent && badgeParent !== card) badgeParent.classList.add('vexora-product-header');
-                    badge.style.position = 'static';
-                    badge.style.top = 'auto'; badge.style.right = 'auto';
-                    badge.style.bottom = 'auto'; badge.style.left = 'auto';
-                    badge.style.transform = 'none';
-                });
-            });
-        }
-
-        function initProductLogos() {
-            applyProductLogos();
-            const grid = document.getElementById('softwareGrid');
-            if (grid) {
-                new MutationObserver(() => requestAnimationFrame(applyProductLogos)).observe(grid, {
-                    childList: true, subtree: true
-                });
+            }
+            badge.style.setProperty('position', 'static', 'important');
+            badge.style.setProperty('inset', 'auto', 'important');
+            badge.style.setProperty('top', 'auto', 'important');
+            badge.style.setProperty('right', 'auto', 'important');
+            badge.style.setProperty('bottom', 'auto', 'important');
+            badge.style.setProperty('left', 'auto', 'important');
+            badge.style.setProperty('transform', 'none', 'important');
+            const parent = badge.parentElement;
+            if (parent && heading && (parent === heading.parentElement || parent.contains(heading))) {
+                parent.classList.add('vexora-product-header');
             }
         }
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initProductLogos, { once: true });
-        } else initProductLogos();
+
+        function applyToCard(card) {
+            if (!(card instanceof HTMLElement)) return;
+            const heading = titleFor(card);
+            if (heading) {
+                heading.style.setProperty('white-space', 'normal', 'important');
+                heading.style.setProperty('overflow-wrap', 'anywhere', 'important');
+                heading.style.setProperty('max-width', '100%', 'important');
+                const headingParent = heading.parentElement;
+                if (headingParent) headingParent.style.minWidth = '0';
+            }
+
+            // Crucially, badge cleanup runs for EVERY card, including products without a custom logo.
+            const badgeCandidates = Array.from(card.querySelectorAll('*')).filter(el => {
+                if (el.children.length > 2) return false;
+                const label = (el.textContent || '').trim();
+                if (!label || label.length > 64) return false;
+                const cls = typeof el.className === 'string' ? el.className : '';
+                const style = getComputedStyle(el);
+                const pillClass = /badge|tag|rounded-full|pill/i.test(cls);
+                const positioned = style.position === 'absolute' || style.position === 'fixed';
+                const badgeText = /trending|best seller|creator choice|new\s?20\d\d|hot|popular|featured|sale|\boff\b|limited|top pick|recommended|exclusive|\bnew\b/i.test(label);
+                return pillClass || (positioned && (badgeText || el.children.length === 0));
+            });
+            badgeCandidates.forEach(el => normalizeBadge(el, heading));
+
+            if (!heading) return;
+            const title = heading.textContent.trim();
+            const isGemini = /\bgemini\b/i.test(title);
+            const logo = productLogos.find(item => item.match.test(title));
+            if (!isGemini && !logo) return;
+
+            const headerScope = heading.parentElement || card;
+            const icon = headerScope.querySelector('i[class*="fa-"]') || card.querySelector('i[class*="fa-"]');
+            if (!icon) return;
+            const iconBox = icon.parentElement;
+            if (!iconBox || iconBox.dataset.vexoraLogoApplied === 'true') return;
+
+            let visual;
+            if (isGemini) visual = geminiMark();
+            else {
+                visual = document.createElement('img');
+                visual.src = logo.src; visual.alt = logo.alt + ' logo';
+                visual.loading = 'lazy'; visual.decoding = 'async';
+                visual.className = 'vexora-product-logo';
+                visual.onerror = () => { visual.remove(); icon.style.display = ''; };
+            }
+            icon.style.display = 'none';
+            iconBox.appendChild(visual);
+            iconBox.classList.add('vexora-product-logo-box');
+            iconBox.dataset.vexoraLogoApplied = 'true';
+        }
+
+        function applyProductFixes() {
+            const grid = document.getElementById('softwareGrid');
+            if (!grid) return;
+            Array.from(grid.children).forEach(applyToCard);
+        }
+
+        function initProductFixes() {
+            applyProductFixes();
+            const grid = document.getElementById('softwareGrid');
+            if (grid) {
+                let queued = false;
+                const observer = new MutationObserver(() => {
+                    if (queued) return;
+                    queued = true;
+                    requestAnimationFrame(() => { queued = false; applyProductFixes(); });
+                });
+                observer.observe(grid, { childList: true, subtree: true });
+            }
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProductFixes, { once: true });
+        else initProductFixes();
     })();
     </script>
 </body>
