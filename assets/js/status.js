@@ -14,7 +14,7 @@ function render(data){
  $('overall-label').textContent=overall==='up'?'All Systems Operational':overall==='down'?'Service disruption detected':'Some monitor data is unavailable';
  $('overall-pill').textContent=labels[overall];
  $('overall-card').querySelector('.overall-icon i').className=overall==='up'?'fa-solid fa-circle-check':overall==='down'?'fa-solid fa-circle-xmark':'fa-solid fa-circle-question';
- $('updated-label').textContent='PXN snapshot polled: '+date(data.updatedAt);
+ $('updated-label').textContent='Vexora Labs status last updated: '+date(data.updatedAt);
  $('stat-total').textContent=services.length;$('stat-up').textContent=counts.up;$('stat-issues').textContent=counts.down+counts.unknown;
  $('stat-sync').textContent=data.updatedAt?new Date(data.updatedAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'—';
  var groups={};services.forEach(function(s){(groups[s.group||'Services']=groups[s.group||'Services']||[]).push(s);});
