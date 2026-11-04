@@ -159,6 +159,18 @@ def main():
             if not isinstance(stats, dict):
                 stats = {}
 
+            # Compact, hostname-free history for the public uptime graph.
+            public_history = []
+            for point in history[-48:]:
+                if not isinstance(point, dict):
+                    continue
+                point_status = point.get("status")
+                public_history.append({
+                    "status": "up" if point_status == 1 else "down" if point_status == 0 else "unknown",
+                    "time": point.get("time"),
+                    "ping": point.get("ping"),
+                })
+
             services.append({
                 "id": mid,
                 "name": monitor.get("name") or f"Monitor {mid}",
@@ -167,6 +179,7 @@ def main():
                 "status": state,
                 "ping": latest.get("ping"),
                 "lastCheck": latest.get("time"),
+                "history": public_history,
                 "message": ("TCP server monitor" if str(monitor.get("type", "")).lower() == "tcp" else "DNS monitor" if str(monitor.get("type", "")).lower() == "dns" else "Service monitor"),
                 "uptime24h": uptime.get(f"{mid}_24"),
                 "cpu": stats.get("cpu"),
