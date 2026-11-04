@@ -1,4 +1,3 @@
-\
 #!/usr/bin/env python3
 """Fetch the upstream status snapshot and normalize it for Vexora's status page."""
 
