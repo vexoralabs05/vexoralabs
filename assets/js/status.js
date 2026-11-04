@@ -19,19 +19,28 @@ function render(data){
  $('stat-sync').textContent=data.updatedAt?new Date(data.updatedAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'—';
  var groups={};services.forEach(function(s){(groups[s.group||'Services']=groups[s.group||'Services']||[]).push(s);});
  $('service-list').innerHTML=Object.keys(groups).map(function(g){return '<div class="service-group-title">'+esc(g)+'</div>'+groups[g].map(function(s){
-  var state=s.status||'unknown', resources=metric('Ping',s.ping==null?null:s.ping+' ms')+metric('24h uptime',pct(s.uptime24h))+metric('CPU',s.cpu==null?null:s.cpu+'%')+metric('RAM',s.memory==null?null:s.memory+'%')+metric('Disk',s.disk==null?null:s.disk+'%');
+  var state=labels[s.status]?s.status:'unknown', resources=metric('Ping',s.ping==null?null:s.ping+' ms')+metric('24h uptime',pct(s.uptime24h))+metric('CPU',s.cpu==null?null:s.cpu+'%')+metric('RAM',s.memory==null?null:s.memory+'%')+metric('Disk',s.disk==null?null:s.disk+'%');
   return '<article class="service-row"><div class="service-main"><div class="service-name">'+esc(s.name)+'</div><div class="service-meta">'+esc(s.type==='tcp'?'TCP server monitor':s.type==='dns'?'DNS monitor':'Service monitor')+'</div><div class="status-metrics">'+resources+'</div></div><span class="service-status state-'+esc(state)+'">'+labels[state]+'</span></article>';
  }).join('');}).join('');
  var ih=$('incident-list');
  ih.className=incidents.length?'':'status-empty';
  ih.innerHTML=incidents.length?incidents.map(function(i){return '<article class="incident-card"><div class="incident-title">'+esc(i.title)+'</div><div class="incident-desc">'+esc(i.description)+'</div><div class="incident-date">'+esc(date(i.updatedAt||i.createdAt))+' · '+esc(i.status||'Update')+'</div></article>';}).join(''):'<i class="fa-solid fa-circle-check"></i><strong>No incident records</strong>';
- if(maintenance.length){
-  var mh=document.getElementById('maintenance-list');
-  if(!mh){mh=document.createElement('div');mh.id='maintenance-list';ih.parentNode.insertBefore(mh,ih.nextSibling);}
-  mh.innerHTML='<h2 class="text-2xl font-extrabold text-white mt-10 mb-5">Maintenance history</h2>'+maintenance.map(function(m){return '<article class="incident-card"><div class="incident-title">'+esc(m.title)+'</div><div class="incident-desc">'+esc(m.description)+'</div><div class="incident-date">'+esc(date(m.startDate))+' – '+esc(date(m.endDate))+' · '+(m.active?'Active':'Inactive')+'</div></article>';}).join('');
+ var maintenanceSection=$('maintenance-section');
+ var maintenanceList=$('maintenance-list');
+ if(maintenanceSection&&maintenanceList){
+  if(maintenance.length){
+   maintenanceSection.classList.remove('hidden');
+   maintenanceList.innerHTML=maintenance.map(function(m){
+    var period=[date(m.startDate),date(m.endDate)].filter(function(v){return v!=='Time unavailable';}).join(' – ');
+    return '<article class="incident-card"><div class="incident-title">'+esc(m.title||'Scheduled maintenance')+'</div><div class="incident-desc">'+esc(m.description||'No additional details provided.')+'</div><div class="incident-date">'+esc(period||'Schedule unavailable')+' · '+(m.active?'Active':'Completed')+'</div></article>';
+   }).join('');
+  }else{
+   maintenanceSection.classList.add('hidden');
+   maintenanceList.innerHTML='';
+  }
  }
 }
 function load(){fetch(DATA_URL+'?v='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json();}).then(render).catch(function(){$('updated-label').textContent='Unable to load status data';});}
 var menu=$('status-menu-btn'),mobile=$('status-mobile-menu');if(menu&&mobile)menu.addEventListener('click',function(){var open=mobile.classList.contains('hidden');mobile.classList.toggle('hidden',!open);menu.setAttribute('aria-expanded',String(open));});
-$('status-year').textContent=new Date().getFullYear();load();setInterval(load,60000);
+if($('status-year'))$('status-year').textContent=new Date().getFullYear();load();setInterval(load,60000);
 })();
