@@ -20,7 +20,9 @@ function render(data){
  var groups={};services.forEach(function(s){(groups[s.group||'Services']=groups[s.group||'Services']||[]).push(s);});
  $('service-list').innerHTML=Object.keys(groups).map(function(g){return '<div class="service-group-title">'+esc(g)+'</div>'+groups[g].map(function(s){
   var state=labels[s.status]?s.status:'unknown', resources=metric('Ping',s.ping==null?null:s.ping+' ms')+metric('24h uptime',pct(s.uptime24h))+metric('CPU',s.cpu==null?null:s.cpu+'%')+metric('RAM',s.memory==null?null:s.memory+'%')+metric('Disk',s.disk==null?null:s.disk+'%');
-  return '<article class="service-row"><div class="service-main"><div class="service-name">'+esc(s.name)+'</div><div class="service-meta">'+esc(s.type==='tcp'?'TCP server monitor':s.type==='dns'?'DNS monitor':'Service monitor')+'</div><div class="status-metrics">'+resources+'</div></div><span class="service-status state-'+esc(state)+'">'+labels[state]+'</span></article>';
+  var history=Array.isArray(s.history)?s.history:[];
+  var graph=history.length?'<div class="uptime-graph" role="img" aria-label="Recent server check history">'+history.map(function(point){var hs=labels[point.status]?point.status:'unknown';return '<span class="uptime-segment uptime-'+hs+'" title="'+esc(date(point.time))+(point.ping!=null?' · '+esc(point.ping)+' ms':'')+'"></span>';}).join('')+'</div><div class="uptime-graph-caption"><span>Recent checks</span><span>'+history.length+' samples</span></div>':'<div class="uptime-graph-empty">Historical checks will appear after the next status sync.</div>';
+  return '<article class="service-row"><div class="service-main"><div class="service-heading"><div><div class="service-name">'+esc(s.name)+'</div><div class="service-meta">'+esc(s.type==='tcp'?'TCP server monitor':s.type==='dns'?'DNS monitor':'Service monitor')+'</div></div><span class="service-status state-'+esc(state)+'">'+labels[state]+'</span></div>'+graph+'<div class="status-metrics">'+resources+'</div></div></article>';
  }).join('');}).join('');
  var ih=$('incident-list');
  ih.className=incidents.length?'':'status-empty';
@@ -42,5 +44,5 @@ function render(data){
 }
 function load(){fetch(DATA_URL+'?v='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json();}).then(render).catch(function(){$('updated-label').textContent='Unable to load status data';});}
 var menu=$('status-menu-btn'),mobile=$('status-mobile-menu');if(menu&&mobile)menu.addEventListener('click',function(){var open=mobile.classList.contains('hidden');mobile.classList.toggle('hidden',!open);menu.setAttribute('aria-expanded',String(open));});
-if($('status-year'))$('status-year').textContent=new Date().getFullYear();load();setInterval(load,60000);
+if($('status-year'))if($('status-year'))$('status-year').textContent=new Date().getFullYear();load();setInterval(load,60000);
 })();
