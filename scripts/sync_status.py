@@ -167,7 +167,7 @@ def main():
                 "status": state,
                 "ping": latest.get("ping"),
                 "lastCheck": latest.get("time"),
-                "message": latest.get("msg") or "",
+                "message": ("TCP server monitor" if str(monitor.get("type", "")).lower() == "tcp" else "DNS monitor" if str(monitor.get("type", "")).lower() == "dns" else "Service monitor"),
                 "uptime24h": uptime.get(f"{mid}_24"),
                 "cpu": stats.get("cpu"),
                 "memory": stats.get("memory"),
@@ -214,7 +214,7 @@ def main():
 
     # Build the Vexora status feed.
     result = {
-        "provider": "Vexora Status",
+        "provider": "Vexora Labs",
         "sourceTitle": "Vexora Labs Status",
         "updatedAt": (
             snap.get("polledAt")
