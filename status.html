@@ -1,72 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vexora Labs Status | Service Availability</title>
-  <meta name="description" content="Live service availability and incident updates for Vexora Labs VPN services.">
-  <meta name="theme-color" content="#09090b">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vexora Labs Status | System Availability</title>
+  <meta name="description" content="Live service availability, server performance and incident updates from Vexora Labs.">
+  <meta name="theme-color" content="#09070f">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23dc2626'/%3E%3Cpath d='M30 30 L50 72 L70 30' stroke='white' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/status.css">
+  <link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/status.css">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
-<header class="sticky top-0 z-50 glass-header">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-[72px]">
-      <a href="index.html" class="flex items-center gap-3 group">
-        <img src="assets/images/vex.jpg" alt="Vexora Labs" class="w-11 h-11 rounded-xl object-cover shadow-lg border border-brand-400/20">
-        <span><strong class="font-extrabold text-xl tracking-tight text-white block leading-none">Vexora Labs</strong><small class="text-[9px] font-mono uppercase tracking-[0.2em] text-brand-400 font-bold">Infrastructure Status</small></span>
-      </a>
-      <nav class="hidden lg:flex items-center gap-6">
-        <a href="index.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">Home</a>
-        <a href="vpn.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">VPN Configs</a>
-        <a href="pricing.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">Pricing</a>
-        <a href="status.html" aria-current="page" class="nav-link text-[13px] font-semibold text-white">Status</a>
-        <a href="contact.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">Contact</a>
-      </nav>
-      <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-brand-600 hover:bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white"><i class="fa-brands fa-whatsapp"></i> Support</a>
-      <button id="status-menu-btn" class="lg:hidden p-2.5 text-gray-300 bg-[#111116] border border-[#1e1e2a] rounded-xl" aria-expanded="false" aria-controls="status-mobile-menu"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </div>
-  <div id="status-mobile-menu" class="hidden lg:hidden bg-[#0c0c10] border-b border-[#1e1e2a] px-4 py-4 space-y-1">
-    <a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="index.html">Home</a>
-    <a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="vpn.html">VPN Configs</a>
-    <a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="pricing.html">Pricing</a>
-    <a class="block rounded-lg px-4 py-3 text-sm text-white bg-white/5" href="status.html">Status</a>
-    <a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="contact.html">Contact</a>
-  </div>
-</header>
+<header class="sticky top-0 z-50 glass-header"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center h-[72px]">
+  <a href="index.html" class="flex items-center gap-3"><img src="assets/images/vex.jpg" alt="Vexora Labs" class="w-11 h-11 rounded-xl object-cover border border-brand-400/20"><span><strong class="font-extrabold text-xl tracking-tight text-white block leading-none">Vexora Labs</strong><small class="text-[9px] font-mono uppercase tracking-[.2em] text-brand-400 font-bold">Network Status</small></span></a>
+  <nav class="hidden lg:flex items-center gap-6"><a href="index.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">Home</a><a href="vpn.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">VPN Configs</a><a href="pricing.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">Pricing</a><a href="status.html" aria-current="page" class="nav-link text-[13px] font-semibold text-white">Status</a><a href="contact.html" class="nav-link text-[13px] font-semibold text-gray-300 hover:text-white">Contact</a></nav>
+  <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-brand-600 hover:bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white"><i class="fa-brands fa-whatsapp"></i> Support</a>
+  <button id="status-menu-btn" class="lg:hidden p-2.5 text-gray-300 bg-[#111116] border border-[#1e1e2a] rounded-xl" aria-expanded="false" aria-controls="status-mobile-menu" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+</div></div><div id="status-mobile-menu" class="hidden lg:hidden bg-[#0c0c10] border-b border-[#1e1e2a] px-4 py-4 space-y-1"><a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="index.html">Home</a><a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="vpn.html">VPN Configs</a><a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="pricing.html">Pricing</a><a class="block rounded-lg px-4 py-3 text-sm text-white bg-white/5" href="status.html">Status</a><a class="block rounded-lg px-4 py-3 text-sm text-gray-300 hover:bg-white/5" href="contact.html">Contact</a></div></header>
 <main class="flex-grow status-page">
-  <section class="status-hero">
-    <div class="status-orb status-orb-one"></div><div class="status-orb status-orb-two"></div>
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative z-10">
-      <div class="inline-flex items-center gap-2 rounded-full border border-brand-500/25 bg-brand-500/10 px-4 py-2 text-xs font-bold tracking-wide text-brand-300"><span class="status-live-dot"></span> VEXORA NETWORK MONITOR</div>
-      <h1 class="mt-6 text-4xl sm:text-6xl font-black tracking-tight text-white">System <span class="status-gradient">Status</span></h1>
-      <p class="mt-4 max-w-2xl text-gray-400 leading-relaxed">Real-time service availability and infrastructure updates for Vexora Labs customers.</p>
-      <div class="status-overall mt-9" id="overall-card" data-state="unknown">
-        <div class="flex items-center gap-4"><span class="overall-icon"><i class="fa-solid fa-circle-question"></i></span><div><div class="text-xs uppercase tracking-[.18em] text-gray-400 font-bold">Current system status</div><div class="text-xl sm:text-2xl font-extrabold text-white" id="overall-label">Waiting for status data</div><div class="text-xs text-gray-500 mt-1" id="updated-label">No provider data has been connected yet.</div></div></div>
-        <span class="overall-pill" id="overall-pill">Not connected</span>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
-        <div class="status-stat"><span class="stat-label">Services</span><strong id="stat-total">—</strong></div>
-        <div class="status-stat"><span class="stat-label">Operational</span><strong id="stat-up">—</strong></div>
-        <div class="status-stat"><span class="stat-label">Issues</span><strong id="stat-issues">—</strong></div>
-        <div class="status-stat"><span class="stat-label">Last sync</span><strong id="stat-sync">—</strong></div>
-      </div>
-    </div>
-  </section>
-  <section class="max-w-5xl mx-auto w-full px-4 sm:px-6 pb-16">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5"><div><div class="text-xs font-bold tracking-[.2em] text-brand-400 uppercase">Infrastructure</div><h2 class="text-2xl font-extrabold text-white mt-1">Service availability</h2></div><div class="text-xs text-gray-500" id="refresh-note"><i class="fa-solid fa-rotate mr-1"></i> Auto-refreshes every 60 seconds</div></div>
-    <div id="service-list" class="space-y-3"><div class="status-empty"><i class="fa-solid fa-plug-circle-xmark"></i><strong>Status feed is not connected</strong><span>Connect the provider's authorized status API through GitHub Actions to display live servers here.</span></div></div>
-    <div class="mt-12"><div class="text-xs font-bold tracking-[.2em] text-brand-400 uppercase">Service history</div><h2 class="text-2xl font-extrabold text-white mt-1 mb-5">Recent incidents</h2><div id="incident-list" class="status-empty"><i class="fa-solid fa-clock-rotate-left"></i><strong>No incident data available</strong><span>Incident history will appear when the provider feed is connected.</span></div></div>
-    <div class="status-footnote mt-10"><i class="fa-solid fa-circle-info"></i><p>Service information is synchronized from the upstream provider's authorized status feed. Vexora Labs is a reseller and is not the operator of the upstream infrastructure.</p></div>
-  </section>
+ <section class="status-hero"><div class="status-orb status-orb-one"></div><div class="status-orb status-orb-two"></div><div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16 relative z-10">
+  <div class="status-kicker"><span class="status-live-dot"></span> VEXORA NETWORK MONITOR</div><h1 class="mt-6 text-4xl sm:text-6xl font-black tracking-tight text-white">System <span class="status-gradient">Status</span></h1><p class="mt-4 max-w-2xl text-gray-400 leading-relaxed">Live service availability and infrastructure performance for Vexora Labs customers.</p>
+  <div class="status-overall mt-9" id="overall-card" data-state="unknown"><div class="flex items-center gap-4"><span class="overall-icon"><i class="fa-solid fa-circle-question"></i></span><div><div class="text-xs uppercase tracking-[.18em] text-gray-400 font-bold">Current system status</div><div class="text-xl sm:text-2xl font-extrabold text-white" id="overall-label">Loading status…</div><div class="text-xs text-gray-500 mt-1" id="updated-label">Waiting for the latest check.</div></div></div><span class="overall-pill" id="overall-pill">Checking</span></div>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5"><div class="status-stat"><span class="stat-label">Services</span><strong id="stat-total">—</strong></div><div class="status-stat"><span class="stat-label">Online</span><strong id="stat-up">—</strong></div><div class="status-stat"><span class="stat-label">Issues</span><strong id="stat-issues">—</strong></div><div class="status-stat"><span class="stat-label">Last sync</span><strong id="stat-sync">—</strong></div></div>
+ </div></section>
+ <section class="max-w-5xl mx-auto w-full px-4 sm:px-6 pb-16">
+  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5"><div><div class="text-xs font-bold tracking-[.2em] text-brand-400 uppercase">Infrastructure</div><h2 class="text-2xl font-extrabold text-white mt-1">Service availability</h2></div><div class="text-xs text-gray-500" id="refresh-note"><i class="fa-solid fa-rotate mr-1"></i> Auto-refresh every 60 seconds</div></div>
+  <div id="service-list" class="space-y-4"><div class="status-empty"><i class="fa-solid fa-spinner fa-spin"></i><strong>Loading services</strong><span>Fetching the latest server checks.</span></div></div>
+  <div class="mt-12"><div class="text-xs font-bold tracking-[.2em] text-brand-400 uppercase">Service history</div><h2 class="text-2xl font-extrabold text-white mt-1 mb-5">Recent incidents</h2><div id="incident-list" class="status-empty"><i class="fa-solid fa-clock-rotate-left"></i><strong>No incident data available</strong></div></div>
+  <div id="maintenance-section" class="mt-10 hidden"><div class="text-xs font-bold tracking-[.2em] text-brand-400 uppercase">Scheduled work</div><h2 class="text-2xl font-extrabold text-white mt-1 mb-5">Maintenance</h2><div id="maintenance-list"></div></div>
+  <div class="status-footnote mt-10"><i class="fa-solid fa-circle-info"></i><p>Metrics are displayed from the latest available monitoring data. Historical charts use recorded checks; unavailable metrics are shown as unavailable rather than estimated.</p></div>
+ </section>
 </main>
 <footer class="border-t border-white/5 bg-[#08080b] py-7"><div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3"><div class="flex items-center gap-2 text-sm text-gray-400"><img src="assets/images/vex.jpg" alt="" class="w-7 h-7 rounded-lg object-cover"><span>© <span id="status-year"></span> Vexora Labs</span></div><a href="https://vexoralabs.com.lk" class="text-xs text-gray-500 hover:text-brand-400">vexoralabs.com.lk</a></div></footer>
-<script src="assets/js/status.js" defer></script>
-</body>
-</html>
+<script src="assets/js/status.js" defer></script></body></html>
