@@ -3,29 +3,24 @@
 var DATA_URL='data/status.json', $=function(id){return document.getElementById(id);};
 var esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
 var labels={up:'Operational',down:'Offline',degraded:'Degraded performance',maintenance:'Under maintenance',unknown:'Unknown'};
-function resourceBar(label,value){if(typeof value!=='number'||!isFinite(value))return '';var n=Math.max(0,Math.min(100,value));var tone=n>=90?'high':n>=75?'medium':'normal';return '<div class="resource-item"><div class="resource-head"><span>'+label+'</span><strong>'+esc(value.toFixed(1))+'%</strong></div><div class="resource-track"><span class="resource-fill '+tone+'" style="width:'+n+'%"></span></div></div>';}
 function date(v){if(!v)return 'Time unavailable';var d=new Date(v);return isNaN(d)?String(v):d.toLocaleString();}
 function pct(v){return typeof v==='number'?v.toFixed(2)+'%':'—';}
 function metric(label,value){return value==null?'':'<span class="status-metric"><b>'+esc(label)+'</b> '+esc(value)+'</span>';}
 function render(data){
  var services=Array.isArray(data.services)?data.services:[], incidents=Array.isArray(data.incidents)?data.incidents:[], maintenance=Array.isArray(data.maintenance)?data.maintenance:[];
  var counts={up:0,down:0,unknown:0};services.forEach(function(s){counts[s.status]=(counts[s.status]||0)+1;});
- var overall=services.length&&counts.down===0&&counts.unknown===0?'up':counts.down===services.length?'down':counts.down?'degraded':'unknown';
+ var overall=services.length&&counts.down===0&&counts.unknown===0?'up':counts.down?'down':'unknown';
  $('overall-card').dataset.state=overall;
- $('overall-label').textContent=overall==='up'?'All Systems Operational':overall==='down'?'Major service outage':overall==='degraded'?'Partial service disruption': 'Some monitor data is unavailable';
+ $('overall-label').textContent=overall==='up'?'All Systems Operational':overall==='down'?'Service disruption detected':'Some monitor data is unavailable';
  $('overall-pill').textContent=labels[overall];
- $('overall-card').querySelector('.overall-icon i').className=overall==='up'?'fa-solid fa-circle-check':overall==='down'?'fa-solid fa-circle-xmark':overall==='degraded'?'fa-solid fa-triangle-exclamation':'fa-solid fa-circle-question';
+ $('overall-card').querySelector('.overall-icon i').className=overall==='up'?'fa-solid fa-circle-check':overall==='down'?'fa-solid fa-circle-xmark':'fa-solid fa-circle-question';
  $('updated-label').textContent='Vexora Labs status last updated: '+date(data.updatedAt);
  $('stat-total').textContent=services.length;$('stat-up').textContent=counts.up;$('stat-issues').textContent=counts.down+counts.unknown;
  $('stat-sync').textContent=data.updatedAt?new Date(data.updatedAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'—';
  var groups={};services.forEach(function(s){(groups[s.group||'Services']=groups[s.group||'Services']||[]).push(s);});
  $('service-list').innerHTML=Object.keys(groups).map(function(g){return '<div class="service-group-title">'+esc(g)+'</div>'+groups[g].map(function(s){
-  var state=s.status||'unknown', resources=metric('Ping',s.ping==null?null:s.ping+' ms')+metric('24h uptime',pct(s.uptime24h));
-  var resourceChart='';
-  if(typeof s.cpu==='number'||typeof s.memory==='number'||typeof s.disk==='number'){
-   resourceChart='<div class="resource-chart"><div class="resource-chart-title">SERVER RESOURCE USAGE <span>Latest sample</span></div>'+resourceBar('CPU',s.cpu)+resourceBar('RAM',s.memory)+resourceBar('DISK',s.disk)+(s.sampledAt?'<div class="resource-sampled">Sampled '+esc(date(s.sampledAt))+'</div>':'')+'</div>';
-  }
-  return '<article class="service-row"><div class="service-main"><div class="service-name">'+esc(s.name)+'</div><div class="service-meta">'+esc(s.message||s.type||'Service monitor')+'</div><div class="status-metrics">'+resources+'</div>'+resourceChart+'</div><span class="service-status state-'+esc(state)+'">'+(labels[state]||labels.unknown)+'</span></article>';
+  var state=s.status||'unknown', resources=metric('Ping',s.ping==null?null:s.ping+' ms')+metric('24h uptime',pct(s.uptime24h))+metric('CPU',s.cpu==null?null:s.cpu+'%')+metric('RAM',s.memory==null?null:s.memory+'%')+metric('Disk',s.disk==null?null:s.disk+'%');
+  return '<article class="service-row"><div class="service-main"><div class="service-name">'+esc(s.name)+'</div><div class="service-meta">'+esc(s.type==='tcp'?'TCP server monitor':s.type==='dns'?'DNS monitor':'Service monitor')+'</div><div class="status-metrics">'+resources+'</div></div><span class="service-status state-'+esc(state)+'">'+labels[state]+'</span></article>';
  }).join('');}).join('');
  var ih=$('incident-list');
  ih.className=incidents.length?'':'status-empty';
