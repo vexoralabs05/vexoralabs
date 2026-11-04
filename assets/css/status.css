@@ -21,3 +21,16 @@
 .status-footer-meta a{color:#9ca3af;text-decoration:none;transition:color .2s ease}
 .status-footer-meta a:hover{color:#f87171}
 @media(max-width:600px){.status-footer-inner{flex-direction:column;align-items:flex-start}.status-footer-meta{width:100%;justify-content:space-between;flex-wrap:wrap;text-align:left;gap:8px 14px}}
+
+/* Per-server uptime history graph */
+.service-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.uptime-graph{display:flex;align-items:stretch;gap:3px;height:24px;margin-top:13px;width:100%}
+.uptime-segment{display:block;flex:1 1 0;min-width:2px;border-radius:3px;background:#52525b;transition:opacity .2s}
+.uptime-segment:hover{opacity:.7;transform:scaleY(1.12)}
+.uptime-up{background:#22c55e}
+.uptime-down{background:#ef4444}
+.uptime-degraded,.uptime-maintenance{background:#f59e0b}
+.uptime-unknown{background:#52525b}
+.uptime-graph-caption{display:flex;justify-content:space-between;margin-top:5px;color:#71717a;font-size:10px}
+.uptime-graph-empty{margin-top:12px;padding:9px 11px;border:1px dashed rgba(255,255,255,.1);border-radius:8px;color:#71717a;font-size:10px}
+@media(max-width:640px){.service-heading{align-items:flex-start}.service-heading .service-status{font-size:10px}}
