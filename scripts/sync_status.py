@@ -25,9 +25,9 @@ def request_json(url, key, method="GET", body=None):
         return json.loads(response.read().decode("utf-8"))
 
 def main():
-    key = os.environ.get("PXN_SUPABASE_PUBLISHABLE_KEY", "").strip()
-    if not key:
-        raise RuntimeError("Missing PXN_SUPABASE_PUBLISHABLE_KEY GitHub Actions secret.")
+    key = os.environ.get("VEXORA_STATUS_API_KEY", "").strip()
+if not key:
+    raise RuntimeError("Missing VEXORA_STATUS_API_KEY GitHub Actions secret.")
     # Ask the provider to refresh its live poll; snapshot remains the authoritative display payload.
     try:
         request_json(LIVE_URL, key, method="POST", body={})
