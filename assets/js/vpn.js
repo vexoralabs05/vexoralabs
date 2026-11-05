@@ -53,19 +53,27 @@
     grid.classList.add('revealed');
   }
 
-  /* ---- plan list inside the modal & rate sheet are generated from data.js ---- */
-  function renderPlans() {
+  /* ---- plan list: Sri Lankan IP carries a LKR 150 surcharge ---- */
+  var SL_IP_SURCHARGE = 150;
+
+  function planPrice(plan, config) {
+    var isSriLankanIP = config && String(config.ipType || '').toLowerCase().indexOf('sri lankan') !== -1;
+    return Number(plan.price || 0) + (isSriLankanIP ? SL_IP_SURCHARGE : 0);
+  }
+
+  function renderPlans(config) {
     var box = V.$('#modal-plans');
     if (box) {
-      box.innerHTML = D.vpnPlans.map(function (p, i) {
-        var val = p.label + ' - LKR ' + V.money(p.price);
+      box.innerHTML = D.vpnPlans.map(function (p) {
+        var price = planPrice(p, config);
+        var val = p.label + ' - LKR ' + V.money(price);
         return '<div class="plan-option relative">' +
           (p.popular ? '<div class="absolute -top-2 left-4 px-2 py-0.5 bg-brand-500 text-white text-[10px] font-bold rounded z-10">POPULAR</div>' : '') +
           '<label class="flex items-center justify-between p-4 rounded-xl bg-[#0c0c0e] border ' + (p.popular ? 'border-brand-500/30' : 'border-[#1e1e2a]') + ' cursor-pointer hover:border-brand-500/40 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-500/5">' +
             '<div class="flex items-center gap-3">' +
               '<input type="radio" name="vpn-plan" value="' + V.esc(val) + '" class="w-4 h-4"' + (p.popular ? ' checked' : '') + '>' +
               '<div><span class="text-white font-medium text-sm">' + V.esc(p.label) + '</span><p class="text-gray-500 text-xs">' + V.esc(p.note) + '</p></div>' +
-            '</div><span class="text-brand-400 font-bold text-sm">LKR ' + V.money(p.price) + '</span>' +
+            '</div><span class="text-brand-400 font-bold text-sm">LKR ' + V.money(price) + '</span>' +
           '</label></div>';
       }).join('');
     }
@@ -93,6 +101,7 @@
     var cfg = D.vpnConfigs.filter(function (c) { return String(c.id) === String(id); })[0];
     if (!cfg) { V.toast('This configuration could not be found. Please refresh the page.', 'error'); return; }
     state.selectedId = cfg.id;
+    renderPlans(cfg);
     lastFocus = document.activeElement;
     V.$('#modal-config-name').textContent = cfg ? cfg.name : 'Select a plan';
     V.$('#modal-config-network').textContent = cfg ? cfg.network + ' • ' + cfg.ipType : 'Choose your data package';
@@ -117,7 +126,10 @@
     V.openWhatsApp(
       "Hi Vexora Labs! 🔒\n\nI'd like to order a VPN configuration:\n\n" +
       '📋 Config: ' + (cfg ? cfg.name : 'Not specified') + '\n' +
-      '📦 Plan: ' + picked.value + '\n\n' +
+      '📦 Plan: ' + (function () {
+        var selectedPlan = D.vpnPlans.filter(function (p) { return picked.value.indexOf(p.label + ' - LKR ') === 0; })[0];
+        return selectedPlan ? selectedPlan.label + ' - LKR ' + V.money(planPrice(selectedPlan, cfg)) : picked.value;
+      })() + '\n\n' +
       'Please share the payment details and setup instructions. Thank you!'
     );
     window.closeVpnModal();
@@ -163,3 +175,7 @@
   if (modal) modal.setAttribute('aria-hidden', modal.classList.contains('hidden') ? 'true' : 'false');
   if (state.carrier !== 'all') { var t0 = V.$('.carrier-tab[data-carrier="' + state.carrier + '"]'); if (t0) t0.click(); } else { renderCards(); }
 })();
+
+
+
+
