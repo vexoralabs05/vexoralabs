@@ -1,6 +1,0 @@
-
-[build]
-  publish = "backend-public"
-
-[functions]
-  directory = "netlify/functions"
