@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPTV & Live TV Packages — StreamXpert & Local TV | Vexora Labs</title>
+    <meta name="description" content="Watch 50,000+ Live TV channels, 180,000+ Movies, 45,000+ Series & Live Sports with StreamXpert IPTV, or get the Sri Lankan Local Android TV package for Rs. 500/month with zero data charges.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23dc2626'/%3E%3Cpath d='M30 30 L50 72 L70 30' stroke='white' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- html remover -->
+    <script>
+        if (window.location.pathname.endsWith('.html')) {
+            window.location.replace(window.location.pathname.replace(/\.html$/, ''));
+        }
+    </script>
+
+    <!-- Tailwind Config & CDN -->
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            900: '#7f1d1d',
+                            950: '#450a0a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/navigation.css">
+    <meta name="theme-color" content="#09090b">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vexora Labs">
+    <meta property="og:title" content="IPTV & Live TV Packages — StreamXpert & Local TV | Vexora Labs">
+    <meta property="og:description" content="50,000+ Live Channels, 180,000+ Movies & Local Sri Lankan Android TV packages from 500 LKR/month. Free test line available!">
+    <script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="bg-[#09090b] text-gray-200 font-sans antialiased min-h-screen flex flex-col bg-grid">
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- Shared animated background -->
+    <div class="site-bg-animation" aria-hidden="true">
+        <div id="hero-particles" class="hero-particles"></div>
+        <div class="glow-orb site-glow-orb site-glow-orb-one"></div>
+        <div class="glow-orb site-glow-orb site-glow-orb-two"></div>
+        <div class="glow-orb site-glow-orb site-glow-orb-three"></div>
+    </div>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    
+<header class="site-header sticky top-0 z-50">
+  <div class="site-header-inner">
+    <a href="index.html" class="site-brand" aria-label="Vexora Labs home">
+      <img src="assets/images/vex.jpg" alt="Vexora Labs" onerror="this.style.display='none'">
+      <span class="site-brand-copy"><strong>Vexora Labs</strong><small>Digital Services • Sri Lanka</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a class="site-nav-link" href="index.html" data-nav-page="index.html">Home</a>
+      <div class="nav-dropdown">
+        <button class="site-nav-link nav-trigger" type="button" aria-expanded="false" aria-controls="vpn-dropdown">VPN <i class="fa-solid fa-chevron-down"></i></button>
+        <div class="nav-dropdown-menu" id="vpn-dropdown">
+          <a href="vpn.html" data-nav-page="vpn.html"><i class="fa-solid fa-sliders"></i><span><b>VPN Config</b><small>Browse and order VPN configurations</small></span></a>
+          <a href="pricing.html" data-nav-page="pricing.html"><i class="fa-solid fa-tags"></i><span><b>Pricing</b><small>Compare available VPN plans</small></span></a>
+          <a href="setup-guide.html" data-nav-page="setup-guide.html"><i class="fa-solid fa-book-open"></i><span><b>Setup Guide</b><small>Installation and connection help</small></span></a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="site-nav-link nav-trigger" type="button" aria-expanded="false" aria-controls="service-dropdown">Service <i class="fa-solid fa-chevron-down"></i></button>
+        <div class="nav-dropdown-menu" id="service-dropdown">
+          <a href="software.html" data-nav-page="software.html"><i class="fa-solid fa-box-open"></i><span><b>Software Store</b><small>Software and digital products</small></span></a>
+          <a href="web-development.html" data-nav-page="web-development.html"><i class="fa-solid fa-code"></i><span><b>Web Development</b><small>Websites and digital solutions</small></span></a>
+          <a href="iptv.html" data-nav-page="iptv.html"><i class="fa-solid fa-tv"></i><span><b>IPTV</b><small>Streaming and entertainment</small></span></a>
+        </div>
+      </div>
+      <a class="site-nav-link" href="free-tools.html" data-nav-page="free-tools.html">Free Tools</a>
+      <a class="site-nav-link" href="about.html" data-nav-page="about.html">About</a>
+      <a class="site-nav-link" href="contact.html" data-nav-page="contact.html">Contact</a>
+    </nav>
+    <div class="site-header-actions">
+      <a class="header-whatsapp" href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+      <button class="mobile-nav-toggle" id="mobile-menu-btn" type="button" aria-label="Open navigation" aria-controls="mobile-menu" aria-expanded="false"><i class="fa-solid fa-bars" id="menu-icon"></i></button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="mobile-nav-panel" hidden>
+    <a class="mobile-nav-link" href="index.html" data-nav-page="index.html">Home</a>
+    <section class="mobile-nav-group">
+      <button class="mobile-nav-group-toggle" type="button" aria-expanded="false">VPN <i class="fa-solid fa-chevron-down"></i></button>
+      <div class="mobile-nav-submenu" hidden>
+        <a href="vpn.html" data-nav-page="vpn.html">VPN Config</a>
+        <a href="pricing.html" data-nav-page="pricing.html">Pricing</a>
+        <a href="setup-guide.html" data-nav-page="setup-guide.html">Setup Guide</a>
+      </div>
+    </section>
+    <section class="mobile-nav-group">
+      <button class="mobile-nav-group-toggle" type="button" aria-expanded="false">Service <i class="fa-solid fa-chevron-down"></i></button>
+      <div class="mobile-nav-submenu" hidden>
+        <a href="software.html" data-nav-page="software.html">Software Store</a>
+        <a href="web-development.html" data-nav-page="web-development.html">Web Development</a>
+        <a href="iptv.html" data-nav-page="iptv.html">IPTV</a>
+      </div>
+    </section>
+    <a class="mobile-nav-link" href="free-tools.html" data-nav-page="free-tools.html">Free Tools</a>
+    <a class="mobile-nav-link" href="about.html" data-nav-page="about.html">About</a>
+    <a class="mobile-nav-link" href="contact.html" data-nav-page="contact.html">Contact</a>
+    <a class="mobile-whatsapp" href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+  </div>
+</header>
+
+
+    <main id="main" class="flex-grow">
+
+        <!-- ═══════════════ HERO SECTION ═══════════════ -->
+        <section class="relative pt-24 pb-16 sm:pt-32 sm:pb-20 overflow-hidden">
+            <div class="hero-glow bg-brand-500 top-0 left-1/4 -translate-x-1/2"></div>
+            <div class="hero-glow bg-amber-500 bottom-0 right-1/4 translate-x-1/2"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <div data-aos="fade-down">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/25 rounded-full text-amber-400 text-xs sm:text-sm font-bold uppercase tracking-wider mb-6">
+                        <i class="fa-solid fa-crown"></i> VIP Entertainment Experience • Free Test Line Available
+                    </span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight mb-6" data-aos="fade-up" data-aos-delay="100">
+                    Premium <span class="text-gradient-hero">IPTV & Live TV</span><br class="hidden sm:inline"> Streaming Packages
+                </h1>
+
+                <p class="text-gray-400 text-base sm:text-xl max-w-3xl mx-auto leading-relaxed mb-10" data-aos="fade-up" data-aos-delay="200">
+                    Stream <strong class="text-white">50,000+ Worldwide Live Channels, 180,000+ Movies & Live Sports</strong> in 4K/FHD with <strong class="text-brand-400">StreamXpert IPTV</strong>, or enjoy <strong class="text-emerald-400">Sri Lankan Local TV & Films for just Rs. 500/month</strong> with zero data charges.
+                </p>
+
+                <!-- Hero CTAs -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-14" data-aos="fade-up" data-aos-delay="250">
+                    <button type="button" onclick="orderIptv('StreamXpert Free Test Line', 0, 'Free Trial Before Buying')" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black font-black rounded-2xl text-base transition-all shadow-[0_0_30px_rgba(245,158,11,0.35)] flex items-center justify-center gap-2.5">
+                        <i class="fa-solid fa-circle-play text-lg"></i> Request Free Test Line
+                    </button>
+                    <a href="#streamxpert-plans" class="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-2xl font-bold text-base transition-all shadow-lg shadow-brand-600/30 flex items-center justify-center gap-2.5">
+                        <i class="fa-solid fa-globe"></i> StreamXpert Plans (From Rs. 800)
+                    </a>
+                    <a href="#local-tv-pack" class="w-full sm:w-auto px-8 py-4 bg-[#111118] hover:bg-[#181826] text-white border border-emerald-500/30 rounded-2xl font-bold text-base transition-all flex items-center justify-center gap-2.5">
+                        <i class="fa-solid fa-tv text-emerald-400"></i> Local TV Pack (Rs. 500)
+                    </a>
+                </div>
+
+                <!-- Content Stats Counter Bar -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="300">
+                    <div class="vx-card p-5 text-center border-brand-500/20">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center mx-auto mb-2.5 text-lg">
+                            <i class="fa-solid fa-satellite-dish"></i>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-black text-white">50,000+</div>
+                        <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1">Live Channels</div>
+                    </div>
+
+                    <div class="vx-card p-5 text-center border-purple-500/20">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mx-auto mb-2.5 text-lg">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-black text-white">180,000+</div>
+                        <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1">Movies (VOD)</div>
+                    </div>
+
+                    <div class="vx-card p-5 text-center border-sky-500/20">
+                        <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center mx-auto mb-2.5 text-lg">
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-black text-white">45,000+</div>
+                        <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1">TV Series</div>
+                    </div>
+
+                    <div class="vx-card p-5 text-center border-emerald-500/20">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-2.5 text-lg">
+                            <i class="fa-solid fa-futbol"></i>
+                        </div>
+                        <div class="text-xl sm:text-2xl font-black text-white leading-tight">LIVE SPORTS</div>
+                        <div class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider mt-1">&amp; PPV Events</div>
+                    </div>
+
+                    <div class="vx-card p-5 text-center border-amber-500/20 col-span-2 md:col-span-1">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto mb-2.5 text-lg">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="text-xl sm:text-2xl font-black text-white leading-tight">100% SMOOTH</div>
+                        <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wider mt-1">Anti-Freeze Servers</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════ SRI LANKAN LOCAL TV PACKAGE (RS. 500) ═══════════════ -->
+        <section id="local-tv-pack" class="py-16 bg-[#0c0c10] border-y border-[#1a1a26] section-glow-top">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="vx-card p-7 sm:p-10 lg:p-12 border-emerald-500/35 bg-gradient-to-br from-[#0f1916] via-[#111118] to-[#12101b] relative overflow-hidden" data-aos="fade-up">
+                    <div class="glow-orb w-72 h-72 bg-emerald-500/15 -top-24 -right-24"></div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                        <!-- Left Details -->
+                        <div class="lg:col-span-8">
+                            <div class="flex flex-wrap items-center gap-2.5 mb-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                                    <i class="fa-solid fa-bolt mr-1"></i> ඩේටා ගාස්තු නැත • No Data Charges
+                                </span>
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/5 text-gray-300 border border-white/10">
+                                    Sri Lanka Local + Entertainment
+                                </span>
+                            </div>
+
+                            <h2 class="text-2xl sm:text-4xl font-black text-white mb-4 leading-snug">
+                                Phone එකෙන්, Smart TV එකෙන්, කාර් / වෑන් ඕනෑම <span class="text-emerald-400">Android Setup එකකින්</span> TV සහ Films බලන්න!
+                            </h2>
+
+                            <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
+                                දේශීය රූපවාහිනී නාලිකා (Derana, Hiru, Sirasa, Swarnavahini, ITN, Rupavahini, Siyatha, Supreme, TV 1, Charana, Haritha TV, Rangiri), චිත්‍රපට (Movies), කාටූන් (Cartoons), ක්‍රීඩා (Sports) සහ ප්‍රවෘත්ති නාලිකා සියල්ලම <strong class="text-emerald-400">අමතර ඩේටා ගාස්තු කිසිවක් නොමැතිව</strong> මාසයකට රු. 500/- කට පමණක් නරඹන්න.
+                            </p>
+
+                            <!-- Supported Devices Pills -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                                <div class="p-3.5 rounded-xl bg-[#09090b]/90 border border-[#1e2e26] flex items-center gap-3">
+                                    <i class="fa-solid fa-mobile-screen-button text-emerald-400 text-xl"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">Android Phone</div>
+                                        <div class="text-[10px] text-gray-400">Smartphones &amp; Tabs</div>
+                                    </div>
+                                </div>
+                                <div class="p-3.5 rounded-xl bg-[#09090b]/90 border border-[#1e2e26] flex items-center gap-3">
+                                    <i class="fa-solid fa-tv text-emerald-400 text-xl"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">Smart TV</div>
+                                        <div class="text-[10px] text-gray-400">Android / Google TV</div>
+                                    </div>
+                                </div>
+                                <div class="p-3.5 rounded-xl bg-[#09090b]/90 border border-[#1e2e26] flex items-center gap-3">
+                                    <i class="fa-solid fa-hard-drive text-emerald-400 text-xl"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">Android Box</div>
+                                        <div class="text-[10px] text-gray-400">TV Box / Firestick</div>
+                                    </div>
+                                </div>
+                                <div class="p-3.5 rounded-xl bg-[#09090b]/90 border border-[#1e2e26] flex items-center gap-3">
+                                    <i class="fa-solid fa-car-side text-emerald-400 text-xl"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">Car / Van Setup</div>
+                                        <div class="text-[10px] text-gray-400">Android Head Units</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 text-xs text-gray-400">
+                                <span class="px-2.5 py-1 rounded-md bg-white/5"><i class="fa-solid fa-check text-emerald-400 mr-1"></i> සියලුම ලංකාවේ නාලිකා</span>
+                                <span class="px-2.5 py-1 rounded-md bg-white/5"><i class="fa-solid fa-check text-emerald-400 mr-1"></i> 24/7 Films &amp; Cartoons</span>
+                                <span class="px-2.5 py-1 rounded-md bg-white/5"><i class="fa-solid fa-check text-emerald-400 mr-1"></i> ඩේටා ගාස්තු නැත (Zero Data Cost)</span>
+                                <span class="px-2.5 py-1 rounded-md bg-white/5"><i class="fa-solid fa-check text-emerald-400 mr-1"></i> පහසු ස්ථාපනය (Easy Setup)</span>
+                            </div>
+                        </div>
+
+                        <!-- Right Price & Order Card -->
+                        <div class="lg:col-span-4">
+                            <div class="bg-[#09090b] border-2 border-emerald-500/40 rounded-2xl p-6 sm:p-8 text-center shadow-2xl">
+                                <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 block mb-2">මාසික ගාස්තුව • Monthly Fee</span>
+                                <div class="text-4xl sm:text-5xl font-black text-white mb-1">
+                                    Rs. 500<span class="text-lg font-bold text-gray-400">/-</span>
+                                </div>
+                                <p class="text-xs text-emerald-300 font-semibold mb-6">මාසෙටම රුපියල් 500/= • ඩේටා ගාස්තු නැත</p>
+
+                                <ul class="text-left space-y-2.5 text-xs text-gray-300 mb-6 border-y border-[#1e1e2a] py-4">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Local Live TV Channels + Movies</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Works on Phone, TV, Box &amp; Vehicle Setup</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> No Data Charges (ඩේටා කැපෙන්නේ නැත)</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Instant WhatsApp Setup Support</li>
+                                </ul>
+
+                                <button type="button" onclick="orderIptv('Sri Lankan Local Android TV Package (No Data Charges)', 500, '1 Month')" class="w-full py-4 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i> Order Rs. 500 Package
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════ STREAMXPERT IPTV PRICING PLANS ═══════════════ -->
+        <section id="streamxpert-plans" class="py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                    <span class="text-brand-500 text-xs font-bold uppercase tracking-[0.2em] mb-3 block">StreamXpert IPTV • Worldwide Premium</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-4">Choose Your StreamXpert Plan</h2>
+                    <p class="text-gray-400 text-base leading-relaxed">
+                        Unlock 50,000+ international &amp; local live channels, 180,000+ movies, 45,000+ series, and live sports in crystal-clear HD/4K quality.
+                    </p>
+                </div>
+
+                <!-- 4 Pricing Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-cards">
+
+                    <!-- 1 Month -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full">Starter Pass</span>
+                                <i class="fa-solid fa-tv text-gray-500"></i>
+                            </div>
+                            <h3 class="text-2xl font-black text-white mb-1">1 Month</h3>
+                            <p class="text-xs text-gray-500 mb-5">30 Days Full VIP Access</p>
+
+                            <div class="price-tag p-4 mb-6">
+                                <span class="text-[11px] text-gray-400 uppercase block">Only</span>
+                                <div class="text-3xl font-black text-white">Rs. 800</div>
+                            </div>
+
+                            <ul class="space-y-2.5 text-xs text-gray-300 mb-6">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 50,000+ Live TV Channels</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 180,000+ Movies &amp; 45,000+ Series</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> Live Sports &amp; PPV Events</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> Anti-Buffering 100% Smooth</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 24/7 Customer Support</li>
+                            </ul>
+                        </div>
+
+                        <button type="button" onclick="orderIptv('StreamXpert IPTV — 1 Month', 800, '1 Month')" class="order-btn w-full py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Order 1 Month
+                        </button>
+                    </div>
+
+                    <!-- 3 Months -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between border-sky-500/30">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 rounded-full">Save Rs. 200</span>
+                                <span class="text-xs text-gray-500 line-through font-mono">Rs. 2,400</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-white mb-1">3 Months</h3>
+                            <p class="text-xs text-gray-500 mb-5">90 Days Full VIP Access</p>
+
+                            <div class="price-tag p-4 mb-6">
+                                <span class="text-[11px] text-gray-400 uppercase block">Only</span>
+                                <div class="text-3xl font-black text-white">Rs. 2,200</div>
+                            </div>
+
+                            <ul class="space-y-2.5 text-xs text-gray-300 mb-6">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 50,000+ Live TV Channels</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 180,000+ Movies &amp; 45,000+ Series</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> Live Sports &amp; PPV Events</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> Anti-Buffering 100% Smooth</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 24/7 Priority Support</li>
+                            </ul>
+                        </div>
+
+                        <button type="button" onclick="orderIptv('StreamXpert IPTV — 3 Months', 2200, '3 Months (Save Rs. 200)')" class="order-btn w-full py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Order 3 Months
+                        </button>
+                    </div>
+
+                    <!-- 6 Months -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between border-purple-500/30">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-purple-400 bg-purple-500/15 border border-purple-500/30 px-3 py-1 rounded-full">Save Rs. 300</span>
+                                <span class="text-xs text-gray-500 line-through font-mono">Rs. 4,800</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-white mb-1">6 Months</h3>
+                            <p class="text-xs text-gray-500 mb-5">180 Days Full VIP Access</p>
+
+                            <div class="price-tag p-4 mb-6">
+                                <span class="text-[11px] text-gray-400 uppercase block">Only</span>
+                                <div class="text-3xl font-black text-white">Rs. 4,500</div>
+                            </div>
+
+                            <ul class="space-y-2.5 text-xs text-gray-300 mb-6">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 50,000+ Live TV Channels</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 180,000+ Movies &amp; 45,000+ Series</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> All Live Sports &amp; PPV Events</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> Fast &amp; Stable Servers</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-400"></i> 24/7 Priority Support</li>
+                            </ul>
+                        </div>
+
+                        <button type="button" onclick="orderIptv('StreamXpert IPTV — 6 Months', 4500, '6 Months (Save Rs. 300)')" class="order-btn w-full py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Order 6 Months
+                        </button>
+                    </div>
+
+                    <!-- 1 Year (Mega Value) -->
+                    <div class="vx-card p-6 sm:p-7 flex flex-col justify-between border-amber-500/50 bg-gradient-to-b from-[#1a1510] to-[#111116] relative shadow-xl shadow-amber-900/10 lg:scale-105 z-10">
+                        <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-600 text-black text-[10px] font-black uppercase px-3.5 py-1 rounded-full tracking-wider shadow-md whitespace-nowrap">
+                            <i class="fa-solid fa-crown mr-1"></i> Mega Value • Annual Saver
+                        </span>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-4 mt-2">
+                                <span class="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/15 border border-amber-500/30 px-3 py-1 rounded-full">Save Rs. 1,900</span>
+                                <span class="text-xs text-gray-500 line-through font-mono">Rs. 9,600</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-white mb-1">1 Year Pass</h3>
+                            <p class="text-xs text-amber-400/90 font-semibold mb-5">365 Days Special Offer</p>
+
+                            <div class="p-4 mb-6 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                                <span class="text-[11px] text-amber-300 uppercase font-bold block">Special Offer</span>
+                                <div class="text-3xl font-black text-white">Rs. 7,700</div>
+                            </div>
+
+                            <ul class="space-y-2.5 text-xs text-gray-200 mb-6">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-star text-amber-400"></i> Full Year VIP Pass &amp; Access</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> 50,000+ Live Channels (4K/FHD)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> 180,000+ Movies &amp; 45,000+ Series</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> Live Sports &amp; PPV Events Included</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> Dedicated 24/7 VIP Support</li>
+                            </ul>
+                        </div>
+
+                        <button type="button" onclick="orderIptv('StreamXpert IPTV — 1 Year Mega Value', 7700, '1 Year (Save Rs. 1,900)')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black font-black text-sm transition-all shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Claim 1 Year Offer
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Free Test Line Banner -->
+                <div class="mt-12 vx-card p-6 sm:p-8 border-amber-500/30 bg-gradient-to-r from-[#17130d] via-[#121218] to-[#17130d] flex flex-col md:flex-row items-center justify-between gap-6" data-aos="fade-up">
+                    <div class="flex items-center gap-4 text-center md:text-left flex-col sm:flex-row">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-2xl shrink-0">
+                            <i class="fa-solid fa-vial-circle-check"></i>
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-widest text-amber-400 block">Check Before You Buy!</span>
+                            <h3 class="text-xl sm:text-2xl font-extrabold text-white">Free Test Line Available</h3>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Test our channel list, server speed, and 100% smooth streaming quality on your device before purchasing.</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="orderIptv('StreamXpert Free Test Line', 0, 'Free Trial Request')" class="w-full md:w-auto px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-sm transition-all shrink-0 flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Request Free Test Line
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══════════════ WHY CHOOSE OUR IPTV & DEVICE SUPPORT ═══════════════ -->
+        <section class="py-16 bg-[#0c0c10] border-y border-[#1a1a26]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-cards">
+                    <div class="vx-card p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <h3 class="text-white font-bold text-base mb-1">Fast &amp; Stable Servers</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">High-availability global CDN nodes with 99.98% uptime and instant channel switching.</p>
+                    </div>
+
+                    <div class="vx-card p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <h3 class="text-white font-bold text-base mb-1">No Buffering (100% Smooth)</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Anti-freeze technology ensures uninterrupted live sports, movies, and 4K/FHD playback.</p>
+                    </div>
+
+                    <div class="vx-card p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-hand-pointer"></i>
+                        </div>
+                        <h3 class="text-white font-bold text-base mb-1">Easy &amp; User Friendly</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Works with Android Phones, Android TV Boxes, Smart TVs, Apple iOS/macOS, and Car Setups.</p>
+                    </div>
+
+                    <div class="vx-card p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <h3 class="text-white font-bold text-base mb-1">24/7 Customer Support</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Full step-by-step installation assistance and instant activation via WhatsApp.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════ FAQ SECTION ═══════════════ -->
+        <section class="py-20">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-500/10 border border-brand-500/20 rounded-full text-brand-400 text-xs font-bold uppercase tracking-wider mb-3">
+                        <i class="fa-solid fa-circle-question"></i> FAQ
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Frequently Asked Questions</h2>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="faq-item">
+                        <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" aria-expanded="false" onclick="toggleFaq(this)">
+                            <span class="text-white font-medium pr-4">How can I get the Free Test Line before buying?</span>
+                            <i class="fas fa-chevron-down faq-chevron text-gray-500 text-sm"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="px-5 pb-5 text-gray-400 text-sm leading-relaxed">
+                                Simply click the "Request Free Test Line" button on this page to message us on WhatsApp (+94 72 739 7294). Tell us your device type (Android Phone, Smart TV, Android Box, iPhone, or PC) and we will send your free trial login credentials along with the app download link.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" aria-expanded="false" onclick="toggleFaq(this)">
+                            <span class="text-white font-medium pr-4">What is the difference between the Rs. 500 Local Package and StreamXpert IPTV?</span>
+                            <i class="fas fa-chevron-down faq-chevron text-gray-500 text-sm"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="px-5 pb-5 text-gray-400 text-sm leading-relaxed">
+                                The <strong>Rs. 500/month Local Android TV Package</strong> is designed for Android phones, Smart TVs, Android Boxes, and Car/Van Android setups to watch Sri Lankan local channels, films, and cartoons with <strong>zero data charges (ඩේටා ගාස්තු නැත)</strong>. <strong>StreamXpert IPTV (from Rs. 800/month)</strong> is a global premium IPTV service featuring 50,000+ worldwide live channels, 180,000+ movies, 45,000+ series, and live international sports/PPV events.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" aria-expanded="false" onclick="toggleFaq(this)">
+                            <span class="text-white font-medium pr-4">Which devices are supported?</span>
+                            <i class="fas fa-chevron-down faq-chevron text-gray-500 text-sm"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="px-5 pb-5 text-gray-400 text-sm leading-relaxed">
+                                StreamXpert IPTV works on Android smartphones, Android TV, Mi Box / Android TV Boxes, Amazon Firestick, Apple iPhone / iPad / Apple TV, Samsung &amp; LG Smart TVs, and Windows/Mac computers. The Rs. 500 Local TV package supports any Android Phone, Smart TV, Android Box, or Car/Van Android player.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="bg-[#07070a] border-t border-[#1a1a26] pt-14 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                <p>&copy; <span data-year>2026</span> Vexora Labs. All rights reserved.</p>
+                <div class="flex gap-5">
+                    <a href="index.html" class="hover:text-gray-300">Home</a>
+                    <a href="vpn.html" class="hover:text-gray-300">VPN Configs</a>
+                    <a href="software.html" class="hover:text-gray-300">Software Store</a>
+                    <a href="pricing.html" class="hover:text-gray-300">Pricing</a>
+                    <a href="contact.html" class="hover:text-gray-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        function orderIptv(planName, price, duration) {
+            var lines = [
+                'Hello Vexora Labs! 👋',
+                '',
+                price > 0 ? "I'd like to order an IPTV package:" : "I'd like to request a Free IPTV Test Line:",
+                '📺 *' + planName + '*',
+                '⏳ Validity: ' + duration
+            ];
+            if (price > 0) {
+                lines.push('💰 Price: Rs. ' + Number(price).toLocaleString('en-US') + '/-');
+            }
+            lines.push('', 'Please send me the setup details. Thank you!');
+            if (window.Vexora && window.Vexora.openWhatsApp) {
+                window.Vexora.openWhatsApp(lines.join('\n'));
+            } else {
+                window.open('https://wa.me/94727397294?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
