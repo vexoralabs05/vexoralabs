@@ -9,66 +9,93 @@
   <link rel="stylesheet" href="assets/css/navigation.css">
   <link rel="stylesheet" href="assets/css/free-tools.css">
   <script src="assets/js/free-tools.js" defer></script>
-
-  <link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/navigation.css">
-<link rel="stylesheet" href="assets/css/free-tools.css">
-  
 </head>
-<body>
+<body class="free-tools-body">
   <header class="site-header">
-    <a class="brand" href="index.html"><img src="assets/images/vex.jpg" alt="Vexora Labs logo"><span>VEXORA <b>LABS</b></span></a>
+    <a class="brand" href="index.html">
+      <img src="assets/images/vex.jpg" alt="Vexora Labs logo">
+      <span>VEXORA <b>LABS</b></span>
+    </a>
     <nav class="main-nav" aria-label="Main navigation">
       <a href="index.html">Home</a>
       <a href="vpn.html">VPN</a>
-      <a href="services.html">Services</a>
-      <a class="active" href="free-tools.html">Free Tools</a>
+      <a href="pricing.html">Pricing</a>
+      <a class="active is-current" href="free-tools.html">Free Tools</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
 
-  <main class="tools-page">
-    <section class="tools-hero reveal">
-      <span class="eyebrow"><span class="status-dot"></span> VEXORA LABS · PRODUCTIVITY SUITE</span>
-      <h1>Useful tools. <span>Zero friction.</span></h1>
-      <p>Fast, simple, privacy-friendly tools for everyday digital tasks. Choose a tool to open its dedicated workspace.</p>
-      <label class="tool-search">
-        <span aria-hidden="true">⌕</span>
-        <input id="toolSearch" type="search" placeholder="Search tools..." autocomplete="off" aria-label="Search free tools">
-        <kbd>Ctrl K</kbd>
-      </label>
-      <p class="search-status" id="searchStatus" aria-live="polite">Showing all 4 tools</p>
-    </section>
+  <main class="tools-page free-tools-page">
+    <div class="ft-container">
+      <section class="tools-hero ft-hero ft-animate">
+        <span class="eyebrow ft-eyebrow">
+          <span class="status-dot"></span> VEXORA LABS · PRODUCTIVITY SUITE
+        </span>
+        <h1>Useful tools. <span>Zero friction.</span></h1>
+        <p>Fast, simple, privacy-friendly tools for everyday digital tasks. Choose a tool to open its dedicated workspace.</p>
 
-    <section class="tool-grid" id="toolGrid" aria-label="Available free tools">
-      <article class="tool-card reveal" data-search="password generator secure random strong password security">
-        <div class="tool-icon">⌑</div><span class="tool-tag">SECURITY</span>
-        <h2>Secure Password Generator</h2>
-        <p>Create strong random passwords with adjustable length and character options.</p>
-        <a class="tool-link" href="password-generator.html">Open tool <span>↗</span></a>
-      </article>
-      <article class="tool-card reveal" data-search="word character counter text count lines writing">
-        <div class="tool-icon">文</div><span class="tool-tag">PRODUCTIVITY</span>
-        <h2>Word &amp; Character Counter</h2>
-        <p>Count words, characters, spaces and lines while you type or paste text.</p>
-        <a class="tool-link" href="word-counter.html">Open tool <span>↗</span></a>
-      </article>
-      <article class="tool-card reveal" data-search="text case converter uppercase lowercase title sentence">
-        <div class="tool-icon">Aa</div><span class="tool-tag">TEXT</span>
-        <h2>Text Case Converter</h2>
-        <p>Convert text into uppercase, lowercase, title case or sentence case.</p>
-        <a class="tool-link" href="text-case-converter.html">Open tool <span>↗</span></a>
-      </article>
-      <article class="tool-card reveal" data-search="url encoder decoder encode decode link percent">
-        <div class="tool-icon">⌁</div><span class="tool-tag">DEVELOPER</span>
-        <h2>URL Encoder / Decoder</h2>
-        <p>Encode or decode URL components safely for web development and testing.</p>
-        <a class="tool-link" href="url-encoder-decoder.html">Open tool <span>↗</span></a>
-      </article>
-      <div class="empty-state" id="emptyState" hidden>No tools match your search. Try another keyword.</div>
-    </section>
+        <label class="tool-search ft-search-wrapper" for="toolSearch">
+          <span class="ft-search-icon" aria-hidden="true">⌕</span>
+          <input id="toolSearch" class="ft-search" type="search" placeholder="Search tools..." autocomplete="off" aria-label="Search free tools">
+          <kbd>Ctrl K</kbd>
+        </label>
+
+        <p class="search-status" id="searchStatus" aria-live="polite">Showing all 4 tools</p>
+      </section>
+
+      <section class="ft-tools-section">
+        <div class="tool-grid ft-tools-grid" id="toolGrid" aria-label="Available free tools">
+          <article class="tool-card ft-tool-card" data-search="password generator secure random strong password security">
+            <div class="tool-card-top">
+              <div class="tool-icon ft-tool-icon">⌑</div>
+              <span class="tool-tag">SECURITY</span>
+            </div>
+            <h2>Secure Password Generator</h2>
+            <p>Create strong random passwords with adjustable length and character options.</p>
+            <a class="tool-link ft-tool-link" href="password-generator.html">Open tool <span>↗</span></a>
+          </article>
+
+          <article class="tool-card ft-tool-card" data-search="word character counter text count lines writing">
+            <div class="tool-card-top">
+              <div class="tool-icon ft-tool-icon">文</div>
+              <span class="tool-tag">PRODUCTIVITY</span>
+            </div>
+            <h2>Word &amp; Character Counter</h2>
+            <p>Count words, characters, spaces and lines while you type or paste text.</p>
+            <a class="tool-link ft-tool-link" href="word-counter.html">Open tool <span>↗</span></a>
+          </article>
+
+          <article class="tool-card ft-tool-card" data-search="text case converter uppercase lowercase title sentence">
+            <div class="tool-card-top">
+              <div class="tool-icon ft-tool-icon">Aa</div>
+              <span class="tool-tag">TEXT</span>
+            </div>
+            <h2>Text Case Converter</h2>
+            <p>Convert text into uppercase, lowercase, title case or sentence case.</p>
+            <a class="tool-link ft-tool-link" href="text-case-converter.html">Open tool <span>↗</span></a>
+          </article>
+
+          <article class="tool-card ft-tool-card" data-search="url encoder decoder encode decode link percent">
+            <div class="tool-card-top">
+              <div class="tool-icon ft-tool-icon">⌁</div>
+              <span class="tool-tag">DEVELOPER</span>
+            </div>
+            <h2>URL Encoder / Decoder</h2>
+            <p>Encode or decode URL components safely for web development and testing.</p>
+            <a class="tool-link ft-tool-link" href="url-encoder-decoder.html">Open tool <span>↗</span></a>
+          </article>
+        </div>
+
+        <div class="empty-state ft-empty-state" id="emptyState" hidden>
+          No tools match your search. Try another keyword.
+        </div>
+      </section>
+    </div>
   </main>
-  <footer class="tools-footer">© <span id="year"></span> Vexora Labs. Built for useful work.</footer>
+
+  <footer class="tools-footer ft-footer">
+    © <span id="year"></span> Vexora Labs. Built for useful work.
+  </footer>
 </body>
 </html>
