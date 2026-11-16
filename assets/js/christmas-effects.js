@@ -7,17 +7,7 @@
   const reducedMotion = window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function addSantaHat() {
-    const brand = document.querySelector(".site-brand");
-    if (!brand || brand.querySelector(".vx-santa-hat")) return;
-    const hat = document.createElement("span");
-    hat.className = "vx-santa-hat";
-    hat.setAttribute("aria-hidden", "true");
-    const pom = document.createElement("span");
-    pom.className = "vx-hat-pom";
-    hat.appendChild(pom);
-    brand.appendChild(hat);
-  }
+ 
 
   function addLights() {
     if (document.getElementById("vx-christmas-lights")) return;
@@ -86,7 +76,7 @@
     raf = requestAnimationFrame(draw);
   }
 
-  function init() { addSantaHat(); addLights(); addSnow(); }
+  function init() { ; addLights(); addSnow(); }
   if (document.readyState === "loading")
     document.addEventListener("DOMContentLoaded", init, {once:true});
   else init();
