@@ -1,0 +1,50 @@
+/* Vexora Labs Christmas add-on. Keeps the existing site design intact. */
+#vx-christmas-lights {
+  position: fixed; inset: 0 0 auto; height: 14px; z-index: 9998;
+  pointer-events: none; overflow: hidden; opacity: .9;
+}
+#vx-christmas-lights::before {
+  content: ""; position: absolute; left: -2%; top: -10px; width: 104%;
+  height: 22px; border-top: 1px solid rgba(220,230,255,.45); border-radius: 50%;
+}
+.vx-light {
+  position: absolute; top: 5px; width: 5px; height: 7px; border-radius: 50%;
+  box-shadow: 0 0 7px currentColor, 0 0 13px currentColor;
+  animation: vx-light-glow 2.4s ease-in-out infinite alternate;
+}
+.vx-light:nth-child(4n+1) { color:#ff5364; background:currentColor; }
+.vx-light:nth-child(4n+2) { color:#53d9a4; background:currentColor; }
+.vx-light:nth-child(4n+3) { color:#ffd36a; background:currentColor; }
+.vx-light:nth-child(4n) { color:#72baff; background:currentColor; }
+@keyframes vx-light-glow {
+  from { opacity:.45; filter:brightness(.8); }
+  to { opacity:1; filter:brightness(1.35); }
+}
+.site-brand { position:relative; }
+.vx-santa-hat {
+  position:absolute; z-index:3; width:23px; height:16px; left:13px; top:-7px;
+  transform:rotate(-23deg); pointer-events:none;
+}
+.vx-santa-hat::before {
+  content:""; position:absolute; left:3px; top:1px; width:17px; height:12px;
+  background:#d92735; border-radius:12px 3px 0 0;
+  clip-path:polygon(0 100%,100% 100%,78% 0);
+}
+.vx-santa-hat::after {
+  content:""; position:absolute; left:1px; bottom:0; width:20px; height:4px;
+  border-radius:5px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+.vx-santa-hat .vx-hat-pom {
+  position:absolute; right:0; top:-1px; width:5px; height:5px;
+  border-radius:50%; background:#fff; box-shadow:0 0 3px rgba(255,255,255,.8);
+}
+#vx-snow-canvas {
+  position:fixed; inset:0; width:100%; height:100%; z-index:9997;
+  pointer-events:none;
+}
+@media(max-width:600px) {
+  .vx-santa-hat { width:20px; height:14px; left:12px; top:-6px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  #vx-christmas-lights, .vx-light { animation:none !important; }
+}
