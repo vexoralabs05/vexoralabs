@@ -546,44 +546,91 @@
     </main>
 
     <!-- ═══════════════ FOOTER ═══════════════ -->
-    <footer class="bg-[#07070a] border-t border-[#1a1a26] pt-14 pb-10">
+    <footer class="bg-[#07070a] border-t border-[#1a1a26] pt-16 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="assets/images/vex.jpg" alt="Vexora Labs" class="w-10 h-10 rounded-xl object-cover shadow-md"
+                             onerror="this.outerHTML=`<div class='w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-900 flex items-center justify-center text-white font-black text-xl shadow-md'>V</div>`">
+                        <span class="font-extrabold text-2xl text-white">Vexora Labs</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-md">
+                        Sri Lanka | Russia | Italy's premier digital Services. High-speed VPN configurations, genuine software licenses, and professional web development services.
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <a href="https://wa.me/94727397294" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center hover:bg-emerald-600 hover:border-transparent transition-all" title="WhatsApp" aria-label="WhatsApp">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-base" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@vexora_lab" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center hover:bg-brand-600 hover:border-transparent transition-all" title="TikTok" aria-label="TikTok">
+                            <i class="fa-brands fa-tiktok text-gray-200 text-base" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.facebook.com/share/1K8uKt8cj8/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all" title="Facebook" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="https://instagram.com/vexora_labss" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center hover:bg-pink-600 hover:border-transparent transition-all" title="Instagram" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram text-pink-400 text-base" aria-hidden="true"></i>
+                        </a>
+                        <a href="" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#111118] border border-[#1e1e2a] flex items-center justify-center hover:bg-sky-500 hover:border-transparent transition-all" title="Telegram" aria-label="Telegram">
+                            <i class="fa-brands fa-telegram text-sky-400 text-base" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-white font-bold text-xs tracking-[0.15em] uppercase mb-4">Quick Links</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="https://vexoralabs.com.lk" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="vpn.html" class="text-gray-400 hover:text-white transition-colors">VPN Configs</a></li>
+                        <li><a href="software.html" class="text-gray-400 hover:text-white transition-colors">Software Services</a></li>
+                        <li><a href="pricing.html" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="setup-guide.html" class="text-gray-400 hover:text-white transition-colors">Setup Guide</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-white font-bold text-xs tracking-[0.15em] uppercase mb-4">Contact & Orders</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                            <span class="text-white font-mono">+94 72 739 7294</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-solid fa-headset text-brand-400"></i>
+                            <span>24/7 WhatsApp Support</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-solid fa-shield-halved text-blue-400"></i>
+                            <span>100% Genuine Licenses</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-400">
+                            <i class="fa-solid fa-code text-purple-400"></i>
+                            <span>Web Development Services</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-[#141420] pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
                 <p>&copy; <span data-year>2026</span> Vexora Labs. All rights reserved.</p>
-                <div class="flex gap-5">
-                    <a href="index.html" class="hover:text-gray-300">Home</a>
-                    <a href="vpn.html" class="hover:text-gray-300">VPN Configs</a>
-                    <a href="software.html" class="hover:text-gray-300">Software Store</a>
+                <div class="flex gap-4">
+                    <a href="about.html" class="hover:text-gray-300">About</a>
+                    <a href="contact.html" class="hover:text-gray-300">Support</a>
                     <a href="pricing.html" class="hover:text-gray-300">Pricing</a>
-                    <a href="contact.html" class="hover:text-gray-300">Contact</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Vexora Data & Logic -->
+
     <script src="assets/js/data.js"></script>
     <script src="assets/js/main.js"></script>
-    <script>
-        function orderIptv(planName, price, duration) {
-            var lines = [
-                'Hello Vexora Labs! 👋',
-                '',
-                price > 0 ? "I'd like to order an IPTV package:" : "I'd like to request a Free IPTV Test Line:",
-                '📺 *' + planName + '*',
-                '⏳ Validity: ' + duration
-            ];
-            if (price > 0) {
-                lines.push('💰 Price: Rs. ' + Number(price).toLocaleString('en-US') + '/-');
-            }
-            lines.push('', 'Please send me the setup details. Thank you!');
-            if (window.Vexora && window.Vexora.openWhatsApp) {
-                window.Vexora.openWhatsApp(lines.join('\n'));
-            } else {
-                window.open('https://wa.me/94727397294?text=' + encodeURIComponent(lines.join('\n')), '_blank');
-            }
-        }
-    </script>
     <script src="assets/js/christmas-effects.js" defer></script>
 </body>
 </html>
